@@ -3,11 +3,7 @@
 }
 
 body {
-	/*Want to change background image?*/
-	/*Upload a new one to the img folder.*/
-	/*Make sure you name it 'minecraft.jpg'*/
-	background: linear-gradient(rgba(20, 26, 35,0.55),rgba(20, 26, 35, 0.55)),
-				url("../img/minecraft.jpg") no-repeat center center fixed;
+	background: linear-gradient(rgba(20, 26, 35, 0.55), rgba(20, 26, 35, 0.55)), url("../img/minecraft.jpg") no-repeat center center fixed;
 	background-size: cover;
 	font-family: "Open Sans", Helvetica;
 	margin: 0;
@@ -18,15 +14,9 @@ html, body {
 	width: 100vw;
 	height: 100vh;
 	overflow-x: hidden;
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-pack: center;
-	    -ms-flex-pack: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 
 a {
@@ -44,66 +34,38 @@ p {
 
 .logo img {
 	width: 225px; /* Change image size for mobile */
-	-webkit-animation-name: logo;
-	        animation-name: logo;
-	-webkit-animation-duration: 5s;
-	        animation-duration: 5s;
-	-webkit-animation-iteration-count: infinite;
-	        animation-iteration-count: infinite;
-	-webkit-animation-timing-function: ease-in-out;
-	        animation-timing-function: ease-in-out;
-}
-
-
-@-webkit-keyframes logo {
-	0% {
-		-webkit-transform: scale(1);
-		        transform: scale(1);
-	}
-	50% {
-		-webkit-transform: scale(1.07);
-		        transform: scale(1.07);
-	}
-	100% {
-		-webkit-transform: scale(1);
-		        transform: scale(1);
-	}
+	animation: logo 5s infinite ease-in-out;
 }
 
 @keyframes logo {
-	0% {
-		-webkit-transform: scale(1);
-		        transform: scale(1);
+	0%, 100% {
+		transform: scale(1);
 	}
 	50% {
-		-webkit-transform: scale(1.07);
-		        transform: scale(1.07);
-	}
-	100% {
-		-webkit-transform: scale(1);
-		        transform: scale(1);
+		transform: scale(1.07);
 	}
 }
 
-.infoo{
-	position:absolute;
-	margin-top:60%;
-	color:white
-	}
-.infoo a{
-	color:#D3D3D3;
-	padding:10px;
-	}
+.infoo {
+	position: absolute;
+	margin-top: 60%;
+	color: white;
+}
+
+.infoo a {
+	color: #D3D3D3;
+	padding: 10px;
+}
 
 .playercount {
 	display: inline-block;
-	margin: 20px 15px 0 15px;
+	margin: 20px 15px 0;
 	padding: 2px 0;
 	background-color: rgba(15, 199, 209, 0.75);
 	font-size: 1em;
 	color: white;
 	text-align: center;
-	border-radius: 5px 0 5px 0;
+	border-radius: 5px 0;
 	line-height: 27px;
 }
 
@@ -124,28 +86,19 @@ p {
 }
 
 .items {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-pack: distribute;
-	    justify-content: space-around;
-	-ms-flex-preferred-size: 100px;
-	    flex-basis: 100px;
-	padding: 18px 0 10px 0;
-
+	justify-content: space-around;
+	flex-basis: 100px;
+	padding: 18px 0 10px;
 }
 
 .item img {
-	-webkit-transition: all 0.2s ease;
-	-o-transition: all 0.2s ease;
 	transition: all 0.2s ease;
 	margin-bottom: 7px;
 }
 
 .item img:hover {
-	-webkit-transform:scale(1.1);
-	    -ms-transform:scale(1.1);
-	        transform:scale(1.1);
+	transform: scale(1.1);
 }
 
 .img {
@@ -161,14 +114,9 @@ p {
 .subtitle {
 	color: #cfcfcf;
 	font-size: 12px;
-}
-
-.title,
-.subtitle {
 	margin: 0;
 	padding: 0;
 }
-
 
 @media(min-width: 400px) {
 	.logo img {
@@ -201,12 +149,15 @@ p {
 	.logo {
 		margin-bottom: 28px;
 	}
+
 	.img {
 		width: 100%;
 	}
+
 	.items {
-		padding: 30px 0 20px 0;
+		padding: 30px 0 20px;
 	}
+
 	.playercount {
 		font-size: 1.22em;
 		padding: 10px;
@@ -223,9 +174,7 @@ p {
 
 @media(min-width: 1000px) {
 	.items {
-		-webkit-box-pack: center;
-		    -ms-flex-pack: center;
-		        justify-content: center;
+		justify-content: center;
 	}
 
 	.item:not(:first-child) {
