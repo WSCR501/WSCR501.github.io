@@ -1,0 +1,89 @@
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+#hero {
+  width: 100%;
+  height: 100vh;
+  background: url("../img/hero-bg.jpg") top center;
+  background-size: cover;
+  position: relative;
+  margin-bottom: -70px;
+  
+  @media (max-width: 992px) {
+    margin-bottom: -60px;
+    
+  }
+
+  &:before {
+    content: "";
+    background: rgba($secondary, .5) linear-gradient(rgba(26, 0, 33,.5) 0%, rgba(26, 0, 33,.5) 5%, rgba(38, 6, 51,.5) 40%, rgba(147, 47, 69,.7) 76%, rgba(236, 97, 93,.7) 94%, rgba(236, 97, 93,.5) 100%) repeat scroll 0% 0%;
+    
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .hero-container {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 56px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  h2 {
+    color: #eee;
+    margin: 15px 0 0 0;
+    font-size: 24px;
+  }
+
+  .btn-get-started {
+    font-family: $font-primary;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 40px;
+    border-radius: 4px;
+    transition: 0.5s;
+    margin-top: 30px;
+    border: 2px solid #fff;
+    color: #fff;
+    &:hover {
+      background: $primary;
+      border: 2px solid $primary;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    background-attachment: fixed;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 30px;
+      line-height: 36px;
+    }
+    h2 {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+
+}

@@ -1,0 +1,74 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  background: rgba($secondary,.25);
+  transition: all 0.5s;
+  z-index: 997;
+  position: relative;
+  height: 70px;
+  @media (max-width: 992px) {
+    height: 60px;
+  }
+
+  &.fixed-top, &.header-inner-pages {
+    background: rgba($secondary, 0.8);
+  }
+
+  &.fixed-top {
+    position: fixed;
+  }
+
+  .logo {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    a {
+      color: #fff;
+    }
+
+    img {
+      max-height: 40px;
+    }
+  }
+}
+
+.scrolled-offset {
+  margin-top: 70px;
+  @media (max-width: 991px) {
+    margin-top: 60px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Header Social Links
+--------------------------------------------------------------*/
+.header-social-links {
+  padding-left: 20px;
+  a {
+    color: rgba(#fff, .6);
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+
+    i {
+      line-height: 0;
+    }
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 15px 0 0;
+  }
+
+}
