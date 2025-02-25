@@ -1,0 +1,97 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+.border-top{border-top:1px solid #f6f6f6}
+
+.single-service::before {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-left: 1px solid #888888;
+    border-top: 1px solid #888888;
+    content: "";
+    height: 50px;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    width: 50px;
+}
+.single-service::after {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border-bottom: 1px solid #888888;
+    border-right: 1px solid #888888;
+    content: "";
+    height: 50px;
+    right: 10px;
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+}
+
+.single-service {
+  margin-bottom: 30px;
+  padding: 70px 40px;
+  transition: all 0.6s ease 0s;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.02);
+  position:relative
+}
+.single-service:hover {
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.07);
+}
+.single-service i {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.single-service > h3 {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+.single-service p {
+  color: #666666;
+  line-height: 26px;
+  margin: 0;
+}
+.padding-lr {
+  padding: 90px 30px 50px;
+}
+.custom-pad{padding:90px 30px}
+
+
+.analysis-box {
+  padding: 80px;
+}
+.analysis-area .row{}
+.analysis-area .row .col-md-4:nth-child(1){background:#f6f6f6;}
+.analysis-area .row .col-md-4:nth-child(2){background:#eee;}
+.analysis-area .row .col-md-4:nth-child(3){background:#f6f6f6;}
+.analysis-box h2 {
+  font-size: 80px;
+  font-weight: 300;
+  margin-top: 0;
+}
+.analysis-box h4 {
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding-bottom: 8px;
+  position: relative;
+  text-transform: uppercase;
+}
+.analysis-box h4::before {
+  background-color: #464646;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 1px;
+  position: absolute;
+  width: 35px;
+}
+.analysis-box p{}

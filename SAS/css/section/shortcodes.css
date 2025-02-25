@@ -1,0 +1,25 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+@import url("default.css");
+@import url("hamburgers.min.css");
+@import url("header.css");
+@import url("animate-headline.css");
+@import url("slider.css");
+@import url("portfolio.css");
+@import url("service.css");
+@import url("testimonial.css");
+@import url("breadcrumb.css");
+@import url("blog.css");
+@import url("footer.css");
+@import url("team.css");
+@import url("pricing-table.css");
+@import url("single-blog.css");

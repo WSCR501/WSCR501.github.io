@@ -1,0 +1,79 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+
+/*------------- 6. testimonial-area ---------------*/
+
+.single-testimonial > img {
+    border-radius: 50%;
+}
+.single-testimonial > h3 {
+  color: #464646;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 26px 0 20px;
+  text-transform: capitalize;
+}
+.single-testimonial {
+  margin: auto;
+  width: 60%;
+}
+.single-testimonial > p {
+  color: #464646;
+  letter-spacing: 1px;
+}
+.single-testimonial > img {
+    border-radius: 50%;
+    margin: 0 auto;
+    width: 100px !important;
+    height: 100px;
+}
+.testimonial-area {
+    position: relative;
+}
+.owl-dots {
+    margin-top: 20px;
+}
+.owl-carousel .owl-controls .owl-dots .owl-dot {
+    background-color: transparent;
+    border: 1px solid #888;
+    display: inline-block;
+    height: 5px;
+    width: 30px;
+    z-index: 999;
+    margin-right: 12px;
+}
+.owl-carousel .owl-controls .owl-dots .owl-dot.active {
+  background-color: #888;
+  border: 1px solid #888;
+}
+
+.testimonial-area.testi-img-bg{
+  background: rgba(0, 0, 0, 0) url("../../img/bg/about.jpg") repeat fixed 0 0;
+}
+
+
+.testi-opacity {
+    position: relative;
+}
+.testi-opacity::before {
+    background: #ffffff none repeat scroll 0 0;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+

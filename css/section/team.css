@@ -1,0 +1,72 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+.member-image {
+    overflow: hidden;
+    position: relative;
+}
+.member-image img {
+    width: 100%;
+}
+.member-title {
+  background: #464646 none repeat scroll 0 0;
+  bottom: -70px;
+  display: block;
+  left: 0;
+  overflow: hidden;
+  padding: 5px 10px;
+  position: absolute;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+.member-title h2 {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 28px;
+  margin: 0;
+  text-transform: uppercase;
+}
+.member-title a:hover {
+  color: #dddddd;
+}
+.member-title h3 {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
+  margin: 0;
+}
+.member-info {
+    border-color: #ddd;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.single-creative-member:hover .member-title {
+    bottom: 0;
+}
+.testimonial-area.testimonial-2 {
+  background: rgba(0, 0, 0, 0) url("img/2.jpg") repeat scroll 0 0 / cover ;
+}
+.testimonial-area.testimonial-2:before {
+  background: #f7f7f7 none repeat scroll 0 0;
+}
+.testimonial-2 .single-testimonial p,.testimonial-2 .single-testimonial .quotes,.testimonial-2 .single-testimonial .client-info {
+  color: #444;
+}
+.single-creative-member {
+    -webkit-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}

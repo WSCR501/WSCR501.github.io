@@ -1,0 +1,221 @@
+/* -----------------------------------
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+--------------------------------------*/
+
+.slider {
+  position: relative;
+}
+
+h1.heading-sub-title {
+  color: #464646;
+  font-family: oswald;
+  font-size: 35px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.cd-headline.clip .cd-words-wrapper::after {
+  background-color: #009688;
+}
+.cd-headline.clip .cd-words-wrapper .is-visible {
+    color: #009688;
+    font-weight: 300;
+}
+
+.slider-text p {
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+.slider-text hr {
+  background-color: #464646;
+  border: 0 none;
+  height: 3px;
+  margin: 35px 0 40px;
+  width: 60px;
+}
+
+.slider-text.text-center hr {
+  margin: 35px auto 40px;
+}
+/* slider bg */
+
+
+.slider-img-bg-1 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider1.jpg") no-repeat center center / cover ;
+}
+
+.slider-img-bg-2 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider2.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-3 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider3.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-4 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider4.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-5 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider5.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-6 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider6.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-7 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider7.jpg") no-repeat center center / cover ;
+}
+.slider-img-bg-8 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/slider8.jpg") no-repeat center center / cover ;
+}
+
+.bg-fixed{
+	background-attachment:fixed;
+}
+
+/* slyder style ctg */
+.slider-style-1 {
+  width: 750px;
+  position:relative;
+  z-index:999
+}
+.slider-style-2 {
+  background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0;
+  margin: auto;
+  outline: 1px solid #ffffff;
+  outline-offset: 5px;
+  padding: 20px;
+  position: relative;
+  width: 750px;
+  z-index: 999;
+}
+
+
+
+/* slider overlay */
+
+.off-white-overlay::before ,.black-overlay::before,.teal-overlay::before,.light-grey-overlay::before {
+  background: #f1f1f1 none repeat scroll 0 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.black-overlay::before{
+  background: #000000 none repeat scroll 0 0;
+  opacity: 0.3;
+}
+.teal-overlay::before{
+  background: #009688 none repeat scroll 0 0;
+  opacity: 0.3;
+}
+.light-grey-overlay::before{
+  background: #888 none repeat scroll 0 0;
+  opacity: 0.1;
+}
+/* -----------------------------------
+slider 7
+
+--------------------------------------*/
+
+.slider-title {
+  color: #fff;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+.slider-title > span {
+  display: block;
+  font-family: dosis;
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+}
+.slider-title h2 {
+  color: #fff;
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  margin: 0;
+  text-transform: uppercase;
+}
+.single-slider {
+  background-position: center center;
+  background-size: cover;
+  height: 700px;
+}
+
+.owl-theme .owl-controls .owl-nav div {
+  background: #ffffff none repeat scroll 0 0;
+  font-size: 25px;
+  height: 40px;
+  left: 10px;
+  line-height: 40px;
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease 0s;
+  visibility: hidden;
+  width: 40px;
+}
+.owl-theme .owl-controls .owl-nav div.owl-next {
+  left: auto;
+  right: 10px;
+}
+.owl-theme:hover .owl-controls .owl-nav div {
+  opacity: 1;
+  visibility:visible
+}
+.owl-theme .owl-controls .owl-nav div:hover {
+  background:#464646;
+  color:#fff;
+}
+
+
+.border-bottom {
+  border-bottom: 1px solid #f6f6f6;
+  border-top: 1px solid #f6f6f6;
+}
+
+.slider-text-style-3{}
+.slider-text-style-3 h1{}
+.slider-text-style-3 span{}
+.slider-text-style-3 .info-inner {
+  background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0;
+  box-sizing: border-box;
+  display: inline-block;
+  outline: 1px solid #fff;
+  outline-offset: 8px;
+  padding: 65px;
+}
+
+
+
+/* slider-7 */
+
+.slider-dotted .owl-dots {
+  bottom: 20px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+.slider-dotted.owl-carousel .owl-controls .owl-dots .owl-dot.active {
+  background-color: #f1f1f1;
+  border: 1px solid #f1f1f1;
+}
+
+.slider-dotted.owl-carousel .owl-controls .owl-dots .owl-dot {
+  border: 1px solid #f1f1f1;
+}
+

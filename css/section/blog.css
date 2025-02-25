@@ -1,0 +1,107 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+/*----------------------------------------*/
+/*  2.11.  blog section
+/*----------------------------------------*/
+.blog-title a {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.author-date li {
+    display: inline-block;
+    padding-right: 20px;
+}
+.author-date ul li i {
+  font-size: 16px;
+  padding-right: 7px;
+}
+.author-date {
+    border-bottom: 1px solid #ededed;
+    border-top: 1px solid #ededed;
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+.blog-text {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+.read-more {
+  margin-bottom: 15px;
+}
+.comments-share {
+  border-top: 1px solid #ededed;
+  display: block;
+  margin: 0 -15px;
+  padding: 10px 15px 0;
+}
+.comments-share > a {
+  color: #888888;
+}
+.comments-share > a:hover {
+  color: #222222;
+}
+.comments-share a i {
+  margin-right: 7px;
+  position: relative;
+  top: 1px;
+}
+.share {
+    float: right;
+}
+.single-blog {
+  border: 1px solid #ededed;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease 0s;
+}
+.blog-mar .single-blog {
+  margin-bottom: 30px;
+}
+.blog-content {
+  overflow: hidden;
+  padding: 15px;
+}
+
+.blog-title > h3 {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.blog-img img {
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+.blog-img:hover img {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+}
+.blog-img {
+    overflow: hidden;
+}
+
+.active-blog-carsoule [class*="col-"] {
+  width: 100%;
+}
+
+/* blog audio video*/
+.single-blog audio {
+  padding: 20px 15px 0;
+  width: 100%;
+}
+.single-blog video {
+  width: 100%;
+}

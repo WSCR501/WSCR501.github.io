@@ -1,0 +1,326 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+.header-position {
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+}
+.header-area{}
+.logo {
+  margin-top: 24px;
+}
+.logo a {
+  color: #222;
+  font-family: "Dosis",sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.logo a span,.footer-logo a span{
+  color: #009688;
+}
+.logo-top-header .logo a {
+  border: 1px solid #464646;
+  padding: 10px 15px;
+}
+.main-menu{}
+.main-menu ul{}
+.main-menu ul li {
+  display: inline-block;
+  margin-left: 35px;
+  padding: 30px 0;
+  position: relative;
+}
+.main-menu ul li a {
+  color: #464646;
+  font-family: "Lato",sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  position: relative;
+  text-transform: uppercase;
+}
+.main-menu ul li:hover > a {
+  color: #009688;
+}
+.main-menu ul li ul {
+  background: #ffffff none repeat scroll 0 0;
+  border-top: 2px solid #009688;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  transition: all 0.3s ease 0s;
+  visibility: hidden;
+  width: 190px;
+  z-index: 999999999;
+}
+.main-menu ul li:hover > ul{opacity:1;visibility:visible;}
+.main-menu ul li ul li a{}
+.main-menu ul li ul li {
+  display: block;
+  margin: 0;
+  padding: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all .3s ease 0s;
+}
+.main-menu ul li ul li:hover {
+  background: #f5f5f5;
+}
+.main-menu ul li ul li a {
+  display: block;
+  padding: 10px 15px;
+  text-transform: capitalize;
+}
+.main-menu ul li ul li:first-child {
+    border-top: none;
+}
+.main-menu ul li ul li:hover > a{padding-left:15px}
+.main-menu ul li ul li a:before{display:none}
+.main-menu ul li ul li > ul {
+  left: 100%;
+  margin-top: -1px;
+  opacity: 0;
+  position: absolute;
+  top: 45%;
+  visibility: hidden;
+}
+.main-menu ul li ul li:hover > ul {
+  top: 0;
+}
+.main-menu.text-end span {
+  float: right;
+}
+
+.mean-container .mean-bar {
+  background: transparent none repeat scroll 0 0;
+  min-height: 0;
+  padding: 0;
+}
+.mean-container a.meanmenu-reveal {
+  border: 1px solid #464646;
+  color: #464646;
+  margin-top: -22px;
+  padding: 4px 5px;
+  position: absolute;
+}
+.mean-container a.meanmenu-reveal span {
+  background-color: #333;
+}
+.mean-container .mean-nav {
+	margin-top: 15px;
+	max-height: 300px;
+	overflow-x: scroll;
+}
+.mobile-menu .angel-down > a::after, 
+.mobile-menu .angel-right > a::after {
+	display: none;
+}
+
+
+
+/**
+ * Note: I have omitted any vendor-prefixes for clarity.
+ * Adding them is left as an exercise for the reader.
+ */
+
+
+/* stiky */
+.header-sticky.sticky {
+  animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+  background: rgba(255, 255, 255, 0.95) none repeat scroll 0 0;
+  box-shadow: 0 1px 3px rgba(55, 55, 55, 0.5);
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2147483647;
+}
+
+
+/* intelligent-header */
+
+.headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+.headroom--pinned {
+    transform: translateY(0%);
+}
+.headroom--unpinned {
+    transform: translateY(-100%);
+}
+.intelligent-header {
+    background-color: #fff;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 999999;
+}
+.free-space {
+  height: 80px;
+}
+
+.intelligent-header.headroom--pinned {
+  transition: all 0.3s ease 0s;
+}
+.intelligent-header.headroom--not-top {
+  box-shadow: 0 1px 3px rgba(50, 50, 50, 0.4);
+}
+
+
+/* Menu Toggle */
+.menu-toggle {
+  box-sizing: border-box;
+  float: right;
+  height: 19px;
+  margin-left: 30px;
+  margin-top: 31px;
+  padding: 0;
+}
+.stick .menu-toggle {
+  margin-top: 25px;
+}
+.hamburger-box {
+  height: 19px;
+  width: 30px;
+}
+.hamburger-inner, .hamburger-inner::after, .hamburger-inner::before {
+  background-color: #000;
+  height: 2px;
+  width: 30px;
+}
+.hamburger-inner::before {
+  top: -8px;
+}
+.hamburger-inner::after {
+  bottom: -8px;
+}
+
+/* Main Menu */
+.main-menu {
+  padding: 0;
+}
+.menu-style-toggle{}
+.menu-style-toggle nav {
+  opacity: 0;
+  margin-right: -30px;
+  visibility: hidden;
+}
+.menu-style-toggle nav.menu-open {
+  opacity: 1;
+  margin-right: 0;
+  visibility: visible;
+}
+
+.menu-style-toggle nav {
+  float: left;
+  transition: all 0.3s ease 0s;
+}
+.main-menu.mean-menu.menu-style-toggle.text-end {
+  float: right;
+}
+
+
+.waraper .header-sticky.sticky {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.waraper {
+  padding: 0 100px;
+}
+
+
+.main-menu-shadow ul li a::before {
+  background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0) 80%) repeat scroll 0 0;
+  content: "";
+  height: 10px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  transition-duration: 0.3s;
+  transition-property: transform, opacity;
+  width: 100%;
+  z-index: -1;
+}
+.main-menu-shadow ul li a{
+position:relative
+}
+.main-menu-shadow ul  li:hover  a::before {
+  opacity: 1;
+  transform: translateY(5px);
+}
+
+.boxed-layout.wrapper {
+  box-shadow: -3px 0 50px -2px rgba(0, 0, 0, 0.14);
+  margin: auto;
+  position: relative;
+  width: 1240px;
+}
+.boxed-layout .header-sticky.sticky, .boxed-layout .intelligent-header {
+  margin: auto;
+  right: 0;
+  width: 1240px;
+}
+
+.side-space {
+    padding: 0 5%;
+}
+.side-space .intelligent-header {
+  left: 5%;
+  right: 5%;
+  width: auto;
+}
+.side-space .intelligent-header .header-area {
+  padding: 0 10px;
+}
+.side-space .header-sticky.sticky {
+  left: 5%;
+  padding: 0 10px;
+  right: 5%;
+  width: auto;
+}
+
+
+.angel-down > a::after ,.angel-right > a::after {
+  content: "";
+  font-family: material-design-iconic-font;
+  font-size: 14px;
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-40%);
+}
+.angel-right > a::after {
+	content:"\f2fb"; 
+	right: 15px;
+	transform: translateY(-50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

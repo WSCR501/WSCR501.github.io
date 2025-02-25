@@ -1,0 +1,123 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+.footer-logo a {
+  color: #222222;
+  font-family: lato;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.footer-menu ul li a {
+  color: #464646;
+  font-family: "Lato",sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  position: relative;
+  text-transform: uppercase;
+}
+.footer-menu ul li a:hover {
+  color: #009688;
+}
+.footer-menu ul li {
+  display: inline-block;
+  position: relative;
+}
+.footer-menu ul li+li{
+  margin-left: 30px;
+}
+.copyright p {
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: capitalize;
+}
+.footer-menu {
+  padding: 20px 0 0;
+}
+.footer-logo > p {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+.footer-menu li+li::before {
+  background: #464646 none repeat scroll 0 0;
+  content: "";
+  height: 10px;
+  position: absolute;
+  left: -15px;
+  top: 7px;
+  width: 1px;
+}
+.footer-style-1 .footer-bottom, .footer-style-2 .footer-bottom {
+  padding-top: 20px;
+}
+.instgram-feed li {
+    float: left;
+    padding: 3px;
+    width: 33.33%;
+}
+.instgram-feed li img {
+    width: 100%;
+}
+.instgram-feed {
+    margin: -3px;
+}
+.instgram-feed li a {
+  display: block;
+  position: relative;
+}
+.instgram-feed li a::after {
+  background: #000000 none repeat scroll 0 0;
+  bottom: 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+.instgram-feed li a:hover::after {
+  opacity: 0.6;
+}
+.widget-title h5 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.footer-style-3 .footer-menu {
+  padding: 0;
+}
+.footer-style-3 .copyright p {
+  line-height: 30px;
+}
+.copyright a:hover {
+  color: #009688;
+}
+.logo.footer-logo-2 {
+  margin-top: 0;
+}
+
+
+
+
+
+
+
+
+
+
+

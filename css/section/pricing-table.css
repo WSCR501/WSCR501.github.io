@@ -1,0 +1,106 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+/* pricing table area */
+.single-pricing-table {
+  background: #f9f9f9 none repeat scroll 0 0;
+  padding: 30px 0;
+  position: relative;
+}
+.single-pricing-table h4 {
+  letter-spacing: 1px;
+}
+.adv-area li {
+  color: #333333;
+  display: block;
+  letter-spacing: 1px;
+  line-height: 30px;
+  position: relative;
+}
+.adv-area li::before {
+  content: "\f26b";
+  font-family: material-design-iconic-font;
+  padding-right: 20px;
+}
+.adv-area li.disable::before {
+  content: "\f136";
+}
+.adv-area li.disable {
+  color: #888888;
+}
+.price-tag span {
+  color: #464646;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 45px;
+  text-transform: capitalize;
+  z-index: 11;
+}
+.price-icon {
+  border: 5px solid #ddd;
+  border-radius: 100%;
+  display: inline-block;
+  font-size: 50px;
+  height: 105px;
+  line-height: 90px;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 105px;
+  z-index: 1;
+  transition: all 0.3s ease 0s;
+  color:#464646
+}
+.price-tag {
+  margin-bottom: 15px;
+}
+.adv-area > ul {
+    display: inline-block;
+    text-align: left;
+}
+.adv-area {
+  border-bottom: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
+  padding: 25px 0;
+}
+.single-pricing-table:hover .price-icon {
+  color: #ddd;
+}
+.adv-area li.disable:hover {
+  cursor: no-drop;
+}
+.special::before {
+  border-color: #dddddd rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+  border-style: solid;
+  border-width: 64px 64px 0 0;
+  content: "";
+  height: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+.special::after {
+  color: #ffffff;
+  content: "";
+  font-family: "Material-Design-Iconic-Font";
+  font-size: 25px;
+  font-weight: 700;
+  left: 9px;
+  position: absolute;
+  top: 6px;
+}
+
+.price-btn {
+  margin-top: 25px;
+}
+
+

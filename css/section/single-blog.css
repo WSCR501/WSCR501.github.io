@@ -1,0 +1,287 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+/*-----------------------------------------
+	6.5 SINGLE POST
+-------------------------------------------*/
+.post-details-area {
+  border: 1px solid #e5e5e5;
+  box-shadow: none;
+  margin-bottom: 60px;
+}
+.post-details-area:hover {
+  box-shadow: none;
+}
+.post-details-area img {
+  width: 100%;
+}
+.post-details-area .blog-post-title {
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  line-height: 24px;
+  margin-bottom: 17px;
+  text-transform: uppercase;
+}
+.single-blog .blog-title > h3 {
+  font-size: 20px;
+}
+.single-post .author-date {
+  padding: 10px 0;
+}
+/*-----------------------------------------
+	6.6 COMMENT FORM AREA
+-------------------------------------------*/
+.theme-comment-section .media {
+  border: 1px solid #e5e5e5;
+  padding: 25px 0 25px 25px;
+}
+.c-title {
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+.theme-comment-section .media-body > p span {
+  color: #808080;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+.c-title a {
+    color: #212121;
+}
+.media-list li {
+    background: #ffffff none repeat scroll 0 0;
+    margin-bottom: 20px;
+    transition: .3s;
+    position: relative;
+}
+
+.media-replay {
+  margin-left: 25px;
+}
+.theme-comment-section .media-body {
+  margin-top: 0;
+  padding-right: 25px;
+}
+.reply-link {
+  color: #999999;
+  font-style: italic;
+  font-weight: normal;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.media-left img {
+  border-radius: 3px;
+}
+.comment-title {
+  border-bottom: 1px solid #e5e5e5;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+.comment-form-wrapper {
+  margin-top: 60px;
+}
+.post-content > h4 {
+  display: inline-block;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+.single-blog .post-content {
+  padding: 20px 25px 10px;
+}
+.post-content p {
+  letter-spacing: 0.3px;
+}
+.single-blog .conract-area-bottom {
+  margin-top: 0;
+}
+
+.blog-feature > li {
+    letter-spacing: 1px;
+    padding-left: 20px;
+    position: relative;
+    line-height: 25px;
+}
+.blog-feature > li::before {
+    content: "";
+    font-family: material-design-iconic-font;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+.blog-feature {
+    margin-bottom: 15px;
+}
+blockquote {
+  background: #f1f1f1 none repeat scroll 0 0;
+  border-left: 2px solid #888888;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+.date-time {
+  margin-bottom: 5px;
+}
+
+
+
+
+/*---------------------------------------
+	7. WIDGET AREA STYLE
+-----------------------------------------*/
+.single-widget {
+  background: #ffffff none repeat scroll 0 0;
+  border: 1px solid rgba(0, 0, 0, 0);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 15px;
+}
+.single-widget .widget-title {
+  border-bottom: 1px solid #e5e5e5;
+  color: #333333;
+  display: inline-block;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  padding-bottom: 7px;
+  position: relative;
+  text-transform: uppercase;
+}
+.static-banner {
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(221, 221, 221, 0.5);
+  margin-bottom: 30px;
+}
+.tags > a {
+  border: 1px solid #e5e5e5;
+  color: #666;
+  display: inline-block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  margin-right: 3px;
+  padding: 5px 15px;
+  text-transform: capitalize;
+}
+
+.post-cat-list > li {
+  border-bottom: 1px solid #e5e5e5;
+}
+.post-cat-list > li:last-child {
+  border-bottom: medium none;
+}
+.post-cat-list > li a {
+  color: #666;
+  display: block;
+  padding: 10px 0;
+  text-transform: capitalize;
+}
+.post-cat-list a span {
+    float: right;
+}
+.widget-single-post img {
+  display: inline-block;
+  float: left;
+  width: 70px;
+}
+.widget-post-content {
+  float: left;
+  padding-left: 10px;
+  width: calc(100% - 70px);
+}
+
+.widget-post-content > h4 {
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.widget-post-content p {
+  line-height: 22px;
+  margin: 0;
+}
+.widget-single-post {
+  margin-bottom: 20px;
+}
+.widget-single-post:last-child{
+  margin-bottom: 0;
+}
+.search-widget input {
+  border: 1px solid #e5e5e5;
+  height: 35px;
+  margin-bottom: 5px;
+  padding: 0 15px;
+  width: 80%;
+}
+.search-widget button {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: #888888 none repeat scroll 0 0;
+  border-color: #888888 #888888 #888888 rgba(0, 0, 0, 0);
+  border-image: none;
+  border-style: solid;
+  border-width: 1px;
+  color: #ffffff;
+  font-size: 17px;
+  height: 35px;
+  line-height: 35px;
+  margin-left: -3px;
+  padding: 0 10px;
+  position: relative;
+  top: 2px;
+  width: 20%;
+  transition:.3s
+}
+.search-widget button:hover {
+  background: #ffffff none repeat scroll 0 0;
+  border-color: #efefef #efefef #efefef rgba(0, 0, 0, 0);
+  color: #888888;
+}
+
+.sidebar-menu > li {
+    line-height: 40px;
+}
+.sidebar-menu > li+li {
+    border-top: 1px solid #eeeeee;
+}
+.sidebar-menu li a {
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+.sidebar-menu {
+    padding: 0 7px;
+}
+.count {
+    float: right;
+}
+.single-blog  .panel-body {
+    padding: 0 10px;
+}
+
+.single-blog .single-post audio {
+  padding: 25px 25px 0;
+}

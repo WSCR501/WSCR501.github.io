@@ -1,0 +1,105 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: trim Minimal Portfolio Template.
+    Template URI:yourmail@your.com 
+    Description: This is html5 template
+    Author: themepixells
+    Author URI: yourmail@your.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+
+
+/*--------  Breadcrumb style default  -----------*/
+h2.page-title {
+	color: #ffffff;
+	font-family: oswald;
+	font-size: 30px;
+	font-weight: 500;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	z-index: 999;
+	position: relative;
+}
+.breadcrumbs li {
+    display: inline-block;
+}
+.breadcrumbs > ul li {
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.breadcrumbs > ul li a {
+  color: #ffffff;
+  padding-right: 17px;
+  position: relative;
+}
+.breadcrumbs > ul li a:hover {
+  color: #f2f2f2;
+}
+.breadcrumbs ul li a.active::after {
+    color: #888888;
+}
+.breadcrumbs ul li a::after {
+  background-color: #ffffff;
+  content: "";
+  font-size: 8px;
+  height: 15px;
+  margin-left: 11px;
+  position: absolute;
+  right: 7px;
+  top: 0;
+  transform: rotate(33deg);
+  width: 1.5px;
+}
+.breadcrumbs-area {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/breadcrumb.jpg") no-repeat scroll 0 0;
+  padding: 60px 0;
+}
+.breadcrumbs-area.img-bg-2 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/breadcrumb2.jpg") no-repeat 0 0;
+}
+.breadcrumbs-area.img-bg-3 {
+  background: rgba(0, 0, 0, 0) url("../../img/bg/breadcrumb3.jpg") no-repeat 0 0;
+}
+.bg-fixed {
+  background-attachment: fixed;
+}
+.breadcrumb-opacity {
+    position: relative;
+}
+.breadcrumbs-area.solid-bg {
+  background: #f1f1f1 none repeat scroll 0 0;
+}
+.breadcrumb-opacity::before {
+    background: #000000 none repeat scroll 0 0;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.4;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.solid-bg h2.page-title {
+  color: #464646;
+}
+.solid-bg .breadcrumbs > ul li {
+  color: #464646;
+}
+.solid-bg .breadcrumbs > ul li a {
+  color: #464646;
+}
+.solid-bg .breadcrumbs ul li a::after {
+  background-color: #464646;
+}
