@@ -203,6 +203,38 @@
             margin-top: 15px;
             text-align: right;
         }
+        body {
+            background-color: #f0f0f0; /* 仅为演示背景，实际使用时可以去掉 */
+            padding: 20px;
+        }
+        
+        .transparent-box {
+            display: inline-block;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* 半透明边框 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        
+        /* 深色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .transparent-box {
+                background-color: rgba(0, 0, 0, 0.5);
+                border-color: rgba(255, 255, 255, 0.1);
+                color: #eee;
+            }
+        }
+        
+        /* 可选悬停效果 */
+        .transparent-box:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: background-color 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -213,9 +245,9 @@
             <div class="logo">繁星游戏堡</div>
             <div class="nav-links">
                 <a href="index.html">介绍</a>
-                <a href="#">管理人员</a>
+                <a href="#section1">管理人员</a>
                 <a id="myBtn">关于我们</a>
-                <a href="#">硬件监控</a>
+                <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
             </div>
         </nav>
     </header>
@@ -244,7 +276,44 @@
                 </div>
             </div>
         </div>
-    
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+        <h3>管理人员</h3>
+        <div id="section1">
+        <div class="transparent-box">
+            <img src="1.png" alt="腐竹头像">
+            <p style="color:yellowgreen">IrisOracle 鸢尾</p>
+            繁星游戏堡·腐竹<br>
+            à voir le monde et sa beauté.
+        </div>
+        <div class="transparent-box">
+            <img src="2.png" alt="哥能刷新一下吗">
+            <p style="color:#6495ED">Ruthyrings RU</p>
+            繁星游戏堡·吉祥物<br>
+            兄弟玩整合包么
+        </div>
+        <div class="transparent-box">
+            <img src="3.png" alt="哥能刷新一下吗">
+            <p style="color:#6495ED">PrimeMoon_ PO</p>
+            繁星游戏堡·管理员<br>
+            所谓坚持，只是死撑罢了
+        </div>
+        <div class="transparent-box">
+            <img src="4.jpg" alt="哥能刷新一下吗">
+            <p style="color:#6495ED">Windows XP</p>
+            繁星游戏堡·御用刑部尚书<br>
+            没想说的(doge)
+        </div>
         <script>
             // 获取元素
             const modal = document.getElementById("myModal");
