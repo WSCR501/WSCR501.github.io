@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>helloshabby</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        header {
+            background-color: rgba(98, 0, 238, 0.8);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #6200ee;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3700b3;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #333;
+        }
+        
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay muted loop></video>
+    <div class="overlay"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">helloshabby</div>
+            <div class="nav-links">
+                <a href="#">helloshabby</a>
+                <a href="#">helloshabby</a>
+                <a href="#">helloshabby</a>
+                <a href="#">helloshabby</a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h1>helloshabby</h1>
+            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby</p>
+            <a href="#" class="btn">helloshabby</a>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card">
+                <h2>helloshabby</h2>
+                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
+            </div>
+            <div class="feature-card">
+                <h2>helloshabby</h2>
+                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
+            </div>
+            <div class="feature-card">
+                <h2>helloshabby</h2>
+                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
+            </div>
+        </section>
+        
+        <section class="content">
+            <h2>helloshabby helloshabby</h2>
+            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
+            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
+        </section>
+    </div>
+    
+    <footer>
+        <p>helloshabby helloshabby helloshabby helloshabby</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Randomly select background video
+            const videos = ['ob.mp4', 'op.mp4'];
+            const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+            const videoBg = document.getElementById('video-background');
+            videoBg.src = randomVideo;
+            
+            // Ensure video plays correctly on mobile
+            videoBg.play().catch(e => {
+                console.log("Autoplay prevented, trying with muted attribute");
+                videoBg.muted = true;
+                videoBg.play();
+            });
+            
+            // Particle explosion effect
+            document.body.addEventListener('click', function(e) {
+                createParticles(e.clientX, e.clientY);
+            });
+            
+            function createParticles(x, y) {
+                const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
+                const particleCount = 30;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    document.body.appendChild(particle);
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 2 + Math.random() * 3;
+                    const lifetime = 1000 + Math.random() * 1000;
+                    
+                    const xVelocity = Math.cos(angle) * velocity;
+                    const yVelocity = Math.sin(angle) * velocity;
+                    
+                    let startTime = Date.now();
+                    
+                    function animateParticle() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = elapsed / lifetime;
+                        
+                        if (progress >= 1) {
+                            particle.remove();
+                            return;
+                        }
+                        
+                        const currentX = x + xVelocity * elapsed * 0.1;
+                        const currentY = y + yVelocity * elapsed * 0.1;
+                        
+                        particle.style.left = currentX + 'px';
+                        particle.style.top = currentY + 'px';
+                        particle.style.opacity = 1 - progress;
+                        particle.style.transform = `scale(${1 - progress * 0.5})`;
+                        
+                        requestAnimationFrame(animateParticle);
+                    }
+                    
+                    requestAnimationFrame(animateParticle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
