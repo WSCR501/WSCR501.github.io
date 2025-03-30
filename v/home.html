@@ -354,7 +354,6 @@
             margin: 10px 0;
             border-radius: 50%;
             background-color: rgba(188, 45, 45, 0.5);
-            cursor: pointer;
             transition: all 0.3s;
         }
         
@@ -417,7 +416,7 @@
             </div>
             <div class="page" id="page4">
                 <h2>更新日志</h2>
-                <p>1.禁止老旧IE或老旧Chromium访问<br>2.Safari访问时提示用户背景视频可能因编码问题无法播放<br>3.做了加入我们按钮:)<br></p>
+                <p>1.禁止老旧IE或老旧Chromium访问<br>2.Safari访问时提示用户背景视频可能因编码问题无法播放<br>3.做了加入我们按钮:)<br>4.修复了翻页遗留通病</p>
             </div>
             <script>
                 function isIE() {
@@ -530,6 +529,12 @@
                     animate();
                 });
             </script>
+            <div class="nav-dots">
+                <div class="dot active" data-page="1"></div>
+                <div class="dot" data-page="2"></div>
+                <div class="dot" data-page="3"></div>
+                <div class="dot" data-page="4"></div>
+            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const pages = document.querySelectorAll('.page');
@@ -564,20 +569,7 @@
                     }, { passive: true });
                     
                     // 点击导航点
-                    dots.forEach(dot => {
-                        dot.addEventListener('click', function() {
-                            if (isAnimating) return;
-                            
-                            const targetPage = parseInt(this.getAttribute('data-page')) - 1;
-                            if (targetPage !== currentPage) {
-                                isAnimating = true;
-                                currentPage = targetPage;
-                                updatePages(() => {
-                                    isAnimating = false;
-                                });
-                            }
-                        });
-                    });
+                    
                     
                     // 更新页面状态
                     function updatePages(callback) {
