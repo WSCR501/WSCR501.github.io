@@ -235,19 +235,114 @@
             background-color: rgba(255, 255, 255, 0.7);
             transition: background-color 0.3s ease;
         }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #121212;
+            height: 100vh;
+            cursor: none;
+        }
+        
+        .trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = [
+                '#FF0000', '#FF7F00', '#FFFF00', 
+                '#00FF00', '#0000FF', '#4B0082', 
+                '#9400D3', '#FF1493', '#00FFFF'
+            ];
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let trailCount = 10; // 拖尾粒子数量
+            let trails = [];
+            
+            // 初始化拖尾粒子
+            for (let i = 0; i < trailCount; i++) {
+                let trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(trail);
+                trails.push({
+                    element: trail,
+                    x: 0,
+                    y: 0,
+                    size: Math.random() * 10 + 5,
+                    speed: Math.random() * 0.5 + 0.1,
+                    delay: i * 5
+                });
+            }
+            
+            // 跟踪鼠标位置
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // 动画循环
+            function animate() {
+                for (let i = 0; i < trails.length; i++) {
+                    const trail = trails[i];
+                    
+                    // 延迟跟随效果
+                    if (i === 0) {
+                        trail.x = mouseX;
+                        trail.y = mouseY;
+                    } else {
+                        const prev = trails[i - 1];
+                        trail.x += (prev.x - trail.x) * trail.speed;
+                        trail.y += (prev.y - trail.y) * trail.speed;
+                    }
+                    
+                    // 更新粒子位置和大小
+                    trail.element.style.left = trail.x + 'px';
+                    trail.element.style.top = trail.y + 'px';
+                    trail.element.style.width = trail.size + 'px';
+                    trail.element.style.height = trail.size + 'px';
+                    
+                    // 随机颜色变化
+                    if (Math.random() < 0.05) {
+                        trail.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        });
+    </script>
     <video id="video-background" autoplay muted loop></video>
     <div class="overlay"></div>
     <header>
         <nav>
             <div class="logo">繁星游戏堡</div>
             <div class="nav-links">
-                <a href="index.html">介绍</a>
-                <a href="#section1">管理人员</a>
+                <a href="index.html">开始</a>
+                <a href="ren.html">管理人员</a>
                 <a id="myBtn">关于我们</a>
                 <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
+                <a onclick="showAlert()">捐款</a>
             </div>
         </nav>
     </header>
@@ -257,8 +352,13 @@
             <h1>繁星游戏堡</h1>
             <h3>FxGameCastel</h3>
             <p> 用心打造极致体验</p>
+            <button class="btn" onclick="showAlert()">加入我们</button>
+            <script>
+                function showAlert() {
+                    alert("施工中");
+                }
+            </script>
         </section>
-        
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -288,32 +388,6 @@
         <br>
         <br>
         <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-        <h3>管理人员</h3>
-        <div id="section1">
-        <div class="transparent-box">
-            <img src="1.png" alt="腐竹头像">
-            <p style="color:yellowgreen">IrisOracle 鸢尾</p>
-            繁星游戏堡·腐竹<br>
-            à voir le monde et sa beauté.
-        </div>
-        <div class="transparent-box">
-            <img src="2.png" alt="哥能刷新一下吗">
-            <p style="color:#6495ED">Ruthyrings RU</p>
-            繁星游戏堡·吉祥物<br>
-            兄弟玩整合包么
-        </div>
-        <div class="transparent-box">
-            <img src="3.png" alt="哥能刷新一下吗">
-            <p style="color:#6495ED">PrimeMoon_ PO</p>
-            繁星游戏堡·管理员<br>
-            所谓坚持，只是死撑罢了
-        </div>
-        <div class="transparent-box">
-            <img src="4.jpg" alt="哥能刷新一下吗">
-            <p style="color:#6495ED">Windows XP</p>
-            繁星游戏堡·御用刑部尚书<br>
-            没想说的(doge)
-        </div>
         <script>
             // 获取元素
             const modal = document.getElementById("myModal");
@@ -353,7 +427,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Randomly select background video
-            const videos = ['ob.mp4', 'op.mp4'];
+            const videos = ['https://video-cn.douyin.com/7a65de9bb2dc0a55aa747ec06c58e250/67e8b1d0/tos-cn-ve-15c001-alinc2/oIvEKRHwQt5ADr6BgRwDfAE9NqAFg5KgFfCnIk?a=10006&ch=0&cr=3&dr=0&cd=0%7C0%7C0%7C3&cv=1&br=1204&bt=1204&cs=0&ds=2&ft=eFqHTX998xs8u4ImO0P5fQhlpPiXAbnNoVJEkMLDQbPD-Ipz&mime_type=video_mp4&qs=0&rc=NXZpTGRTaFBnKWwxZnNoaGRmZzVoNzs7PDk7ODg8ZmdnZkBpM2puZnY5cnRkeTMzNGkzM0BTbGt2aXFEOmp3X2heK2p0OiMzMjU1LzExX14xYmEyM2AyYSMuNGRvMmRrM2hgLS1kLTBzcw%3D%3D&dy_q=1743299500&feature_id=fea919893f650a8c49286568590446ef&l=20250330095140C8137AEA177186D42B96&ply_type=3&policy=eyJ2bSI6MywidWlkIjoiODg1MjE1MDA5MTQifQ%3D%3D', 'https://video-cn.douyin.com/8ae0e1d5e29c1c8fce041d9c4b866dda/67e8b288/tos-cn-ve-15c001-alinc2/oofofK6RROooIHdHgfKRHEA9AsLsfQeiRAKG0I?a=10006&ch=0&cr=3&dr=0&cd=0%7C0%7C0%7C3&cv=1&br=1642&bt=1642&cs=0&ds=3&ft=eFqHTX998xs8u4ImO0P5fQhlpPiXAlnNoVJEkMLDQbPD-Ipz&mime_type=video_mp4&qs=0&rc=NXZpTGRTaFBnKWwxZnNoaGRmNmk8Omg5NmU1aDM3OTM5NkBpM3hkcGw5cm1keTMzNGkzM0BTbGt2aXFEOmp3X2heK2p0OiM0NDJhYTAxNi0xNmEzMDQ0YSNpMDFnMmRzM2hgLS1kLS9zcw%3D%3D&btag=c0000200008000&dy_q=1743299692&feature_id=fea919893f650a8c49286568590446ef&l=2025033009545220999FF5DAFDF6CADB1C&ply_type=3&policy=eyJ2bSI6MywidWlkIjoiODg1MjE1MDA5MTQifQ%3D%3D'];
             const randomVideo = videos[Math.floor(Math.random() * videos.length)];
             const videoBg = document.getElementById('video-background');
             videoBg.src = randomVideo;
