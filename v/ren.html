@@ -51,8 +51,40 @@
         }
         
         .logo {
-            font-size: 1.5rem;
+            /* 原有样式保留 */
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+        .logo a {
+            position: relative;
+            z-index: 1;
             font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo:hover::before {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
         
         .nav-links a {
@@ -268,7 +300,7 @@
             <img src="3.png" alt="哥能刷新一下吗">
             <p style="color:#6495ED">PrimeMoon_ PO</p>
             繁星游戏堡·管理员<br>
-            所谓坚持，只是死撑罢了
+            这个管理很懒，没留下什么
         </div>
         <div class="transparent-box">
             <img src="4.jpg" alt="哥能刷新一下吗">

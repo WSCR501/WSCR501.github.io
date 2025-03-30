@@ -361,6 +361,103 @@
             background-color: white;
             transform: scale(1.3);
         }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a192f;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        .firework-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff3366, #ff9933);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .firework-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.6);
+        }
+        
+        .firework-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .logo {
+            /* 原有样式保留 */
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+        .logo a {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo:hover::before {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(11px);
+            -webkit-backdrop-filter: blur(11px);
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .logo:hover::after {
+            left: 100%;
+        }
     </style>
     </style>
 </head>
@@ -371,9 +468,11 @@
         <div class="overlay">
         <header>
             <nav>
-                <div class="logo">繁星游戏堡</div>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">繁星游戏堡</a>
+                </div>
                 <div class="nav-links">
-                    <a href="index.html">开始</a>
+                    <a id="fireworkBtn">开始</a>
                     <a href="ren.html">管理人员</a>
                     <a id="myBtn">关于我们</a>
                     <a href="login.html">硬件监控</a>
@@ -662,9 +761,9 @@
                     alert("施工中");
                 }
                 function showAlert1() {
-                    var r = confirm("QQ链接:点击确定跳转\n点按取消查看discord链接");
+                    var r = confirm("加入QQ群问卷链接:点击确定跳转\n点按取消查看discord链接");
                     if (r == true) {
-                        window.location.href = "https://qm.qq.com/cgi-bin/qm/qr?k=P0ATj71V46Gy-iRGq5TRGn_A_twgBAVU&jump_from=webapi&authKey=cyrxEWiHSSBNSK8WgrS0ntaKvG6wUATtYhBRZAKCv2jFRhtydIlAZlVI3Y0yhMCd"; // 点击确定跳转到百度
+                        window.location.href = "https://wj.qq.com/s2/15083217/9cc4/"; // 点击确定跳转
                     } else {
                         alert("Discord链接:https://discord.gg/dUWasqNV");
                     }
@@ -736,7 +835,94 @@
                     }
                 }
             });
-        </script>    
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('fireworkBtn');
+                const colors = [
+                    '#ff3366', '#ff9933', '#33ccff', 
+                    '#9966ff', '#ff66cc', '#66ff33',
+                    '#ffff00', '#00ffff', '#ff00ff'
+                ];
+                
+                btn.addEventListener('click', function(e) {
+                    createFireworks(e.clientX, e.clientY);
+                });
+                
+                function createFireworks(x, y) {
+                    // 烟花爆炸粒子数量
+                    const particleCount = 100;
+                    
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        
+                        // 随机大小 (3-8px)
+                        const size = Math.random() * 5 + 3;
+                        particle.style.width = `${size}px`;
+                        particle.style.height = `${size}px`;
+                        
+                        // 随机颜色
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.backgroundColor = color;
+                        
+                        // 初始位置 (按钮点击位置)
+                        particle.style.left = `${x}px`;
+                        particle.style.top = `${y}px`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        // 随机角度和速度
+                        const angle = Math.random() * Math.PI * 2;
+                        const velocity = 2 + Math.random() * 10;
+                        
+                        // 计算x和y方向的速度
+                        const vx = Math.cos(angle) * velocity;
+                        const vy = Math.sin(angle) * velocity;
+                        
+                        // 动画持续时间 (800-1200ms)
+                        const duration = 800 + Math.random() * 400;
+                        
+                        // 开始动画
+                        animateParticle(particle, x, y, vx, vy, duration);
+                    }
+                }
+                
+                function animateParticle(particle, startX, startY, vx, vy, duration) {
+                    const startTime = Date.now();
+                    
+                    function update() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = elapsed / duration;
+                        
+                        // 动画结束
+                        if (progress >= 1) {
+                            particle.remove();
+                            return;
+                        }
+                        
+                        // 计算当前位置 (添加重力效果)
+                        const gravity = 0.1;
+                        const currentX = startX + vx * elapsed * 0.2;
+                        const currentY = startY + vy * elapsed * 0.2 + gravity * elapsed * 0.1 * elapsed * 0.1;
+                        
+                        // 更新位置
+                        particle.style.left = `${currentX}px`;
+                        particle.style.top = `${currentY}px`;
+                        
+                        // 淡出效果
+                        particle.style.opacity = 1 - progress;
+                        
+                        // 缩小效果
+                        particle.style.transform = `scale(${1 - progress * 0.5})`;
+                        
+                        requestAnimationFrame(update);
+                    }
+                    
+                    requestAnimationFrame(update);
+                }
+            });
+        </script>
     </div>
 </body>
 </html>
