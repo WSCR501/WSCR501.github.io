@@ -338,7 +338,7 @@
             right: 30px;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 13;
+            z-index: 999;
         }
         
         .dot {
@@ -359,181 +359,8 @@
     </style>
 </head>
 <body>
+        
     <div class="page active" id="page1">
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const colors = [
-                    '#FF0000', '#FF7F00', '#FFFF00', 
-                    '#00FF00', '#0000FF', '#4B0082', 
-                    '#9400D3', '#FF1493', '#00FFFF'
-                ];
-                
-                let mouseX = 0;
-                let mouseY = 0;
-                let trailCount = 10; // 拖尾粒子数量
-                let trails = [];
-                
-                // 初始化拖尾粒子
-                for (let i = 0; i < trailCount; i++) {
-                    let trail = document.createElement('div');
-                    trail.className = 'trail';
-                    trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    document.body.appendChild(trail);
-                    trails.push({
-                        element: trail,
-                        x: 0,
-                        y: 0,
-                        size: Math.random() * 10 + 5,
-                        speed: Math.random() * 0.5 + 0.1,
-                        delay: i * 5
-                    });
-                }
-                
-                // 跟踪鼠标位置
-                document.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-                const blueColors = [
-                    '#0000FF',  // 纯蓝
-                    '#1E90FF',  // 道奇蓝（DodgerBlue）
-                    '#4169E1',  // 皇家蓝（RoyalBlue）
-                    '#4682B4',  // 钢蓝（SteelBlue）
-                    '#87CEFA',  // 浅天蓝（LightSkyBlue）
-                    '#ADD8E6',  // 浅蓝（LightBlue）
-                    '#B0E0E6',  // 粉蓝（PowderBlue）
-                    '#6495ED',  // 矢车菊蓝（CornflowerBlue）
-                ];
-                // 动画循环
-                function animate() {
-                    for (let i = 0; i < trails.length; i++) {
-                        const trail = trails[i];
-                        // 延迟跟随效果
-                        if (i === 0) {
-                            trail.x = mouseX;
-                            trail.y = mouseY;
-                        } else {
-                            const prev = trails[i - 1];
-                            trail.x += (prev.x - trail.x) * trail.speed;
-                            trail.y += (prev.y - trail.y) * trail.speed;
-                        }
-                        
-                        // 更新粒子位置和大小
-                        trail.element.style.left = trail.x + 'px';
-                        trail.element.style.top = trail.y + 'px';
-                        trail.element.style.width = trail.size + 'px';
-                        trail.element.style.height = trail.size + 'px';
-                        
-                        // 随机颜色变化
-                        if (Math.random() < 0.05) {
-                            trail.element.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
-                        }
-                    }
-                    
-                    requestAnimationFrame(animate);
-                }
-                
-                animate();
-            });
-        </script>
-        <div class="nav-dots">
-            <div class="dot active" data-page="1"></div>
-            <div class="dot" data-page="2"></div>
-            <div class="dot" data-page="3"></div>
-            <div class="dot" data-page="4"></div>
-        </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const pages = document.querySelectorAll('.page');
-                const dots = document.querySelectorAll('.dot');
-                let currentPage = 0;
-                
-                // 初始化第一页
-                pages[0].classList.add('active');
-                
-                // 滚动事件处理
-                let isScrolling = false;
-                window.addEventListener('wheel', function(e) {
-                    if (isScrolling) return;
-                    
-                    isScrolling = true;
-                    
-                    if (e.deltaY > 0 && currentPage < pages.length - 1) {
-                        // 向下滚动
-                        currentPage++;
-                    } else if (e.deltaY < 0 && currentPage > 0) {
-                        // 向上滚动
-                        currentPage--;
-                    }
-                    
-                    updatePages();
-                    
-                    setTimeout(() => {
-                        isScrolling = false;
-                    }, 1000); // 防止滚动过快
-                });
-                
-                // 点击导航点
-                dots.forEach(dot => {
-                    dot.addEventListener('click', function() {
-                        currentPage = parseInt(this.getAttribute('data-page')) - 1;
-                        updatePages();
-                    });
-                });
-                
-                // 更新页面状态
-                function updatePages() {
-                    pages.forEach((page, index) => {
-                        page.classList.remove('active', 'prev');
-                        
-                        if (index === currentPage) {
-                            page.classList.add('active');
-                        } else if (index < currentPage) {
-                            page.classList.add('prev');
-                        }
-                    });
-                    
-                    // 更新导航点
-                    dots.forEach((dot, index) => {
-                        dot.classList.remove('active');
-                        if (index === currentPage) {
-                            dot.classList.add('active');
-                        }
-                    });
-                }
-                
-                // 触摸设备支持
-                let startY;
-                document.addEventListener('touchstart', function(e) {
-                    startY = e.touches[0].clientY;
-                }, { passive: true });
-                
-                document.addEventListener('touchmove', function(e) {
-                    if (isScrolling) return;
-                    
-                    const y = e.touches[0].clientY;
-                    const diff = startY - y;
-                    
-                    if (Math.abs(diff) > 50) { // 滑动阈值
-                        isScrolling = true;
-                        
-                        if (diff > 0 && currentPage < pages.length - 1) {
-                            // 向上滑动
-                            currentPage++;
-                        } else if (diff < 0 && currentPage > 0) {
-                            // 向下滑动
-                            currentPage--;
-                        }
-                        
-                        updatePages();
-                        
-                        setTimeout(() => {
-                            isScrolling = false;
-                        }, 1000);
-                    }
-                }, { passive: true });
-            });
-        </script>
         <video id="video-background" autoplay muted loop></video>
         <div class="overlay">
         <header>
@@ -553,31 +380,7 @@
                 <h1 id="color-changing-text">繁星游戏堡</h1>
                 <h3>FxGameCastel</h3>
                 <p> 用心打造极致体验</p>
-                <button class="btn" onclick="showAlert()">加入我们</button>
-                <script>
-                    const textElement = document.getElementById("color-changing-text");
-                    // 可选的随机颜色列表（或者用随机生成的颜色）
-                    const colors = [
-                    "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF",
-                    "#FF5733", "#33FF57", "#3357FF", "#F39C12", "#8E44AD", "#16A085"
-                    ];
-
-                    function changeColor() {
-                    // 方法1：从预定义颜色数组中随机选择
-                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    // 方法2：完全随机生成 HEX 颜色（可选）
-                    // const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
-                    
-                    textElement.style.color = randomColor;
-                    }
-
-                    // 每秒更换一次颜色
-                    setInterval(changeColor, 1000); // 1000ms = 1秒
-                    function showAlert() {
-                        alert("施工中");
-                    }
-                </script>
+                <button class="btn" onclick="showAlert1()">加入我们</button>
             </section>
             
             <div id="myModal" class="modal">
@@ -612,9 +415,205 @@
                 <p>这里还没有东西</p>
             </div>
             <script>
+                function isSafari() {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    const isMac = navigator.userAgent.includes('Macintosh');
+                    const isSafariUA = navigator.userAgent.includes('Safari');
+                    const isChromeUA = navigator.userAgent.includes('Chrome');
+                    
+                    // iOS 上的所有浏览器都是 WebKit（Safari 内核）
+                    if (isIOS) {
+                        return true;
+                    }
+                    
+                    // macOS 上的 Safari（排除 Chrome 和 Edge）
+                    return (isMac && isSafariUA && !isChromeUA);
+                }
+            
+                if (isSafari()) {
+                    alert("当前浏览器是Safari,背景可能无法正常显示");
+                } else {
+                    
+                }
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const colors = [
+                        '#FF0000', '#FF7F00', '#FFFF00', 
+                        '#00FF00', '#0000FF', '#4B0082', 
+                        '#9400D3', '#FF1493', '#00FFFF'
+                    ];
+                    
+                    let mouseX = 0;
+                    let mouseY = 0;
+                    let trailCount = 10; // 拖尾粒子数量
+                    let trails = [];
+                    
+                    // 初始化拖尾粒子
+                    for (let i = 0; i < trailCount; i++) {
+                        let trail = document.createElement('div');
+                        trail.className = 'trail';
+                        trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        document.body.appendChild(trail);
+                        trails.push({
+                            element: trail,
+                            x: 0,
+                            y: 0,
+                            size: Math.random() * 10 + 5,
+                            speed: Math.random() * 0.5 + 0.1,
+                            delay: i * 5
+                        });
+                    }
+                    
+                    // 跟踪鼠标位置
+                    document.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                    });
+                    const blueColors = [
+                        '#0000FF',  // 纯蓝
+                        '#1E90FF',  // 道奇蓝（DodgerBlue）
+                        '#4169E1',  // 皇家蓝（RoyalBlue）
+                        '#4682B4',  // 钢蓝（SteelBlue）
+                        '#87CEFA',  // 浅天蓝（LightSkyBlue）
+                        '#ADD8E6',  // 浅蓝（LightBlue）
+                        '#B0E0E6',  // 粉蓝（PowderBlue）
+                        '#6495ED',  // 矢车菊蓝（CornflowerBlue）
+                    ];
+                    // 动画循环
+                    function animate() {
+                        for (let i = 0; i < trails.length; i++) {
+                            const trail = trails[i];
+                            // 延迟跟随效果
+                            if (i === 0) {
+                                trail.x = mouseX;
+                                trail.y = mouseY;
+                            } else {
+                                const prev = trails[i - 1];
+                                trail.x += (prev.x - trail.x) * trail.speed;
+                                trail.y += (prev.y - trail.y) * trail.speed;
+                            }
+                            
+                            // 更新粒子位置和大小
+                            trail.element.style.left = trail.x + 'px';
+                            trail.element.style.top = trail.y + 'px';
+                            trail.element.style.width = trail.size + 'px';
+                            trail.element.style.height = trail.size + 'px';
+                            
+                            // 随机颜色变化
+                            if (Math.random() < 0.05) {
+                                trail.element.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+                            }
+                        }
+                        
+                        requestAnimationFrame(animate);
+                    }
+                    
+                    animate();
+                });
+            </script>
+            <div class="nav-dots">
+                <div class="dot active" data-page="1"></div>
+                <div class="dot" data-page="2"></div>
+                <div class="dot" data-page="3"></div>
+                <div class="dot" data-page="4"></div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const pages = document.querySelectorAll('.page');
+                    const dots = document.querySelectorAll('.dot');
+                    let currentPage = 0;
+                    
+                    // 初始化第一页
+                    pages[0].classList.add('active');
+                    
+                    // 滚动事件处理
+                    let isScrolling = false;
+                    window.addEventListener('wheel', function(e) {
+                        if (isScrolling) return;
+                        
+                        isScrolling = true;
+                        
+                        if (e.deltaY > 0 && currentPage < pages.length - 1) {
+                            // 向下滚动
+                            currentPage++;
+                        } else if (e.deltaY < 0 && currentPage > 0) {
+                            // 向上滚动
+                            currentPage--;
+                        }
+                        
+                        updatePages();
+                        
+                        setTimeout(() => {
+                            isScrolling = false;
+                        }, 300); // 防止滚动过快
+                    });
+                    
+                    // 点击导航点
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', function() {
+                            currentPage = parseInt(this.getAttribute('data-page')) - 1;
+                            updatePages();
+                        });
+                    });
+                    
+                    // 更新页面状态
+                    function updatePages() {
+                        pages.forEach((page, index) => {
+                            page.classList.remove('active', 'prev');
+                            
+                            if (index === currentPage) {
+                                page.classList.add('active');
+                            } else if (index < currentPage) {
+                                page.classList.add('prev');
+                            }
+                        });
+                        
+                        // 更新导航点
+                        dots.forEach((dot, index) => {
+                            dot.classList.remove('active');
+                            if (index === currentPage) {
+                                dot.classList.add('active');
+                            }
+                        });
+                    }
+                    
+                    // 触摸设备支持
+                    let startY;
+                    document.addEventListener('touchstart', function(e) {
+                        startY = e.touches[0].clientY;
+                    }, { passive: true });
+                    
+                    document.addEventListener('touchmove', function(e) {
+                        if (isScrolling) return;
+                        
+                        const y = e.touches[0].clientY;
+                        const diff = startY - y;
+                        
+                        if (Math.abs(diff) > 50) { // 滑动阈值
+                            isScrolling = true;
+                            
+                            if (diff > 0 && currentPage < pages.length - 1) {
+                                // 向上滑动
+                                currentPage++;
+                            } else if (diff < 0 && currentPage > 0) {
+                                // 向下滑动
+                                currentPage--;
+                            }
+                            
+                            updatePages();
+                            
+                            setTimeout(() => {
+                                isScrolling = false;
+                            }, 1000);
+                        }
+                    }, { passive: true });
+                });
+            </script>
+            <script>
                 // 获取元素
                 const modal = document.getElementById("myModal");
-                const btn = document.getElementById("myBtn");
+                const btn = document.getElementById("myBtn","mysys");
                 const span = document.getElementsByClassName("close")[0];
                 const confirmBtn = document.getElementById("confirmBtn");
                 const cancelBtn = document.getElementById("cancelBtn");
@@ -646,7 +645,19 @@
                     }
                 }
             </script>
-            
+            <script>
+                function showAlert() {
+                    alert("施工中");
+                }
+                function showAlert1() {
+                    var r = confirm("QQ链接:点击确定跳转\nDiscord链接:https://discord.gg/dUWasqNV");
+                    if (r == true) {
+                        window.location.href = "https://qm.qq.com/cgi-bin/qm/qr?k=P0ATj71V46Gy-iRGq5TRGn_A_twgBAVU&jump_from=webapi&authKey=cyrxEWiHSSBNSK8WgrS0ntaKvG6wUATtYhBRZAKCv2jFRhtydIlAZlVI3Y0yhMCd"; // 点击确定跳转到百度
+                    } else {
+                        
+                    }
+                }
+            </script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 // Randomly select background video
@@ -713,7 +724,7 @@
                     }
                 }
             });
-        </script>
-    </div>    
+        </script>    
+    </div>
 </body>
 </html>
