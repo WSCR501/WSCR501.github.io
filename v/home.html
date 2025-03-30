@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>helloshabby</title>
+    <title>繁星游戏堡</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +23,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -2;
+            z-index: -1;
         }
         
         .overlay {
@@ -33,7 +33,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.6);
-            z-index: 999;
+            z-index: 11;
         }
         
         header {
@@ -128,7 +128,7 @@
             height: 10px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 100;
+            z-index: 15;
         }
         
         
@@ -338,7 +338,7 @@
             right: 30px;
             top: 50%;
             transform: translateY(-50%);
-            z-index: 1000;
+            z-index: 13;
         }
         
         .dot {
@@ -359,160 +359,110 @@
     </style>
 </head>
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const colors = [
-                '#FF0000', '#FF7F00', '#FFFF00', 
-                '#00FF00', '#0000FF', '#4B0082', 
-                '#9400D3', '#FF1493', '#00FFFF'
-            ];
-            
-            let mouseX = 0;
-            let mouseY = 0;
-            let trailCount = 10; // 拖尾粒子数量
-            let trails = [];
-            
-            // 初始化拖尾粒子
-            for (let i = 0; i < trailCount; i++) {
-                let trail = document.createElement('div');
-                trail.className = 'trail';
-                trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                document.body.appendChild(trail);
-                trails.push({
-                    element: trail,
-                    x: 0,
-                    y: 0,
-                    size: Math.random() * 10 + 5,
-                    speed: Math.random() * 0.5 + 0.1,
-                    delay: i * 5
-                });
-            }
-            
-            // 跟踪鼠标位置
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-            
-            // 动画循环
-            function animate() {
-                for (let i = 0; i < trails.length; i++) {
-                    const trail = trails[i];
-                    
-                    // 延迟跟随效果
-                    if (i === 0) {
-                        trail.x = mouseX;
-                        trail.y = mouseY;
-                    } else {
-                        const prev = trails[i - 1];
-                        trail.x += (prev.x - trail.x) * trail.speed;
-                        trail.y += (prev.y - trail.y) * trail.speed;
-                    }
-                    
-                    // 更新粒子位置和大小
-                    trail.element.style.left = trail.x + 'px';
-                    trail.element.style.top = trail.y + 'px';
-                    trail.element.style.width = trail.size + 'px';
-                    trail.element.style.height = trail.size + 'px';
-                    
-                    // 随机颜色变化
-                    if (Math.random() < 0.05) {
-                        trail.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    }
+    <div class="page active" id="page1">
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const colors = [
+                    '#FF0000', '#FF7F00', '#FFFF00', 
+                    '#00FF00', '#0000FF', '#4B0082', 
+                    '#9400D3', '#FF1493', '#00FFFF'
+                ];
+                
+                let mouseX = 0;
+                let mouseY = 0;
+                let trailCount = 10; // 拖尾粒子数量
+                let trails = [];
+                
+                // 初始化拖尾粒子
+                for (let i = 0; i < trailCount; i++) {
+                    let trail = document.createElement('div');
+                    trail.className = 'trail';
+                    trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    document.body.appendChild(trail);
+                    trails.push({
+                        element: trail,
+                        x: 0,
+                        y: 0,
+                        size: Math.random() * 10 + 5,
+                        speed: Math.random() * 0.5 + 0.1,
+                        delay: i * 5
+                    });
                 }
                 
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-        });
-    </script>
-    <div class="nav-dots">
-        <div class="dot active" data-page="1"></div>
-        <div class="dot" data-page="2"></div>
-        <div class="dot" data-page="3"></div>
-        <div class="dot" data-page="4"></div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const pages = document.querySelectorAll('.page');
-            const dots = document.querySelectorAll('.dot');
-            let currentPage = 0;
-            
-            // 初始化第一页
-            pages[0].classList.add('active');
-            
-            // 滚动事件处理
-            let isScrolling = false;
-            window.addEventListener('wheel', function(e) {
-                if (isScrolling) return;
-                
-                isScrolling = true;
-                
-                if (e.deltaY > 0 && currentPage < pages.length - 1) {
-                    // 向下滚动
-                    currentPage++;
-                } else if (e.deltaY < 0 && currentPage > 0) {
-                    // 向上滚动
-                    currentPage--;
+                // 跟踪鼠标位置
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                });
+                const blueColors = [
+                    '#0000FF',  // 纯蓝
+                    '#1E90FF',  // 道奇蓝（DodgerBlue）
+                    '#4169E1',  // 皇家蓝（RoyalBlue）
+                    '#4682B4',  // 钢蓝（SteelBlue）
+                    '#87CEFA',  // 浅天蓝（LightSkyBlue）
+                    '#ADD8E6',  // 浅蓝（LightBlue）
+                    '#B0E0E6',  // 粉蓝（PowderBlue）
+                    '#6495ED',  // 矢车菊蓝（CornflowerBlue）
+                ];
+                // 动画循环
+                function animate() {
+                    for (let i = 0; i < trails.length; i++) {
+                        const trail = trails[i];
+                        // 延迟跟随效果
+                        if (i === 0) {
+                            trail.x = mouseX;
+                            trail.y = mouseY;
+                        } else {
+                            const prev = trails[i - 1];
+                            trail.x += (prev.x - trail.x) * trail.speed;
+                            trail.y += (prev.y - trail.y) * trail.speed;
+                        }
+                        
+                        // 更新粒子位置和大小
+                        trail.element.style.left = trail.x + 'px';
+                        trail.element.style.top = trail.y + 'px';
+                        trail.element.style.width = trail.size + 'px';
+                        trail.element.style.height = trail.size + 'px';
+                        
+                        // 随机颜色变化
+                        if (Math.random() < 0.05) {
+                            trail.element.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+                        }
+                    }
+                    
+                    requestAnimationFrame(animate);
                 }
                 
-                updatePages();
+                animate();
+            });
+        </script>
+        <div class="nav-dots">
+            <div class="dot active" data-page="1"></div>
+            <div class="dot" data-page="2"></div>
+            <div class="dot" data-page="3"></div>
+            <div class="dot" data-page="4"></div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const pages = document.querySelectorAll('.page');
+                const dots = document.querySelectorAll('.dot');
+                let currentPage = 0;
                 
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 1000); // 防止滚动过快
-            });
-            
-            // 点击导航点
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    currentPage = parseInt(this.getAttribute('data-page')) - 1;
-                    updatePages();
-                });
-            });
-            
-            // 更新页面状态
-            function updatePages() {
-                pages.forEach((page, index) => {
-                    page.classList.remove('active', 'prev');
+                // 初始化第一页
+                pages[0].classList.add('active');
+                
+                // 滚动事件处理
+                let isScrolling = false;
+                window.addEventListener('wheel', function(e) {
+                    if (isScrolling) return;
                     
-                    if (index === currentPage) {
-                        page.classList.add('active');
-                    } else if (index < currentPage) {
-                        page.classList.add('prev');
-                    }
-                });
-                
-                // 更新导航点
-                dots.forEach((dot, index) => {
-                    dot.classList.remove('active');
-                    if (index === currentPage) {
-                        dot.classList.add('active');
-                    }
-                });
-            }
-            
-            // 触摸设备支持
-            let startY;
-            document.addEventListener('touchstart', function(e) {
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            document.addEventListener('touchmove', function(e) {
-                if (isScrolling) return;
-                
-                const y = e.touches[0].clientY;
-                const diff = startY - y;
-                
-                if (Math.abs(diff) > 50) { // 滑动阈值
                     isScrolling = true;
                     
-                    if (diff > 0 && currentPage < pages.length - 1) {
-                        // 向上滑动
+                    if (e.deltaY > 0 && currentPage < pages.length - 1) {
+                        // 向下滚动
                         currentPage++;
-                    } else if (diff < 0 && currentPage > 0) {
-                        // 向下滑动
+                    } else if (e.deltaY < 0 && currentPage > 0) {
+                        // 向上滚动
                         currentPage--;
                     }
                     
@@ -520,172 +470,250 @@
                     
                     setTimeout(() => {
                         isScrolling = false;
-                    }, 1000);
-                }
-            }, { passive: true });
-        });
-    </script>
-    <video id="video-background" autoplay muted loop></video>
-    <div class="page active" id="page1"></div>
-    <div class="overlay">
-    <header>
-        <nav>
-            <div class="logo">繁星游戏堡</div>
-            <div class="nav-links">
-                <a href="index.html">开始</a>
-                <a href="ren.html">管理人员</a>
-                <a id="myBtn">关于我们</a>
-                <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
-                <a onclick="showAlert()">捐款</a>
-            </div>
-        </nav>
-    </header>
-    
-    <div class="container">
-        <section class="hero">
-            <h1>繁星游戏堡</h1>
-            <h3>FxGameCastel</h3>
-            <p> 用心打造极致体验</p>
-            <button class="btn" onclick="showAlert()">加入我们</button>
-            <script>
-                function showAlert() {
-                    alert("施工中");
-                }
-            </script>
-        </section>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h3 style="color: #6495ED;">为什么选择我们？</h3>
-                </div>
-                <div class="modal-body">
-                    <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
-                    <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
-                    <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
-                    <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
-                </div>
-            </div>
-        </div>
-      
-        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-        <div class="page" id="page2">
-            <h1>第二页</h1>
-            <p>这里还没有东西</p>
-        </div>
-        <div class="page" id="page3">
-            <h1>第三页</h1>
-            <p>这里还没有东西</p>
-        </div>
-        <div class="page" id="page4">
-            <h1>第四页</h1>
-            <p>这里还没有东西</p>
-        </div>
-        <script>
-            // 获取元素
-            const modal = document.getElementById("myModal");
-            const btn = document.getElementById("myBtn");
-            const span = document.getElementsByClassName("close")[0];
-            const confirmBtn = document.getElementById("confirmBtn");
-            const cancelBtn = document.getElementById("cancelBtn");
-            
-            // 点击按钮打开对话框
-            btn.onclick = function() {
-                modal.style.display = "block";
-            }
-            
-            // 点击×关闭对话框
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击确定按钮
-            confirmBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击取消按钮
-            cancelBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击对话框外部关闭
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
-        
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Randomly select background video
-            const videos = ['https://img.wjwj.top/2025/03/30/5f96265ba01b32577eb9d5370370c051.webm', 'https://img.wjwj.top/2025/03/30/f479243d7364dcdf3539348fa1c8327a.webm'];
-            const randomVideo = videos[Math.floor(Math.random() * videos.length)];
-            const videoBg = document.getElementById('video-background');
-            videoBg.src = randomVideo;
-            
-            // Ensure video plays correctly on mobile
-            videoBg.play().catch(e => {
-                console.log("Autoplay prevented, trying with muted attribute");
-                videoBg.muted = true;
-                videoBg.play();
-            });
-            
-            // Particle explosion effect
-            document.body.addEventListener('click', function(e) {
-                createParticles(e.clientX, e.clientY);
-            });
-            
-            function createParticles(x, y) {
-                const colors = ['#1e90ff', '#00bfff', '#87cefa', '#4682b4', '#5f9ea0', '#ff00ff'];
-                const particleCount = 30;
+                    }, 1000); // 防止滚动过快
+                });
                 
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = x + 'px';
-                    particle.style.top = y + 'px';
-                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    document.body.appendChild(particle);
-                    
-                    const angle = Math.random() * Math.PI * 2;
-                    const velocity = 2 + Math.random() * 3;
-                    const lifetime = 1000 + Math.random() * 1000;
-                    
-                    const xVelocity = Math.cos(angle) * velocity;
-                    const yVelocity = Math.sin(angle) * velocity;
-                    
-                    let startTime = Date.now();
-                    
-                    function animateParticle() {
-                        const elapsed = Date.now() - startTime;
-                        const progress = elapsed / lifetime;
+                // 点击导航点
+                dots.forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        currentPage = parseInt(this.getAttribute('data-page')) - 1;
+                        updatePages();
+                    });
+                });
+                
+                // 更新页面状态
+                function updatePages() {
+                    pages.forEach((page, index) => {
+                        page.classList.remove('active', 'prev');
                         
-                        if (progress >= 1) {
-                            particle.remove();
-                            return;
+                        if (index === currentPage) {
+                            page.classList.add('active');
+                        } else if (index < currentPage) {
+                            page.classList.add('prev');
+                        }
+                    });
+                    
+                    // 更新导航点
+                    dots.forEach((dot, index) => {
+                        dot.classList.remove('active');
+                        if (index === currentPage) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+                
+                // 触摸设备支持
+                let startY;
+                document.addEventListener('touchstart', function(e) {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+                
+                document.addEventListener('touchmove', function(e) {
+                    if (isScrolling) return;
+                    
+                    const y = e.touches[0].clientY;
+                    const diff = startY - y;
+                    
+                    if (Math.abs(diff) > 50) { // 滑动阈值
+                        isScrolling = true;
+                        
+                        if (diff > 0 && currentPage < pages.length - 1) {
+                            // 向上滑动
+                            currentPage++;
+                        } else if (diff < 0 && currentPage > 0) {
+                            // 向下滑动
+                            currentPage--;
                         }
                         
-                        const currentX = x + xVelocity * elapsed * 0.1;
-                        const currentY = y + yVelocity * elapsed * 0.1;
+                        updatePages();
                         
-                        particle.style.left = currentX + 'px';
-                        particle.style.top = currentY + 'px';
-                        particle.style.opacity = 1 - progress;
-                        particle.style.transform = `scale(${1 - progress * 0.5})`;
+                        setTimeout(() => {
+                            isScrolling = false;
+                        }, 1000);
+                    }
+                }, { passive: true });
+            });
+        </script>
+        <video id="video-background" autoplay muted loop></video>
+        <div class="overlay">
+        <header>
+            <nav>
+                <div class="logo">繁星游戏堡</div>
+                <div class="nav-links">
+                    <a href="index.html">开始</a>
+                    <a href="ren.html">管理人员</a>
+                    <a id="myBtn">关于我们</a>
+                    <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
+                    <a onclick="showAlert()">捐款</a>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <section class="hero">
+                <h1 id="color-changing-text">繁星游戏堡</h1>
+                <h3>FxGameCastel</h3>
+                <p> 用心打造极致体验</p>
+                <button class="btn" onclick="showAlert()">加入我们</button>
+                <script>
+                    const textElement = document.getElementById("color-changing-text");
+                    // 可选的随机颜色列表（或者用随机生成的颜色）
+                    const colors = [
+                    "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF",
+                    "#FF5733", "#33FF57", "#3357FF", "#F39C12", "#8E44AD", "#16A085"
+                    ];
+
+                    function changeColor() {
+                    // 方法1：从预定义颜色数组中随机选择
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // 方法2：完全随机生成 HEX 颜色（可选）
+                    // const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+                    
+                    textElement.style.color = randomColor;
+                    }
+
+                    // 每秒更换一次颜色
+                    setInterval(changeColor, 1000); // 1000ms = 1秒
+                    function showAlert() {
+                        alert("施工中");
+                    }
+                </script>
+            </section>
+            
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h3 style="color: #6495ED;">为什么选择我们？</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
+                        <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
+                        <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
+                        <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
+                    </div>
+                </div>
+            </div>
+        
+            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+            <div class="page" id="page2">
+                <h1>第二页</h1>
+                <p>这里还没有东西</p>
+            </div>
+            <div class="page" id="page3">
+                <h1>第三页</h1>
+                <p>这里还没有东西</p>
+            </div>
+            <div class="page" id="page4">
+                <h1>第四页</h1>
+                <p>这里还没有东西</p>
+            </div>
+            <script>
+                // 获取元素
+                const modal = document.getElementById("myModal");
+                const btn = document.getElementById("myBtn");
+                const span = document.getElementsByClassName("close")[0];
+                const confirmBtn = document.getElementById("confirmBtn");
+                const cancelBtn = document.getElementById("cancelBtn");
+                
+                // 点击按钮打开对话框
+                btn.onclick = function() {
+                    modal.style.display = "block";
+                }
+                
+                // 点击×关闭对话框
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击确定按钮
+                confirmBtn.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击取消按钮
+                cancelBtn.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击对话框外部关闭
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+            
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Randomly select background video
+                const videos = ['https://img.wjwj.top/2025/03/30/5f96265ba01b32577eb9d5370370c051.webm', 'https://img.wjwj.top/2025/03/30/f479243d7364dcdf3539348fa1c8327a.webm'];
+                const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+                const videoBg = document.getElementById('video-background');
+                videoBg.src = randomVideo;
+                
+                // Ensure video plays correctly on mobile
+                videoBg.play().catch(e => {
+                    console.log("Autoplay prevented, trying with muted attribute");
+                    videoBg.muted = true;
+                    videoBg.play();
+                });
+                
+                // Particle explosion effect
+                document.body.addEventListener('click', function(e) {
+                    createParticles(e.clientX, e.clientY);
+                });
+                
+                function createParticles(x, y) {
+                    const colors = ['#1e90ff', '#00bfff', '#87cefa', '#4682b4', '#5f9ea0', '#ff00ff'];
+                    const particleCount = 7;
+                    
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        
+                        document.body.appendChild(particle);
+                        
+                        const angle = Math.random() * Math.PI * -1;
+                        const velocity = 2 + Math.random() * 20;
+                        const lifetime = 1000 + Math.random() * 10;
+                        
+                        const xVelocity = Math.cos(angle) * velocity;
+                        const yVelocity = Math.sin(angle) * velocity;
+                        
+                        let startTime = Date.now();
+                        
+                        function animateParticle() {
+                            const elapsed = Date.now() - startTime;
+                            const progress = elapsed / lifetime;
+                            
+                            if (progress >= 1) {
+                                particle.remove();
+                                return;
+                            }
+                            
+                            const currentX = x + xVelocity * elapsed * 0.5;
+                            const currentY = y + yVelocity * elapsed * 0.5;
+                            
+                            particle.style.left = currentX + 'px';
+                            particle.style.top = currentY + 'px';
+                            particle.style.opacity = 1 - progress;
+                            particle.style.transform = `scale(${1 - progress * 0.5})`;
+                            
+                            requestAnimationFrame(animateParticle);
+                        }
                         
                         requestAnimationFrame(animateParticle);
                     }
-                    
-                    requestAnimationFrame(animateParticle);
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    </div>    
 </body>
 </html>
