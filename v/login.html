@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 350px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .logged-in {
+            text-align: center;
+        }
+        .logout-btn {
+            background-color: #f44336;
+            margin-top: 20px;
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+    <script src="md5.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>登录</h1>
+        
+        <!-- 登录表单 -->
+        <div id="login-form">
+            <div class="form-group">
+                <label for="login-username">用户名</label>
+                <input type="text" id="login-username" placeholder="输入用户名">
+            </div>
+            <div class="form-group">
+                <label for="login-password">密码</label>
+                <input type="password" id="login-password" placeholder="输入密码">
+            </div>
+            <div id="login-error" class="error"></div>
+            <button id="login-btn">登录</button>
+        </div>
+        
+        <!-- 登录成功后的界面 -->
+        <div id="logged-in" style="display: none;">
+            <div class="logged-in">
+                <h2>欢迎, <span id="welcome-username"></span>!</h2>
+                <p>您已成功登录</p>
+                <button class="login-btn" onclick="window.location.href='https://stats.uptimerobot.com/pVfIEfmXhK'">跳转监视页面</button>
+                <button id="logout-btn" class="logout-btn">退出登录</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 硬编码的用户名和MD5加密后的密码
+        const validUsers = [
+            { username: "admin", password: "0192023a7bbd73250516f069df18b500" }, 
+        ];
+
+        // 获取DOM元素
+        const loginForm = document.getElementById('login-form');
+        const loggedIn = document.getElementById('logged-in');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginUsername = document.getElementById('login-username');
+        const loginPassword = document.getElementById('login-password');
+        const loginError = document.getElementById('login-error');
+        const welcomeUsername = document.getElementById('welcome-username');
+
+        // 检查是否已登录
+        function checkLoggedIn() {
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                loginForm.style.display = 'none';
+                loggedIn.style.display = 'block';
+                welcomeUsername.textContent = loggedInUser;
+            }
+        }
+
+        // 初始化检查登录状态
+        checkLoggedIn();
+
+        // 登录功能
+        loginBtn.addEventListener('click', () => {
+            const username = loginUsername.value.trim();
+            const password = loginPassword.value.trim();
+            
+            if (!username || !password) {
+                loginError.textContent = '请输入用户名和密码';
+                return;
+            }
+            
+            // 对输入的密码进行MD5加密
+            const encryptedPassword = md5(password);
+            
+            const user = validUsers.find(u => u.username === username && u.password === encryptedPassword);
+            
+            if (user) {
+                sessionStorage.setItem('loggedInUser', username);
+                checkLoggedIn();
+            } else {
+                loginError.textContent = '用户名或密码错误';
+            }
+        });
+
+        // 退出登录
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedInUser');
+            loggedIn.style.display = 'none';
+            loginForm.style.display = 'block';
+            loginUsername.value = '';
+            loginPassword.value = '';
+            loginError.textContent = '';
+        });
+    </script>
+    <script>
+        // 检测开发者工具的方法
+        function detectDevTools() {
+            // 方法1: 检查窗口大小差异
+            const widthThreshold = window.outerWidth - window.innerWidth > 160;
+            const heightThreshold = window.outerHeight - window.innerHeight > 160;
+            
+            // 方法2: 检查调试函数
+            let debuggerDetected = false;
+            const debuggerCheck = new Function("debugger");
+            try {
+                debuggerCheck();
+            } catch (err) {
+                debuggerDetected = err.stack && err.stack.includes("debugger");
+            }
+            
+            // 方法3: 检查控制台API
+            const consoleOpen = (function() {
+                const fakeElement = document.createElement('div');
+                Object.defineProperty(fakeElement, 'id', {
+                    get: function() {
+                        window.location.href = "about:blank";
+                        return '';
+                    }
+                });
+                console.log(fakeElement);
+                return false;
+            })();
+            
+            // 如果任一检测方法返回true，则跳转空白页
+            if (widthThreshold || heightThreshold || debuggerDetected || consoleOpen) {
+                window.location.href = "about:blank";
+                return true;
+            }
+            return false;
+        }
+
+        // 定期检查
+        setInterval(detectDevTools, 1000);
+        
+        // 初始检查
+        window.onload = function() {
+            detectDevTools();
+        };
+         
+    </script>
+</body>
+</html>

@@ -370,7 +370,7 @@
                     <a href="index.html">开始</a>
                     <a href="ren.html">管理人员</a>
                     <a id="myBtn">关于我们</a>
-                    <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
+                    <a href="login.html">硬件监控</a>
                     <a onclick="showAlert()">捐款</a>
                 </div>
             </nav>
@@ -400,8 +400,6 @@
                     </div>
                 </div>
             </div>
-        
-            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
             <div class="page" id="page2">
                 <h1>第二页</h1>
                 <p>这里还没有东西</p>
@@ -411,9 +409,22 @@
                 <p>这里还没有东西</p>
             </div>
             <div class="page" id="page4">
-                <h1>第四页</h1>
-                <p>这里还没有东西</p>
+                <h2>更新日志</h2>
+                <p>1.禁止老旧IE或老旧Chromium访问<br>2.Safari访问时提示用户背景视频可能因编码问题无法播放<br>3.做了加入我们按钮:)<br></p>
             </div>
+            <script>
+                function isIE() {
+                    const ua = navigator.userAgent;
+                    const isIE = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+                    const isOldEdge = ua.indexOf("Edge/") > -1; // Edge 旧版（基于 EdgeHTML）
+                    return isIE || isOldEdge;
+                }
+            
+                if (isIE()) {
+                    alert("本网站不支持 Internet Explorer 或旧版 Edge，请使用 Chrome、Edge（Chromium）或 Firefox 访问。");
+                    window.location.href = "about:blank"; // 强制跳转空白页（无法关闭时）
+                }
+            </script>
             <script>
                 function isSafari() {
                     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -650,11 +661,11 @@
                     alert("施工中");
                 }
                 function showAlert1() {
-                    var r = confirm("QQ链接:点击确定跳转\nDiscord链接:https://discord.gg/dUWasqNV");
+                    var r = confirm("QQ链接:点击确定跳转\n点按取消查看discord链接");
                     if (r == true) {
                         window.location.href = "https://qm.qq.com/cgi-bin/qm/qr?k=P0ATj71V46Gy-iRGq5TRGn_A_twgBAVU&jump_from=webapi&authKey=cyrxEWiHSSBNSK8WgrS0ntaKvG6wUATtYhBRZAKCv2jFRhtydIlAZlVI3Y0yhMCd"; // 点击确定跳转到百度
                     } else {
-                        
+                        alert("Discord链接:https://discord.gg/dUWasqNV");
                     }
                 }
             </script>
