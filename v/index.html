@@ -37,7 +37,7 @@
         }
         
         header {
-            background-color: rgba(98, 0, 238, 0.8);
+            background-color: #6495ED(98, 0, 238, 0.8);
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -86,7 +86,7 @@
         
         .btn {
             display: inline-block;
-            background-color: #6200ee;
+            background-color: #6495ED;
             color: white;
             padding: 0.8rem 1.5rem;
             border-radius: 4px;
@@ -96,7 +96,7 @@
         }
         
         .btn:hover {
-            background-color: #3700b3;
+            background-color: #6495ED;
         }
         
         .features {
@@ -130,61 +130,304 @@
             pointer-events: none;
             z-index: 100;
         }
+        
+        
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: modalopen 0.3s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .modal-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        
+        .modal-body {
+            padding: 10px 0;
+        }
+        
+        .modal-footer {
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            text-align: right;
+        }
+        body {
+            background-color: #f0f0f0; /* 仅为演示背景，实际使用时可以去掉 */
+            padding: 20px;
+        }
+        
+        .transparent-box {
+            display: inline-block;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* 半透明边框 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        
+        /* 深色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .transparent-box {
+                background-color: rgba(0, 0, 0, 0.5);
+                border-color: rgba(255, 255, 255, 0.1);
+                color: #eee;
+            }
+        }
+        
+        /* 可选悬停效果 */
+        .transparent-box:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: background-color 0.3s ease;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #121212;
+            height: 100vh;
+            cursor: none;
+        }
+        
+        .trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
     </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = [
+                '#FF0000', '#FF7F00', '#FFFF00', 
+                '#00FF00', '#0000FF', '#4B0082', 
+                '#9400D3', '#FF1493', '#00FFFF'
+            ];
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let trailCount = 10; // 拖尾粒子数量
+            let trails = [];
+            
+            // 初始化拖尾粒子
+            for (let i = 0; i < trailCount; i++) {
+                let trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(trail);
+                trails.push({
+                    element: trail,
+                    x: 0,
+                    y: 0,
+                    size: Math.random() * 10 + 5,
+                    speed: Math.random() * 0.5 + 0.1,
+                    delay: i * 5
+                });
+            }
+            
+            // 跟踪鼠标位置
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // 动画循环
+            function animate() {
+                for (let i = 0; i < trails.length; i++) {
+                    const trail = trails[i];
+                    
+                    // 延迟跟随效果
+                    if (i === 0) {
+                        trail.x = mouseX;
+                        trail.y = mouseY;
+                    } else {
+                        const prev = trails[i - 1];
+                        trail.x += (prev.x - trail.x) * trail.speed;
+                        trail.y += (prev.y - trail.y) * trail.speed;
+                    }
+                    
+                    // 更新粒子位置和大小
+                    trail.element.style.left = trail.x + 'px';
+                    trail.element.style.top = trail.y + 'px';
+                    trail.element.style.width = trail.size + 'px';
+                    trail.element.style.height = trail.size + 'px';
+                    
+                    // 随机颜色变化
+                    if (Math.random() < 0.05) {
+                        trail.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        });
+    </script>
     <video id="video-background" autoplay muted loop></video>
     <div class="overlay"></div>
-    
     <header>
         <nav>
-            <div class="logo">helloshabby</div>
+            <div class="logo">繁星游戏堡</div>
             <div class="nav-links">
-                <a href="#">helloshabby</a>
-                <a href="#">helloshabby</a>
-                <a href="#">helloshabby</a>
-                <a href="#">helloshabby</a>
+                <a href="index.html">开始</a>
+                <a href="ren.html">管理人员</a>
+                <a id="myBtn">关于我们</a>
+                <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
+                <a onclick="showAlert()">捐款</a>
             </div>
         </nav>
     </header>
     
     <div class="container">
         <section class="hero">
-            <h1>helloshabby</h1>
-            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby</p>
-            <a href="#" class="btn">helloshabby</a>
+            <h1>繁星游戏堡</h1>
+            <h3>FxGameCastel</h3>
+            <p> 用心打造极致体验</p>
+            <button class="btn" onclick="showAlert()">加入我们</button>
+            <script>
+                function showAlert() {
+                    alert("施工中");
+                }
+            </script>
         </section>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h3 style="color: #6495ED;">为什么选择我们？</h3>
+                </div>
+                <div class="modal-body">
+                    <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
+                    <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
+                    <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
+                    <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+        <script>
+            // 获取元素
+            const modal = document.getElementById("myModal");
+            const btn = document.getElementById("myBtn");
+            const span = document.getElementsByClassName("close")[0];
+            const confirmBtn = document.getElementById("confirmBtn");
+            const cancelBtn = document.getElementById("cancelBtn");
+            
+            // 点击按钮打开对话框
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+            
+            // 点击×关闭对话框
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            // 点击确定按钮
+            confirmBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            // 点击取消按钮
+            cancelBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            // 点击对话框外部关闭
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
         
-        <section class="features">
-            <div class="feature-card">
-                <h2>helloshabby</h2>
-                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
-            </div>
-            <div class="feature-card">
-                <h2>helloshabby</h2>
-                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
-            </div>
-            <div class="feature-card">
-                <h2>helloshabby</h2>
-                <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
-            </div>
-        </section>
-        
-        <section class="content">
-            <h2>helloshabby helloshabby</h2>
-            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
-            <p>helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby helloshabby.</p>
-        </section>
-    </div>
-    
-    <footer>
-        <p>helloshabby helloshabby helloshabby helloshabby</p>
-    </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Randomly select background video
-            const videos = ['ob.mp4', 'op.mp4'];
+            const videos = ['https://i-380.wwentua.com:446/03301200230331153bb/2025/03/30/fa6d357530a31ed7d9526d6cefcf971b.mp4?st=AMsWj8hEq--Oz_6ldP729Q&e=1743311306&b=ATYKOAg8B2AAZwQ2UjQAPAlrCjRUNwI1A2QBPVQwBDYIPFs6CWwHYQUxBTEGYFAxU2cIMAQwUDNVPwFqB2JXZgEMCngIaQd1AHsEP1JyADA_c&fi=230331153&pid=123-129-102-100&up=2&mp=0&co=0', 'https://i-190.wwentua.com:446/03301200230331161bb/2025/03/30/164704eea5027ecf2ed74b539f1f9089.mp4?st=w4AE_iDkxbp6NluRbK56yA&e=1743311376&b=Arhe3VfbUrFZlVOqUH4ANVUuDz4AcVFj&fi=230331161&pid=123-129-102-100&up=2&mp=0&co=0'];
             const randomVideo = videos[Math.floor(Math.random() * videos.length)];
             const videoBg = document.getElementById('video-background');
             videoBg.src = randomVideo;
