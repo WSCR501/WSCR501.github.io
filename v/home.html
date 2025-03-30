@@ -289,14 +289,21 @@
             z-index: 1;
         }
         .page.active {
-            z-index: 999;
+            z-index: 0;
             transform: translateY(0);
         }
-       
+        .page.next {
+            transform: translateY(100%);
+            opacity: 0;
+            z-index: 0;
+            opacity: 1;
+        }
         
         .page.prev {
-            transform: translateY(0%);
-            z-index: 1;
+            transform: translateY(-1%);
+            opacity: 0.5;
+            z-index: 0;
+            opacity: 1;
         }
         
         .page-content {
@@ -337,8 +344,8 @@
             position: fixed;
             right: 30px;
             top: 50%;
-            transform: translateY(-50%);
-            z-index: 999;
+            transform: translateY(-1%);
+            z-index: 10;
         }
         
         .dot {
@@ -523,104 +530,106 @@
                     animate();
                 });
             </script>
-            <div class="nav-dots">
-                <div class="dot active" data-page="1"></div>
-                <div class="dot" data-page="2"></div>
-                <div class="dot" data-page="3"></div>
-                <div class="dot" data-page="4"></div>
-            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const pages = document.querySelectorAll('.page');
                     const dots = document.querySelectorAll('.dot');
                     let currentPage = 0;
                     
-                    // 初始化第一页
-                    pages[0].classList.add('active');
+                    // 初始化所有页面位置
+                    pages.forEach((page, index) => {
+                        if (index === 0) {
+                            page.classList.add('active');
+                        } else {
+                            page.classList.add('next');
+                        }
+                    });
                     
                     // 滚动事件处理
-                    let isScrolling = false;
+                    let isAnimating = false;
+                    
                     window.addEventListener('wheel', function(e) {
-                        if (isScrolling) return;
+                        if (isAnimating) return;
                         
-                        isScrolling = true;
+                        const direction = e.deltaY > 0 ? 1 : -1;
+                        const newPage = currentPage + direction;
                         
-                        if (e.deltaY > 0 && currentPage < pages.length - 1) {
-                            // 向下滚动
-                            currentPage++;
-                        } else if (e.deltaY < 0 && currentPage > 0) {
-                            // 向上滚动
-                            currentPage--;
+                        if (newPage >= 0 && newPage < pages.length) {
+                            isAnimating = true;
+                            currentPage = newPage;
+                            updatePages(() => {
+                                isAnimating = false;
+                            });
                         }
-                        
-                        updatePages();
-                        
-                        setTimeout(() => {
-                            isScrolling = false;
-                        }, 300); // 防止滚动过快
-                    });
+                    }, { passive: true });
                     
                     // 点击导航点
                     dots.forEach(dot => {
                         dot.addEventListener('click', function() {
-                            currentPage = parseInt(this.getAttribute('data-page')) - 1;
-                            updatePages();
+                            if (isAnimating) return;
+                            
+                            const targetPage = parseInt(this.getAttribute('data-page')) - 1;
+                            if (targetPage !== currentPage) {
+                                isAnimating = true;
+                                currentPage = targetPage;
+                                updatePages(() => {
+                                    isAnimating = false;
+                                });
+                            }
                         });
                     });
                     
                     // 更新页面状态
-                    function updatePages() {
-                        pages.forEach((page, index) => {
-                            page.classList.remove('active', 'prev');
-                            
-                            if (index === currentPage) {
-                                page.classList.add('active');
-                            } else if (index < currentPage) {
-                                page.classList.add('prev');
-                            }
-                        });
+                    function updatePages(callback) {
+                        // 先处理当前活动页面
+                        const currentActive = document.querySelector('.page.active');
+                        if (currentActive) {
+                            currentActive.classList.remove('active');
+                            currentActive.classList.add(currentPage > Array.from(pages).indexOf(currentActive) ? 'prev' : 'next');
+                        }
+                        
+                        // 处理新活动页面
+                        const newActive = pages[currentPage];
+                        newActive.classList.remove('prev', 'next');
+                        newActive.classList.add('active');
                         
                         // 更新导航点
                         dots.forEach((dot, index) => {
-                            dot.classList.remove('active');
-                            if (index === currentPage) {
-                                dot.classList.add('active');
-                            }
+                            dot.classList.toggle('active', index === currentPage);
                         });
+                        
+                        // 动画结束后执行回调
+                        setTimeout(callback, 800); // 与CSS过渡时间匹配
                     }
                     
                     // 触摸设备支持
                     let startY;
+                    
                     document.addEventListener('touchstart', function(e) {
                         startY = e.touches[0].clientY;
                     }, { passive: true });
                     
                     document.addEventListener('touchmove', function(e) {
-                        if (isScrolling) return;
+                        if (isAnimating) return;
                         
                         const y = e.touches[0].clientY;
                         const diff = startY - y;
                         
-                        if (Math.abs(diff) > 50) { // 滑动阈值
-                            isScrolling = true;
+                        if (Math.abs(diff) > 50) {
+                            isAnimating = true;
+                            const direction = diff > 0 ? 1 : -1;
+                            const newPage = currentPage + direction;
                             
-                            if (diff > 0 && currentPage < pages.length - 1) {
-                                // 向上滑动
-                                currentPage++;
-                            } else if (diff < 0 && currentPage > 0) {
-                                // 向下滑动
-                                currentPage--;
+                            if (newPage >= 0 && newPage < pages.length) {
+                                currentPage = newPage;
+                                updatePages(() => {
+                                    isAnimating = false;
+                                });
                             }
-                            
-                            updatePages();
-                            
-                            setTimeout(() => {
-                                isScrolling = false;
-                            }, 1000);
                         }
                     }, { passive: true });
                 });
-            </script>
+                </script>
             <script>
                 // 获取元素
                 const modal = document.getElementById("myModal");
