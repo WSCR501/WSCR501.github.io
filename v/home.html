@@ -10,7 +10,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            color: #fff;
+            color: #6562ed;
             position: relative;
             min-height: 100vh;
             overflow-x: hidden;
@@ -33,7 +33,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.6);
-            z-index: -1;
+            z-index: 999;
         }
         
         header {
@@ -241,7 +241,7 @@
             overflow: hidden;
             background-color: #121212;
             height: 100vh;
-            cursor: none;
+            
         }
         
         .trail {
@@ -261,6 +261,101 @@
             margin-top: 50px;
             text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+        
+        .page {
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform: translateY(100%);
+            z-index: 1;
+        }
+        .page.active {
+            z-index: 999;
+            transform: translateY(0);
+        }
+       
+        
+        .page.prev {
+            transform: translateY(0%);
+            z-index: 1;
+        }
+        
+        .page-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        /* 不同页面的背景颜色 */
+       
+        
+        #page2 {
+            background-image: url("5.png");
+        }
+        
+        #page3 {
+            background-color: #e74c3c;
+        }
+        
+        #page4 {
+            background-color: #9b59b6;
+        }
+        /* 导航指示器 */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            margin: 10px 0;
+            border-radius: 50%;
+            background-color: rgba(188, 45, 45, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background-color: white;
+            transform: scale(1.3);
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -332,8 +427,107 @@
             animate();
         });
     </script>
+    <div class="nav-dots">
+        <div class="dot active" data-page="1"></div>
+        <div class="dot" data-page="2"></div>
+        <div class="dot" data-page="3"></div>
+        <div class="dot" data-page="4"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            let currentPage = 0;
+            
+            // 初始化第一页
+            pages[0].classList.add('active');
+            
+            // 滚动事件处理
+            let isScrolling = false;
+            window.addEventListener('wheel', function(e) {
+                if (isScrolling) return;
+                
+                isScrolling = true;
+                
+                if (e.deltaY > 0 && currentPage < pages.length - 1) {
+                    // 向下滚动
+                    currentPage++;
+                } else if (e.deltaY < 0 && currentPage > 0) {
+                    // 向上滚动
+                    currentPage--;
+                }
+                
+                updatePages();
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 1000); // 防止滚动过快
+            });
+            
+            // 点击导航点
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentPage = parseInt(this.getAttribute('data-page')) - 1;
+                    updatePages();
+                });
+            });
+            
+            // 更新页面状态
+            function updatePages() {
+                pages.forEach((page, index) => {
+                    page.classList.remove('active', 'prev');
+                    
+                    if (index === currentPage) {
+                        page.classList.add('active');
+                    } else if (index < currentPage) {
+                        page.classList.add('prev');
+                    }
+                });
+                
+                // 更新导航点
+                dots.forEach((dot, index) => {
+                    dot.classList.remove('active');
+                    if (index === currentPage) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+            
+            // 触摸设备支持
+            let startY;
+            document.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (isScrolling) return;
+                
+                const y = e.touches[0].clientY;
+                const diff = startY - y;
+                
+                if (Math.abs(diff) > 50) { // 滑动阈值
+                    isScrolling = true;
+                    
+                    if (diff > 0 && currentPage < pages.length - 1) {
+                        // 向上滑动
+                        currentPage++;
+                    } else if (diff < 0 && currentPage > 0) {
+                        // 向下滑动
+                        currentPage--;
+                    }
+                    
+                    updatePages();
+                    
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 1000);
+                }
+            }, { passive: true });
+        });
+    </script>
     <video id="video-background" autoplay muted loop></video>
-    <div class="overlay"></div>
+    <div class="page active" id="page1"></div>
+    <div class="overlay">
     <header>
         <nav>
             <div class="logo">繁星游戏堡</div>
@@ -376,18 +570,20 @@
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+      
         <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+        <div class="page" id="page2">
+            <h1>第二页</h1>
+            <p>这里还没有东西</p>
+        </div>
+        <div class="page" id="page3">
+            <h1>第三页</h1>
+            <p>这里还没有东西</p>
+        </div>
+        <div class="page" id="page4">
+            <h1>第四页</h1>
+            <p>这里还没有东西</p>
+        </div>
         <script>
             // 获取元素
             const modal = document.getElementById("myModal");
@@ -445,7 +641,7 @@
             });
             
             function createParticles(x, y) {
-                const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
+                const colors = ['#1e90ff', '#00bfff', '#87cefa', '#4682b4', '#5f9ea0', '#ff00ff'];
                 const particleCount = 30;
                 
                 for (let i = 0; i < particleCount; i++) {
