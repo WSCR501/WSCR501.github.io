@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>helloshabby</title>
+    <title>繁星游戏堡</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            color: #fff;
+            color: #6562ed;
             position: relative;
             min-height: 100vh;
             overflow-x: hidden;
@@ -23,7 +23,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -2;
+            z-index: -1;
         }
         
         .overlay {
@@ -33,7 +33,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.6);
-            z-index: -1;
+            z-index: 11;
         }
         
         header {
@@ -128,7 +128,7 @@
             height: 10px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 100;
+            z-index: 15;
         }
         
         
@@ -241,7 +241,7 @@
             overflow: hidden;
             background-color: #121212;
             height: 100vh;
-            cursor: none;
+            
         }
         
         .trail {
@@ -261,235 +261,962 @@
             margin-top: 50px;
             text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+        
+        .page {
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform: translateY(100%);
+            z-index: 1;
+        }
+        .page.active {
+            z-index: 0;
+            transform: translateY(0);
+        }
+        .page.next {
+            transform: translateY(100%);
+            opacity: 0;
+            z-index: 0;
+            opacity: 1;
+        }
+        
+        .page.prev {
+            transform: translateY(-1%);
+            opacity: 0.5;
+            z-index: 0;
+            opacity: 1;
+        }
+        
+        .page-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        /* 不同页面的背景颜色 */
+       
+        
+        #page2 {
+            background-image: url("5.png");
+        }
+        
+        #page3 {
+            background-color: #e74c3c;
+        }
+        
+        #page4 {
+            background-color: #9b59b6;
+        }
+        /* 导航指示器 */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-1%);
+            z-index: 10;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            margin: 10px 0;
+            border-radius: 50%;
+            background-color: rgba(17, 126, 235, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background-color: rgb(44, 172, 246);
+            transform: scale(1.3);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a192f;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        .firework-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff3366, #ff9933);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .firework-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.6);
+        }
+        
+        .firework-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .logo {
+            /* 原有样式保留 */
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+        .logo a {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo:hover::before {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(11px);
+            -webkit-backdrop-filter: blur(11px);
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .logo:hover::after {
+            left: 100%;
+        }
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 触发按钮样式 - 添加前缀 */
+        .android-dialog-trigger-btn {
+            padding: 12px 24px;
+            background-color: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .android-dialog-trigger-btn:hover {
+            background-color: #7c4dff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* 遮罩层 - 添加前缀 */
+        .android-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: android-dialog-fadeIn 0.3s;
+        }
+
+        /* 弹窗主体 - 添加前缀 */
+        .android-dialog {
+            width: 280px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: scale(0.9);
+            animation: android-dialog-scaleIn 0.3s forwards;
+        }
+
+        /* 弹窗标题 - 添加前缀 */
+        .android-dialog-title {
+            padding: 20px 24px 0;
+            font-size: 20px;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        /* 弹窗内容 - 添加前缀 */
+        .android-dialog-content {
+            padding: 16px 24px;
+            font-size: 14px;
+            color: #424242;
+            line-height: 1.5;
+        }
+
+        /* 按钮容器 - 添加前缀 */
+        .android-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px 8px 8px 24px;
+        }
+
+        /* 按钮样式 - 添加前缀 */
+        .android-dialog-btn {
+            padding: 8px 16px;
+            margin-left: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* 次要按钮 - 添加前缀 */
+        .android-dialog-btn-secondary {
+            color: #6200ee;
+        }
+
+        /* 主要按钮 - 添加前缀 */
+        .android-dialog-btn-primary {
+            color: #6200ee;
+        }
+
+        .android-dialog-btn:hover {
+            background-color: rgba(98, 0, 238, 0.08);
+        }
+
+        /* 动画效果 - 添加前缀 */
+        @keyframes android-dialog-fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes android-dialog-scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 关闭按钮 - 添加前缀 */
+        .android-dialog-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .android-dialog-close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .android-dialog-close-btn::before, 
+        .android-dialog-close-btn::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 2px;
+            background-color: #424242;
+        }
+
+        .android-dialog-close-btn::before {
+            transform: rotate(45deg);
+        }
+
+        .android-dialog-close-btn::after {
+            transform: rotate(-45deg);
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2); /* 渐变背景增强毛玻璃效果 */
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .glass-text {
+            padding: 20px 40px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 关键：毛玻璃模糊效果 */
+            -webkit-backdrop-filter: blur(10px); /* Safari 兼容 */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px); /* 初始轻微下沉，增强动画效果 */
+            transition: 
+            opacity 1s ease-out,
+            visibility 1s ease-out,
+            transform 1s ease-out;
+        }
+
+        .glass-text.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* 为<p>添加延迟 */
+        p.glass-text {
+            transition-delay: 0.3s;
+            margin-top: 20px;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            /* 移除原来的background-image */
+            font-family: Arial, sans-serif;
+            color: white;
+            position: relative; /* 为视频背景提供定位上下文 */
+            min-height: 100vh;
+            overflow: hidden; /* 防止视频溢出导致滚动条 */
+        }
+
+        /* 视频背景容器 */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* 确保视频在内容下方 */
+            object-fit: cover; /* 保持视频填充整个容器 */
+        }
+
+        /* 内容容器 */
+        .content {
+            position: relative;
+            z-index: 1; /* 确保内容在视频上方 */
+            padding: 20px;
+        }
+    </style>
     </style>
 </head>
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const colors = [
-                '#FF0000', '#FF7F00', '#FFFF00', 
-                '#00FF00', '#0000FF', '#4B0082', 
-                '#9400D3', '#FF1493', '#00FFFF'
-            ];
+        
+    <div class="page active" id="page1">
+        <video id="video-background" autoplay muted loop></video>
+        <div class="overlay">
+        <header>
+            <nav>
+                <div class="logo">
+                    <a href="home.html" style="text-decoration: none; color: inherit;">繁星游戏堡</a>
+                </div>
+                <div class="nav-links">
+                    <a id="fireworkBtn">开始</a>
+                    <a href="ren.html">管理人员</a>
+                    <a id="myBtn">关于我们</a>
+                    <a href="login.html">硬件监控</a>
+                    <a><span class="android-dialog-text-trigger" id="androidDialogTextTrigger">捐款</span></a>
+                </div>
+            </nav>
+        </header>
+        <div class="android-dialog-overlay" id="androidDialogOverlay">
+            <div class="android-dialog">
+                <div class="android-dialog-title">捐款</div>
+                <div class="android-dialog-content">
+                    给点钱吧,活不起了:D<br>(付款码还没发货)
+                </div>
+                <div class="android-dialog-actions">
+                    <button class="android-dialog-btn android-dialog-btn-secondary" id="androidDialogCancelBtn">取消</button>
+                    <button class="android-dialog-btn android-dialog-btn-primary" id="androidDialogConfirmBtn">我已捐款</button>
+                </div>
+            </div>
+            <div class="android-dialog-close-btn" id="androidDialogCloseBtn"></div>
+        </div>
+    
+        <script>
+            const textTrigger = document.getElementById('androidDialogTextTrigger');
+            const overlay = document.getElementById('androidDialogOverlay');
+            const cancelBtn = document.getElementById('androidDialogCancelBtn');
+            const confirmBtn = document.getElementById('androidDialogConfirmBtn');
+            const closeBtn = document.getElementById('androidDialogCloseBtn');
+    
+            // 显示弹窗
+            textTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                overlay.style.display = 'flex';
+            });
+    
+            // 关闭弹窗的三种方式
+            const closeDialog = () => {
+                overlay.style.display = 'none';
+            };
+    
+            cancelBtn.addEventListener('click', closeDialog);
             
-            let mouseX = 0;
-            let mouseY = 0;
-            let trailCount = 10; // 拖尾粒子数量
-            let trails = [];
-            
-            // 初始化拖尾粒子
-            for (let i = 0; i < trailCount; i++) {
-                let trail = document.createElement('div');
-                trail.className = 'trail';
-                trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                document.body.appendChild(trail);
-                trails.push({
-                    element: trail,
-                    x: 0,
-                    y: 0,
-                    size: Math.random() * 10 + 5,
-                    speed: Math.random() * 0.5 + 0.1,
-                    delay: i * 5
-                });
-            }
-            
-            // 跟踪鼠标位置
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
+            // 修改确认按钮功能：显示alert后关闭弹窗
+            confirmBtn.addEventListener('click', function() {
+                alert('感谢您的捐款！您的支持对我们非常重要。');
+                closeDialog();
             });
             
-            // 动画循环
-            function animate() {
-                for (let i = 0; i < trails.length; i++) {
-                    const trail = trails[i];
+            closeBtn.addEventListener('click', closeDialog);
+    
+            // 点击遮罩层关闭
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeDialog();
+                }
+            });
+        </script>
+        <div class="container">
+            <section class="hero">
+                <h1 id="color-changing-text">繁星游戏堡</h1>
+                <h3>FxGameCastel</h3>
+                <p> 用心打造极致体验</p>
+                <button class="btn" onclick="showAlert1()">加入我们</button>
+            </section>
+            
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h3 style="color: #6495ED;">为什么选择我们？</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
+                        <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
+                        <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
+                        <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page2">
+                <video autoplay muted loop class="video-background">
+                    <source src="6.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频
+                </video>
+                <h2 class="glass-text">优秀的后台管理</h2>
+                <div style="text-align: left; padding-left: 20px;">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="glass-text">本服务器使用MCDR(MCDReforged)进行控制<br>MCDR是什么？<br>MCDaemon 的重置版本，用于控制 Minecraft 服务器的一个 Python 工具<br>你需要MCDR? 官网:<a href="https://mcdreforged.com/zh-CN">看看</a></p>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                      const glassElements = document.querySelectorAll(".glass-text");
+                      
+                      const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                          if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                          }
+                        });
+                      }, { threshold: 0.1 });
+                
+                      glassElements.forEach((element) => {
+                        observer.observe(element);
+                      });
+                    });
+                </script>
+            </div>
+            <div class="page" id="page3">
+                <video autoplay muted loop class="video-background">
+                    <source src="7.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频
+                </video>
+                <h2 class="glass-text">管理人员</h2>
+                <br>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <div id="section1">
+                <div class="transparent-box">
+                    <img src="1.png" alt="腐竹头像">
+                    <p style="color:yellowgreen">IrisOracle 鸢尾</p>
+                    繁星游戏堡·腐竹<br>
+                    à voir le monde et sa beauté.
+                </div>
+                <div class="transparent-box">
+                    <img src="2.png" alt="哥能刷新一下吗">
+                    <p style="color:#6495ED">Ruthyrings RU</p>
+                    繁星游戏堡·吉祥物<br>
+                    兄弟玩整合包么
+                </div>
+                <div class="transparent-box">
+                    <img src="3.png" alt="哥能刷新一下吗">
+                    <p style="color:#6495ED">PrimeMoon_ PO</p>
+                    繁星游戏堡·管理员<br>
+                    这个管理很懒，没留下什么
+                </div>
+                <div class="transparent-box">
+                    <img src="4.jpg" alt="哥能刷新一下吗">
+                    <p style="color:#6495ED">Windows XP</p>
+                    繁星游戏堡·御用刑部尚书<br>
+                    每天代码一写,头发漫山遍野
+                </div>
+            </div>
+            <div class="page" id="page4">
+                <h2>更新日志</h2>
+                <p>1.禁止老旧IE或老旧Chromium访问<br>2.Safari访问时提示用户背景视频可能因编码问题无法播放<br>3.做了加入我们按钮:)<br>4.修复了翻页遗留通病<br>5.因为鼠标点击炸开效果会导致网页错位,so<br><del>偷偷移除应该没人发现</del></p>
+            </div>
+            <script>
+                function isIE() {
+                    const ua = navigator.userAgent;
+                    const isIE = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+                    const isOldEdge = ua.indexOf("Edge/") > -1; // Edge 旧版（基于 EdgeHTML）
+                    return isIE || isOldEdge;
+                }
+            
+                if (isIE()) {
+                    alert("本网站不支持 Internet Explorer 或旧版 Edge，请使用 Chrome、Edge（Chromium）或 Firefox 访问。");
+                    window.location.href = "about:blank"; // 强制跳转空白页（无法关闭时）
+                }
+            </script>
+            <script>
+                function isSafari() {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    const isMac = navigator.userAgent.includes('Macintosh');
+                    const isSafariUA = navigator.userAgent.includes('Safari');
+                    const isChromeUA = navigator.userAgent.includes('Chrome');
                     
-                    // 延迟跟随效果
-                    if (i === 0) {
-                        trail.x = mouseX;
-                        trail.y = mouseY;
-                    } else {
-                        const prev = trails[i - 1];
-                        trail.x += (prev.x - trail.x) * trail.speed;
-                        trail.y += (prev.y - trail.y) * trail.speed;
+                    // iOS 上的所有浏览器都是 WebKit（Safari 内核）
+                    if (isIOS) {
+                        return true;
                     }
                     
-                    // 更新粒子位置和大小
-                    trail.element.style.left = trail.x + 'px';
-                    trail.element.style.top = trail.y + 'px';
-                    trail.element.style.width = trail.size + 'px';
-                    trail.element.style.height = trail.size + 'px';
+                    // macOS 上的 Safari（排除 Chrome 和 Edge）
+                    return (isMac && isSafariUA && !isChromeUA);
+                }
+            
+                if (isSafari()) {
+                    alert("当前浏览器是Safari,背景可能无法正常显示");
+                } else {
                     
-                    // 随机颜色变化
-                    if (Math.random() < 0.05) {
-                        trail.element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                }
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const colors = [
+                        '#FF0000', '#FF7F00', '#FFFF00', 
+                        '#00FF00', '#0000FF', '#4B0082', 
+                        '#9400D3', '#FF1493', '#00FFFF'
+                    ];
+                    
+                    let mouseX = 0;
+                    let mouseY = 0;
+                    let trailCount = 10; // 拖尾粒子数量
+                    let trails = [];
+                    
+                    // 初始化拖尾粒子
+                    for (let i = 0; i < trailCount; i++) {
+                        let trail = document.createElement('div');
+                        trail.className = 'trail';
+                        trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        document.body.appendChild(trail);
+                        trails.push({
+                            element: trail,
+                            x: 0,
+                            y: 0,
+                            size: Math.random() * 10 + 5,
+                            speed: Math.random() * 0.5 + 0.1,
+                            delay: i * 5
+                        });
                     }
+                    
+                    // 跟踪鼠标位置
+                    document.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                    });
+                    const blueColors = [
+                        '#0000FF',  // 纯蓝
+                        '#1E90FF',  // 道奇蓝（DodgerBlue）
+                        '#4169E1',  // 皇家蓝（RoyalBlue）
+                        '#4682B4',  // 钢蓝（SteelBlue）
+                        '#87CEFA',  // 浅天蓝（LightSkyBlue）
+                        '#ADD8E6',  // 浅蓝（LightBlue）
+                        '#B0E0E6',  // 粉蓝（PowderBlue）
+                        '#6495ED',  // 矢车菊蓝（CornflowerBlue）
+                    ];
+                    // 动画循环
+                    function animate() {
+                        for (let i = 0; i < trails.length; i++) {
+                            const trail = trails[i];
+                            // 延迟跟随效果
+                            if (i === 0) {
+                                trail.x = mouseX;
+                                trail.y = mouseY;
+                            } else {
+                                const prev = trails[i - 1];
+                                trail.x += (prev.x - trail.x) * trail.speed;
+                                trail.y += (prev.y - trail.y) * trail.speed;
+                            }
+                            
+                            // 更新粒子位置和大小
+                            trail.element.style.left = trail.x + 'px';
+                            trail.element.style.top = trail.y + 'px';
+                            trail.element.style.width = trail.size + 'px';
+                            trail.element.style.height = trail.size + 'px';
+                            
+                            // 随机颜色变化
+                            if (Math.random() < 0.05) {
+                                trail.element.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+                            }
+                        }
+                        
+                        requestAnimationFrame(animate);
+                    }
+                    
+                    animate();
+                });
+            </script>
+            <div class="nav-dots">
+                <div class="dot active" data-page="1"></div>
+                <div class="dot" data-page="2"></div>
+                <div class="dot" data-page="3"></div>
+                <div class="dot" data-page="4"></div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const pages = document.querySelectorAll('.page');
+                    const dots = document.querySelectorAll('.dot');
+                    let currentPage = 0;
+                    
+                    // 初始化所有页面位置
+                    pages.forEach((page, index) => {
+                        if (index === 0) {
+                            page.classList.add('active');
+                        } else {
+                            page.classList.add('next');
+                        }
+                    });
+                    
+                    // 滚动事件处理
+                    let isAnimating = false;
+                    
+                    window.addEventListener('wheel', function(e) {
+                        if (isAnimating) return;
+                        
+                        const direction = e.deltaY > 0 ? 1 : -1;
+                        const newPage = currentPage + direction;
+                        
+                        if (newPage >= 0 && newPage < pages.length) {
+                            isAnimating = true;
+                            currentPage = newPage;
+                            updatePages(() => {
+                                isAnimating = false;
+                            });
+                        }
+                    }, { passive: true });
+                    
+                    // 点击导航点
+                    
+                    
+                    // 更新页面状态
+                    function updatePages(callback) {
+                        // 先处理当前活动页面
+                        const currentActive = document.querySelector('.page.active');
+                        if (currentActive) {
+                            currentActive.classList.remove('active');
+                            currentActive.classList.add(currentPage > Array.from(pages).indexOf(currentActive) ? 'prev' : 'next');
+                        }
+                        
+                        // 处理新活动页面
+                        const newActive = pages[currentPage];
+                        newActive.classList.remove('prev', 'next');
+                        newActive.classList.add('active');
+                        
+                        // 更新导航点
+                        dots.forEach((dot, index) => {
+                            dot.classList.toggle('active', index === currentPage);
+                        });
+                        
+                        // 动画结束后执行回调
+                        setTimeout(callback, 800); // 与CSS过渡时间匹配
+                    }
+                    
+                    // 触摸设备支持
+                    let startY;
+                    
+                    document.addEventListener('touchstart', function(e) {
+                        startY = e.touches[0].clientY;
+                    }, { passive: true });
+                    
+                    document.addEventListener('touchmove', function(e) {
+                        if (isAnimating) return;
+                        
+                        const y = e.touches[0].clientY;
+                        const diff = startY - y;
+                        
+                        if (Math.abs(diff) > 50) {
+                            isAnimating = true;
+                            const direction = diff > 0 ? 1 : -1;
+                            const newPage = currentPage + direction;
+                            
+                            if (newPage >= 0 && newPage < pages.length) {
+                                currentPage = newPage;
+                                updatePages(() => {
+                                    isAnimating = false;
+                                });
+                            }
+                        }
+                    }, { passive: true });
+                });
+                </script>
+            <script>
+                // 获取元素
+                const modal = document.getElementById("myModal");
+                const btn = document.getElementById("myBtn","mysys");
+                const span = document.getElementsByClassName("close")[0];
+                const confirmBtn = document.getElementById("confirmBtn");
+                const cancelBtn = document.getElementById("cancelBtn");
+                
+                // 点击按钮打开对话框
+                btn.onclick = function() {
+                    modal.style.display = "block";
                 }
                 
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
-        });
-    </script>
-    <video id="video-background" autoplay muted loop></video>
-    <div class="overlay"></div>
-    <header>
-        <nav>
-            <div class="logo">繁星游戏堡</div>
-            <div class="nav-links">
-                <a href="index.html">开始</a>
-                <a href="ren.html">管理人员</a>
-                <a id="myBtn">关于我们</a>
-                <a href="https://stats.uptimerobot.com/pVfIEfmXhK">硬件监控</a>
-                <a onclick="showAlert()">捐款</a>
-            </div>
-        </nav>
-    </header>
-    
-    <div class="container">
-        <section class="hero">
-            <h1>繁星游戏堡</h1>
-            <h3>FxGameCastel</h3>
-            <p> 用心打造极致体验</p>
-            <button class="btn" onclick="showAlert()">加入我们</button>
+                // 点击×关闭对话框
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击确定按钮
+                confirmBtn.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击取消按钮
+                cancelBtn.onclick = function() {
+                    modal.style.display = "none";
+                }
+                
+                // 点击对话框外部关闭
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
             <script>
                 function showAlert() {
                     alert("施工中");
                 }
-            </script>
-        </section>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h3 style="color: #6495ED;">为什么选择我们？</h3>
-                </div>
-                <div class="modal-body">
-                    <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
-                    <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
-                    <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
-                    <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
-                </div>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-        <script>
-            // 获取元素
-            const modal = document.getElementById("myModal");
-            const btn = document.getElementById("myBtn");
-            const span = document.getElementsByClassName("close")[0];
-            const confirmBtn = document.getElementById("confirmBtn");
-            const cancelBtn = document.getElementById("cancelBtn");
-            
-            // 点击按钮打开对话框
-            btn.onclick = function() {
-                modal.style.display = "block";
-            }
-            
-            // 点击×关闭对话框
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击确定按钮
-            confirmBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击取消按钮
-            cancelBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // 点击对话框外部关闭
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+                function showAlert1() {
+                    var r = confirm("加入QQ群问卷链接:点击确定跳转\n点按取消查看discord链接");
+                    if (r == true) {
+                        window.open("https://wj.qq.com/s2/15083217/9cc4/", "_blank");
+                    } else {
+                        alert("Discord链接:https://discord.gg/dUWasqNV");
+                    }
                 }
-            }
-        </script>
-        
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Randomly select background video
-            const videos = ['https://img.wjwj.top/2025/03/30/5f96265ba01b32577eb9d5370370c051.webm', 'https://img.wjwj.top/2025/03/30/f479243d7364dcdf3539348fa1c8327a.webm'];
-            const randomVideo = videos[Math.floor(Math.random() * videos.length)];
-            const videoBg = document.getElementById('video-background');
-            videoBg.src = randomVideo;
-            
-            // Ensure video plays correctly on mobile
-            videoBg.play().catch(e => {
-                console.log("Autoplay prevented, trying with muted attribute");
-                videoBg.muted = true;
-                videoBg.play();
-            });
-            
-            // Particle explosion effect
-            document.body.addEventListener('click', function(e) {
-                createParticles(e.clientX, e.clientY);
-            });
-            
-            function createParticles(x, y) {
-                const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
-                const particleCount = 30;
+            </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Randomly select background video
+                const videos = ['https://img.wjwj.top/2025/03/30/5f96265ba01b32577eb9d5370370c051.webm', 'https://img.wjwj.top/2025/03/30/f479243d7364dcdf3539348fa1c8327a.webm'];
+                const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+                const videoBg = document.getElementById('video-background');
+                videoBg.src = randomVideo;
                 
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = x + 'px';
-                    particle.style.top = y + 'px';
-                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                // Ensure video plays correctly on mobile
+                videoBg.play().catch(e => {
+                    console.log("Autoplay prevented, trying with muted attribute");
+                    videoBg.muted = true;
+                    videoBg.play();
+                });
+                
+                // Particle explosion effect
+                document.body.addEventListener('click', function(e) {
+                    createParticles(e.clientX, e.clientY);
+                });
+                
+                function createParticles(x, y) {
+                    const colors = ['#1e90ff', '#00bfff', '#87cefa', '#4682b4', '#5f9ea0', '#ff00ff'];
+                    const particleCount = 1;
                     
-                    document.body.appendChild(particle);
                     
-                    const angle = Math.random() * Math.PI * 2;
-                    const velocity = 2 + Math.random() * 3;
-                    const lifetime = 1000 + Math.random() * 1000;
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('fireworkBtn');
+                const colors = [
+                    '#ff3366', '#ff9933', '#33ccff', 
+                    '#9966ff', '#ff66cc', '#66ff33',
+                    '#ffff00', '#00ffff', '#ff00ff'
+                ];
+                
+                btn.addEventListener('click', function(e) {
+                    createFireworks(e.clientX, e.clientY);
+                });
+                
+                function createFireworks(x, y) {
+                    // 烟花爆炸粒子数量
+                    const particleCount = 100;
                     
-                    const xVelocity = Math.cos(angle) * velocity;
-                    const yVelocity = Math.sin(angle) * velocity;
-                    
-                    let startTime = Date.now();
-                    
-                    function animateParticle() {
-                        const elapsed = Date.now() - startTime;
-                        const progress = elapsed / lifetime;
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
                         
+                        // 随机大小 (3-8px)
+                        const size = Math.random() * 5 + 3;
+                        particle.style.width = `${size}px`;
+                        particle.style.height = `${size}px`;
+                        
+                        // 随机颜色
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.backgroundColor = color;
+                        
+                        // 初始位置 (按钮点击位置)
+                        particle.style.left = `${x}px`;
+                        particle.style.top = `${y}px`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        // 随机角度和速度
+                        const angle = Math.random() * Math.PI * 2;
+                        const velocity = 2 + Math.random() * 10;
+                        
+                        // 计算x和y方向的速度
+                        const vx = Math.cos(angle) * velocity;
+                        const vy = Math.sin(angle) * velocity;
+                        
+                        // 动画持续时间 (800-1200ms)
+                        const duration = 800 + Math.random() * 400;
+                        
+                        // 开始动画
+                        animateParticle(particle, x, y, vx, vy, duration);
+                    }
+                }
+                
+                function animateParticle(particle, startX, startY, vx, vy, duration) {
+                    const startTime = Date.now();
+                    
+                    function update() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = elapsed / duration;
+                        
+                        // 动画结束
                         if (progress >= 1) {
                             particle.remove();
                             return;
                         }
                         
-                        const currentX = x + xVelocity * elapsed * 0.1;
-                        const currentY = y + yVelocity * elapsed * 0.1;
+                        // 计算当前位置 (添加重力效果)
+                        const gravity = 0.1;
+                        const currentX = startX + vx * elapsed * 0.2;
+                        const currentY = startY + vy * elapsed * 0.2 + gravity * elapsed * 0.1 * elapsed * 0.1;
                         
-                        particle.style.left = currentX + 'px';
-                        particle.style.top = currentY + 'px';
+                        // 更新位置
+                        particle.style.left = `${currentX}px`;
+                        particle.style.top = `${currentY}px`;
+                        
+                        // 淡出效果
                         particle.style.opacity = 1 - progress;
+                        
+                        // 缩小效果
                         particle.style.transform = `scale(${1 - progress * 0.5})`;
                         
-                        requestAnimationFrame(animateParticle);
+                        requestAnimationFrame(update);
                     }
                     
-                    requestAnimationFrame(animateParticle);
+                    requestAnimationFrame(update);
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    </div>
 </body>
 </html>
