@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux 风格桌面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DejaVu Sans Mono', monospace;
+        }
+        
+        body {
+            background-color: #3a6ea5;
+            background-image: url('https://images.unsplash.com/photo-1617196034183-421b4917c92d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+            color: #fff;
+        }
+        
+        .desktop {
+            height: 100vh;
+            position: relative;
+        }
+        
+        .panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+        
+        .start-menu {
+            background-color: #2d2d2d;
+            position: absolute;
+            bottom: 50px;
+            left: 20px;
+            width: 300px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1001;
+        }
+        
+        .start-menu.show {
+            display: block;
+        }
+        
+        .start-menu-header {
+            background-color: #1a1a1a;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .start-menu-item {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .start-menu-item:hover {
+            background-color: #3a6ea5;
+        }
+        
+        .start-menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .panel-icon {
+            margin-right: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        .panel-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .window {
+            position: absolute;
+            background-color: #2d2d2d;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            min-width: 300px;
+            min-height: 200px;
+            display: none;
+            z-index: 100;
+        }
+        
+        .window.active {
+            z-index: 200;
+        }
+        
+        .window-header {
+            background-color: #1a1a1a;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            user-select: none;
+        }
+        
+        .window-title {
+            font-weight: bold;
+        }
+        
+        .window-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        
+        .window-content {
+            padding: 10px;
+            height: calc(100% - 36px);
+            overflow: auto;
+        }
+        
+        .desktop-icon {
+            position: absolute;
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+            user-select: none;
+        }
+        
+        .desktop-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .desktop-icon img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto 5px;
+        }
+        
+        /* 计算器样式 */
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 5px;
+        }
+        
+        .calculator-display {
+            grid-column: span 4;
+            background-color: #1a1a1a;
+            padding: 10px;
+            text-align: right;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+        
+        .calculator button {
+            padding: 10px;
+            border: none;
+            background-color: #3a3a3a;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .calculator button:hover {
+            background-color: #4a4a4a;
+        }
+        
+        .calculator button.operator {
+            background-color: #3a6ea5;
+        }
+        
+        .calculator button.operator:hover {
+            background-color: #4a7eb5;
+        }
+        
+        /* 记事本样式 */
+        .notepad-textarea {
+            width: 100%;
+            height: 100%;
+            background-color: #2d2d2d;
+            color: #fff;
+            border: none;
+            resize: none;
+            padding: 5px;
+            font-family: 'DejaVu Sans Mono', monospace;
+        }
+        
+        .notepad-textarea:focus {
+            outline: none;
+        }
+        
+        /* 终端样式 */
+        .terminal {
+            background-color: #1a1a1a;
+            color: #fff;
+            height: 100%;
+            padding: 10px;
+            font-family: 'DejaVu Sans Mono', monospace;
+            overflow-y: auto;
+        }
+        
+        .terminal-input {
+            display: flex;
+        }
+        
+        .terminal-prompt {
+            color: #3a6ea5;
+            margin-right: 5px;
+        }
+        
+        .terminal-input-field {
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            flex-grow: 1;
+            font-family: 'DejaVu Sans Mono', monospace;
+        }
+        
+        .terminal-input-field:focus {
+            outline: none;
+        }
+        
+        /* 文件管理器样式 */
+        .file-manager {
+            display: flex;
+            height: 100%;
+        }
+        
+        .file-manager-sidebar {
+            width: 150px;
+            background-color: #1a1a1a;
+            padding: 10px;
+        }
+        
+        .file-manager-content {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            padding: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .file-item i {
+            margin-right: 5px;
+            width: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- 桌面图标 -->
+        <div class="desktop-icon" style="top: 20px; left: 20px;" onclick="openApp('notepad')">
+            <img src="https://cdn-icons-png.flaticon.com/512/281/281760.png" alt="记事本">
+            <span>记事本</span>
+        </div>
+        
+        <div class="desktop-icon" style="top: 20px; left: 120px;" onclick="openApp('calculator')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="计算器">
+            <span>计算器</span>
+        </div>
+        
+        <div class="desktop-icon" style="top: 20px; left: 220px;" onclick="openApp('terminal')">
+            <img src="https://cdn-icons-png.flaticon.com/512/612/612499.png" alt="终端">
+            <span>终端</span>
+        </div>
+        
+        <div class="desktop-icon" style="top: 120px; left: 20px;" onclick="openApp('file-manager')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" alt="文件管理器">
+            <span>文件管理器</span>
+        </div>
+        
+        <!-- 底部面板 -->
+        <div class="panel">
+            <div class="panel-icon" onclick="toggleStartMenu()">
+                <i>🐧</i> 开始
+            </div>
+            <div class="panel-icon" onclick="openApp('notepad')">
+                <i>📝</i>
+            </div>
+            <div class="panel-icon" onclick="openApp('calculator')">
+                <i>🧮</i>
+            </div>
+            <div class="panel-icon" onclick="openApp('terminal')">
+                <i>💻</i>
+            </div>
+        </div>
+        
+        <!-- 开始菜单 -->
+        <div class="start-menu" id="startMenu">
+            <div class="start-menu-header">应用程序</div>
+            <div class="start-menu-item" onclick="openApp('notepad')">
+                <i>📝</i> 记事本
+            </div>
+            <div class="start-menu-item" onclick="openApp('calculator')">
+                <i>🧮</i> 计算器
+            </div>
+            <div class="start-menu-item" onclick="openApp('terminal')">
+                <i>💻</i> 终端
+            </div>
+            <div class="start-menu-item" onclick="openApp('file-manager')">
+                <i>📁</i> 文件管理器
+            </div>
+        </div>
+        
+        <!-- 记事本窗口 -->
+        <div class="window" id="notepadWindow">
+            <div class="window-header">
+                <div class="window-title">记事本</div>
+                <div class="window-controls">
+                    <button onclick="minimizeWindow('notepadWindow')">_</button>
+                    <button onclick="maximizeWindow('notepadWindow')">□</button>
+                    <button onclick="closeWindow('notepadWindow')">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <textarea class="notepad-textarea" id="notepadTextarea" placeholder="在这里输入文本..."></textarea>
+            </div>
+        </div>
+        
+        <!-- 计算器窗口 -->
+        <div class="window" id="calculatorWindow">
+            <div class="window-header">
+                <div class="window-title">计算器</div>
+                <div class="window-controls">
+                    <button onclick="minimizeWindow('calculatorWindow')">_</button>
+                    <button onclick="maximizeWindow('calculatorWindow')">□</button>
+                    <button onclick="closeWindow('calculatorWindow')">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="calculator">
+                    <div class="calculator-display" id="calcDisplay">0</div>
+                    <button onclick="clearCalculator()">C</button>
+                    <button onclick="appendToCalc('(')">(</button>
+                    <button onclick="appendToCalc(')')">)</button>
+                    <button class="operator" onclick="appendToCalc('/')">/</button>
+                    <button onclick="appendToCalc('7')">7</button>
+                    <button onclick="appendToCalc('8')">8</button>
+                    <button onclick="appendToCalc('9')">9</button>
+                    <button class="operator" onclick="appendToCalc('*')">×</button>
+                    <button onclick="appendToCalc('4')">4</button>
+                    <button onclick="appendToCalc('5')">5</button>
+                    <button onclick="appendToCalc('6')">6</button>
+                    <button class="operator" onclick="appendToCalc('-')">-</button>
+                    <button onclick="appendToCalc('1')">1</button>
+                    <button onclick="appendToCalc('2')">2</button>
+                    <button onclick="appendToCalc('3')">3</button>
+                    <button class="operator" onclick="appendToCalc('+')">+</button>
+                    <button onclick="appendToCalc('0')">0</button>
+                    <button onclick="appendToCalc('.')">.</button>
+                    <button onclick="backspaceCalc()">⌫</button>
+                    <button class="operator" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 终端窗口 -->
+        <div class="window" id="terminalWindow" style="width: 600px; height: 400px;">
+            <div class="window-header">
+                <div class="window-title">终端</div>
+                <div class="window-controls">
+                    <button onclick="minimizeWindow('terminalWindow')">_</button>
+                    <button onclick="maximizeWindow('terminalWindow')">□</button>
+                    <button onclick="closeWindow('terminalWindow')">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="terminal" id="terminalOutput">
+                    <div>欢迎使用 Linux 风格终端模拟器</div>
+                    <div>输入 "help" 查看可用命令</div>
+                    <br>
+                </div>
+                <div class="terminal-input">
+                    <span class="terminal-prompt">user@desktop:~$</span>
+                    <input type="text" class="terminal-input-field" id="terminalInput" onkeypress="handleTerminalInput(event)">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 文件管理器窗口 -->
+        <div class="window" id="fileManagerWindow" style="width: 700px; height: 500px;">
+            <div class="window-header">
+                <div class="window-title">文件管理器</div>
+                <div class="window-controls">
+                    <button onclick="minimizeWindow('fileManagerWindow')">_</button>
+                    <button onclick="maximizeWindow('fileManagerWindow')">□</button>
+                    <button onclick="closeWindow('fileManagerWindow')">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="file-manager">
+                    <div class="file-manager-sidebar">
+                        <div class="file-item"><i>📁</i> 主目录</div>
+                        <div class="file-item"><i>📁</i> 文档</div>
+                        <div class="file-item"><i>📁</i> 下载</div>
+                        <div class="file-item"><i>📁</i> 图片</div>
+                        <div class="file-item"><i>📁</i> 音乐</div>
+                        <div class="file-item"><i>📁</i> 视频</div>
+                    </div>
+                    <div class="file-manager-content">
+                        <div class="file-item"><i>📁</i> 文件夹1</div>
+                        <div class="file-item"><i>📄</i> 文档1.txt</div>
+                        <div class="file-item"><i>📄</i> 文档2.txt</div>
+                        <div class="file-item"><i>🖼️</i> 图片1.png</div>
+                        <div class="file-item"><i>🎵</i> 音乐1.mp3</div>
+                        <div class="file-item"><i>📁</i> 文件夹2</div>
+                        <div class="file-item"><i>📄</i> 报告.pdf</div>
+                        <div class="file-item"><i>📄</i> 笔记.md</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let activeWindow = null;
+        let terminalHistory = [];
+        let terminalHistoryIndex = -1;
+        
+        // 打开应用程序
+        function openApp(appName) {
+            closeStartMenu();
+            
+            const windowId = appName + 'Window';
+            const window = document.getElementById(windowId);
+            
+            if (window) {
+                // 如果窗口已经打开，只是激活它
+                if (window.style.display === 'block') {
+                    bringToFront(windowId);
+                    return;
+                }
+                
+                // 设置窗口位置（避免重叠）
+                const windows = document.querySelectorAll('.window');
+                let top = 50 + (windows.length * 20);
+                let left = 50 + (windows.length * 20);
+                
+                window.style.top = top + 'px';
+                window.style.left = left + 'px';
+                window.style.display = 'block';
+                
+                bringToFront(windowId);
+            }
+        }
+        
+        // 关闭窗口
+        function closeWindow(windowId) {
+            const window = document.getElementById(windowId);
+            if (window) {
+                window.style.display = 'none';
+            }
+        }
+        
+        // 最小化窗口
+        function minimizeWindow(windowId) {
+            // 简化版：直接关闭窗口
+            closeWindow(windowId);
+        }
+        
+        // 最大化窗口
+        function maximizeWindow(windowId) {
+            const window = document.getElementById(windowId);
+            if (window) {
+                if (window.style.width === '100%') {
+                    // 恢复原大小
+                    window.style.width = '';
+                    window.style.height = '';
+                    window.style.top = '50px';
+                    window.style.left = '50px';
+                } else {
+                    // 最大化
+                    window.style.width = '100%';
+                    window.style.height = 'calc(100% - 40px)';
+                    window.style.top = '0';
+                    window.style.left = '0';
+                }
+            }
+        }
+        
+        // 将窗口置于最前
+        function bringToFront(windowId) {
+            // 移除所有窗口的active类
+            document.querySelectorAll('.window').forEach(w => {
+                w.classList.remove('active');
+            });
+            
+            // 为当前窗口添加active类
+            const window = document.getElementById(windowId);
+            if (window) {
+                window.classList.add('active');
+                activeWindow = windowId;
+            }
+        }
+        
+        // 切换开始菜单显示/隐藏
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.classList.toggle('show');
+        }
+        
+        // 关闭开始菜单
+        function closeStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.classList.remove('show');
+        }
+        
+        // 点击桌面时关闭开始菜单
+        document.querySelector('.desktop').addEventListener('click', function(e) {
+            if (!e.target.closest('.start-menu') && !e.target.closest('.panel-icon')) {
+                closeStartMenu();
+            }
+        });
+        
+        // 窗口拖动功能
+        document.querySelectorAll('.window-header').forEach(header => {
+            header.addEventListener('mousedown', function(e) {
+                const window = this.parentElement;
+                const windowId = window.id;
+                bringToFront(windowId);
+                
+                let shiftX = e.clientX - window.getBoundingClientRect().left;
+                let shiftY = e.clientY - window.getBoundingClientRect().top;
+                
+                function moveAt(pageX, pageY) {
+                    window.style.left = pageX - shiftX + 'px';
+                    window.style.top = pageY - shiftY + 'px';
+                }
+                
+                function onMouseMove(e) {
+                    moveAt(e.pageX, e.pageY);
+                }
+                
+                document.addEventListener('mousemove', onMouseMove);
+                
+                window.addEventListener('mouseup', function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    window.removeEventListener('mouseup', onMouseMove);
+                }, { once: true });
+            });
+        });
+        
+        // 计算器功能
+        function appendToCalc(value) {
+            const display = document.getElementById('calcDisplay');
+            if (display.textContent === '0' && value !== '.') {
+                display.textContent = value;
+            } else {
+                display.textContent += value;
+            }
+        }
+        
+        function clearCalculator() {
+            document.getElementById('calcDisplay').textContent = '0';
+        }
+        
+        function backspaceCalc() {
+            const display = document.getElementById('calcDisplay');
+            if (display.textContent.length === 1) {
+                display.textContent = '0';
+            } else {
+                display.textContent = display.textContent.slice(0, -1);
+            }
+        }
+        
+        function calculate() {
+            const display = document.getElementById('calcDisplay');
+            try {
+                // 替换×为*用于计算
+                const expression = display.textContent.replace(/×/g, '*');
+                display.textContent = eval(expression);
+            } catch (e) {
+                display.textContent = '错误';
+            }
+        }
+        
+        // 终端功能
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const output = document.getElementById('terminalOutput');
+                
+                // 添加输入到历史记录
+                terminalHistory.push(input.value);
+                terminalHistoryIndex = terminalHistory.length;
+                
+                // 显示命令
+                output.innerHTML += `<div><span class="terminal-prompt">user@desktop:~$</span> ${input.value}</div>`;
+                
+                // 处理命令
+                processCommand(input.value);
+                
+                // 清空输入
+                input.value = '';
+                
+                // 滚动到底部
+                output.scrollTop = output.scrollHeight;
+            } else if (e.key === 'ArrowUp') {
+                // 上箭头 - 历史记录上一个命令
+                e.preventDefault();
+                if (terminalHistoryIndex > 0) {
+                    terminalHistoryIndex--;
+                    document.getElementById('terminalInput').value = terminalHistory[terminalHistoryIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                // 下箭头 - 历史记录下一个命令
+                e.preventDefault();
+                const input = document.getElementById('terminalInput');
+                if (terminalHistoryIndex < terminalHistory.length - 1) {
+                    terminalHistoryIndex++;
+                    input.value = terminalHistory[terminalHistoryIndex];
+                } else if (terminalHistoryIndex === terminalHistory.length - 1) {
+                    terminalHistoryIndex++;
+                    input.value = '';
+                }
+            }
+        }
+        
+        function processCommand(command) {
+            const output = document.getElementById('terminalOutput');
+            
+            switch (command.trim().toLowerCase()) {
+                case 'help':
+                    output.innerHTML += `<div>
+                        可用命令:<br>
+                        help - 显示帮助信息<br>
+                        clear - 清除终端屏幕<br>
+                        date - 显示当前日期和时间<br>
+                        ls - 列出文件<br>
+                        neofetch - 显示系统信息<br>
+                        open notepad - 打开记事本<br>
+                        open calculator - 打开计算器<br>
+                        open terminal - 打开新终端<br>
+                        open files - 打开文件管理器<br>
+                        exit - 关闭终端
+                    </div>`;
+                    break;
+                    
+                case 'clear':
+                    output.innerHTML = '';
+                    break;
+                    
+                case 'date':
+                    output.innerHTML += `<div>${new Date().toString()}</div>`;
+                    break;
+                    
+                case 'ls':
+                    output.innerHTML += `<div>
+                        文档<br>
+                        下载<br>
+                        图片<br>
+                        音乐<br>
+                        视频<br>
+                        桌面
+                    </div>`;
+                    break;
+                    
+                case 'neofetch':
+                    output.innerHTML += `<div>
+                        user@desktop<br>
+                        -----------------<br>
+                        OS: Linux 风格桌面模拟器<br>
+                        Host: HTML5 浏览器<br>
+                        Kernel: JavaScript 引擎<br>
+                        Uptime: 自从页面加载<br>
+                        Shell: 模拟终端<br>
+                        Resolution: ${window.innerWidth}x${window.innerHeight}<br>
+                        Theme: 深色模式<br>
+                    </div>`;
+                    break;
+                    
+                case 'open notepad':
+                    openApp('notepad');
+                    output.innerHTML += `<div>已打开记事本</div>`;
+                    break;
+                    
+                case 'open calculator':
+                    openApp('calculator');
+                    output.innerHTML += `<div>已打开计算器</div>`;
+                    break;
+                    
+                case 'open terminal':
+                    openApp('terminal');
+                    output.innerHTML += `<div>已打开新终端</div>`;
+                    break;
+                    
+                case 'open files':
+                    openApp('file-manager');
+                    output.innerHTML += `<div>已打开文件管理器</div>`;
+                    break;
+                    
+                case 'exit':
+                    closeWindow('terminalWindow');
+                    break;
+                    
+                case '':
+                    break;
+                    
+                default:
+                    output.innerHTML += `<div>命令未找到: ${command}. 输入 "help" 查看可用命令</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>繁星游戏堡</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6562ed;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 11;
+        }
+        
+        header {
+            background-color: #6495ED(98, 0, 238, 0.8);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #6495ED;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #6495ED;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: #333;
+        }
+        
+        footer {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 15;
+        }
+        
+        
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: modalopen 0.3s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .modal-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        
+        .modal-body {
+            padding: 10px 0;
+        }
+        
+        .modal-footer {
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            text-align: right;
+        }
+        body {
+            background-color: #f0f0f0; /* 仅为演示背景，实际使用时可以去掉 */
+            padding: 20px;
+        }
+        
+        .transparent-box {
+            display: inline-block;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* 半透明边框 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        
+        /* 深色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            .transparent-box {
+                background-color: rgba(0, 0, 0, 0.5);
+                border-color: rgba(255, 255, 255, 0.1);
+                color: #eee;
+            }
+        }
+        
+        /* 可选悬停效果 */
+        .transparent-box:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: background-color 0.3s ease;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #121212;
+            height: 100vh;
+            
+        }
+        
+        .trail {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            color: #fff;
+        }
+        
+        .page {
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform: translateY(100%);
+            z-index: 1;
+        }
+        .page.active {
+            z-index: 0;
+            transform: translateY(0);
+        }
+        .page.next {
+            transform: translateY(100%);
+            opacity: 0;
+            z-index: 0;
+            opacity: 1;
+        }
+        
+        .page.prev {
+            transform: translateY(-1%);
+            opacity: 0.5;
+            z-index: 0;
+            opacity: 1;
+        }
+        
+        .page-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        /* 不同页面的背景颜色 */
+       
+        
+        #page2 {
+            background-image: url("5.png");
+        }
+        
+        #page3 {
+            background-color: #e74c3c;
+        }
+        
+        #page4 {
+            background-color: #9b59b6;
+        }
+        /* 导航指示器 */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-1%);
+            z-index: 10;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            margin: 10px 0;
+            border-radius: 50%;
+            background-color: rgba(17, 126, 235, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background-color: rgb(44, 172, 246);
+            transform: scale(1.3);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a192f;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        .firework-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff3366, #ff9933);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .firework-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.6);
+        }
+        
+        .firework-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .logo {
+            /* 原有样式保留 */
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+        .logo a {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo:hover::before {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(11px);
+            -webkit-backdrop-filter: blur(11px);
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .logo:hover::after {
+            left: 100%;
+        }
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 触发按钮样式 - 添加前缀 */
+        .android-dialog-trigger-btn {
+            padding: 12px 24px;
+            background-color: #6200ee;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .android-dialog-trigger-btn:hover {
+            background-color: #7c4dff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* 遮罩层 - 添加前缀 */
+        .android-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: android-dialog-fadeIn 0.3s;
+        }
+
+        /* 弹窗主体 - 添加前缀 */
+        .android-dialog {
+            width: 280px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: scale(0.9);
+            animation: android-dialog-scaleIn 0.3s forwards;
+        }
+
+        /* 弹窗标题 - 添加前缀 */
+        .android-dialog-title {
+            padding: 20px 24px 0;
+            font-size: 20px;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        /* 弹窗内容 - 添加前缀 */
+        .android-dialog-content {
+            padding: 16px 24px;
+            font-size: 14px;
+            color: #424242;
+            line-height: 1.5;
+        }
+
+        /* 按钮容器 - 添加前缀 */
+        .android-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px 8px 8px 24px;
+        }
+
+        /* 按钮样式 - 添加前缀 */
+        .android-dialog-btn {
+            padding: 8px 16px;
+            margin-left: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* 次要按钮 - 添加前缀 */
+        .android-dialog-btn-secondary {
+            color: #6200ee;
+        }
+
+        /* 主要按钮 - 添加前缀 */
+        .android-dialog-btn-primary {
+            color: #6200ee;
+        }
+
+        .android-dialog-btn:hover {
+            background-color: rgba(98, 0, 238, 0.08);
+        }
+
+        /* 动画效果 - 添加前缀 */
+        @keyframes android-dialog-fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes android-dialog-scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 关闭按钮 - 添加前缀 */
+        .android-dialog-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .android-dialog-close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .android-dialog-close-btn::before, 
+        .android-dialog-close-btn::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 2px;
+            background-color: #424242;
+        }
+
+        .android-dialog-close-btn::before {
+            transform: rotate(45deg);
+        }
+
+        .android-dialog-close-btn::after {
+            transform: rotate(-45deg);
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2); /* 渐变背景增强毛玻璃效果 */
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .glass-text {
+            padding: 20px 40px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 关键：毛玻璃模糊效果 */
+            -webkit-backdrop-filter: blur(10px); /* Safari 兼容 */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px); /* 初始轻微下沉，增强动画效果 */
+            transition: 
+            opacity 1s ease-out,
+            visibility 1s ease-out,
+            transform 1s ease-out;
+        }
+
+        .glass-text.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* 为<p>添加延迟 */
+        p.glass-text {
+            transition-delay: 0.3s;
+            margin-top: 20px;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            /* 移除原来的background-image */
+            font-family: Arial, sans-serif;
+            color: white;
+            position: relative; /* 为视频背景提供定位上下文 */
+            min-height: 100vh;
+            overflow: hidden; /* 防止视频溢出导致滚动条 */
+        }
+
+        /* 视频背景容器 */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* 确保视频在内容下方 */
+            object-fit: cover; /* 保持视频填充整个容器 */
+        }
+
+        /* 内容容器 */
+        .content {
+            position: relative;
+            z-index: 1; /* 确保内容在视频上方 */
+            padding: 20px;
+        }
+        /* 使用独立命名空间和更高的z-index基准值 */
+        .win7-dialog-system {
+            --z-index-base: 10000; /* 设置足够高的基准值 */
+        }
+        
+        /* 覆盖层样式 - 使用特定类名 */
+        .win7-dialog-system .win7-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: var(--z-index-base);
+        }
+        
+        /* 对话框容器 - 使用特定类名 */
+        .win7-dialog-system .win7-dialog {
+            width: 400px;
+            border: 1px solid #a5a5a5;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            background-color: #f0f0f0;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: calc(var(--z-index-base) + 1);
+            opacity: 0.95;
+        }
+        
+        /* 标题栏样式 */
+        .win7-dialog-system .win7-dialog .win7-title-bar {
+            background: linear-gradient(to bottom, #3c7fb1, #2a5d8a);
+            color: white;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e4d74;
+        }
+        
+        /* 关闭按钮 */
+        .win7-dialog-system .win7-dialog .win7-close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        /* 内容区域 */
+        .win7-dialog-system .win7-dialog .win7-content {
+            padding: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow: auto;
+            max-height: 60vh;
+        }
+        
+        /* 图标样式 */
+        .win7-dialog-system .win7-dialog .win7-icon {
+            float: left;
+            margin-right: 2px;
+            width: 32px;
+            height: 32px;
+        }
+        
+        /* 消息文本 */
+        .win7-dialog-system .win7-dialog .win7-message {
+            margin-left: 47px;
+        }
+        
+        /* 按钮区域 */
+        .win7-dialog-system .win7-dialog .win7-buttons {
+            text-align: right;
+            padding: 10px 20px;
+            background: linear-gradient(to bottom, #e6e6e6, #d6d6d6);
+            border-top: 1px solid #b5b5b5;
+        }
+        
+        /* 按钮样式 */
+        .win7-dialog-system .win7-dialog .win7-btn {
+            background: linear-gradient(to bottom, #f6f6f6, #e2e2e2);
+            border: 1px solid #b5b5b5;
+            padding: 5px 15px;
+            margin-left: 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        
+        .win7-dialog-system .win7-dialog .win7-btn:hover {
+            background: linear-gradient(to bottom, #e5f3ff, #cce9ff);
+            border-color: #7eb6d9;
+        }
+        
+        .win7-dialog-system .win7-dialog .win7-btn:active {
+            background: linear-gradient(to bottom, #cce9ff, #e5f3ff);
+        }
+        
+        /* 触发按钮 */
+        .win7-dialog-trigger {
+            background: linear-gradient(to bottom, #f6f6f6, #e2e2e2);
+            border: 1px solid #b5b5b5;
+            padding: 8px 20px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        /* 隐藏音频元素 */
+        #bgMusic {
+            display: none;
+        }
+        body {
+            user-select: none;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE/Edge */
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #ffe6f2;
+            height: 100vh;
+        }
+        
+        .petal {
+            position: absolute;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffb6c1" d="M50 0c13.8 0 25 11.2 25 25 0 25-25 50-25 75S25 50 25 25C25 11.2 36.2 0 50 0z"/></svg>');
+            background-size: contain;
+            width: 30px;
+            height: 30px;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: falling linear infinite;
+        }
+        
+        @keyframes falling {
+            0% {
+                transform: translate(var(--startX), var(--startY)) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(var(--endX), var(--endY)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 200vh; /* 使页面可滚动 */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+        }
+        .scroll-text {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #4a4a4a;
+            animation: bounce 2s infinite;
+        }
+        .arrow-icon {
+            width: 30px;
+            height: 30px;
+            fill: #dbd5d5;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .uac-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .uac-dialog {
+            width: 450px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.15s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .uac-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .uac-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            background-color: #0078d7;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .uac-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .uac-body {
+            padding: 20px;
+            display: flex;
+        }
+        
+        .uac-shield {
+            font-size: 24px;
+            margin-right: 16px;
+            color: #0078d7;
+        }
+        
+        .uac-message {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .uac-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 16px;
+            background-color: #f8f8f8;
+            border-top: 1px solid #e5e5e5;
+            gap: 8px;
+        }
+        
+        .uac-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 80px;
+            transition: background-color 0.2s;
+        }
+        
+        .uac-button-primary {
+            background-color: #0078d7;
+            color: white;
+        }
+        
+        .uac-button-primary:hover {
+            background-color: #106ebe;
+        }
+        
+        .uac-button-default {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .uac-button-default:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .uac-elevation-line {
+            height: 2px;
+            background: linear-gradient(90deg, #0078d7, #1a9fff);
+            margin-bottom: 16px;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #content {
+            padding: 20px;
+        }
+        
+        #screensaver {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+        }
+        
+        #screensaver-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://picsum.photos/1600/900');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: -350px; /* 初始位置在屏幕右侧外 */
+            width: 500px;
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #333;
+            transition: transform 1s ease-out;
+            z-index: 1;
+        }
+        
+        .notification.show {
+            transform: translateX(-320px); /* 向左移动320px(250宽度+15padding*2+20边距) */
+        }
+        
+        .notification h3 {
+            margin-top: 0;
+            color: #222;
+        }
+        
+        .notification p {
+            margin-bottom: 0;
+        }
+        /* 使用特定命名空间前缀 */
+        .win11-dialog-simulator {
+            --win11-dialog-bg-color: #f3f3f3;
+            --win11-dialog-text-color: #000000;
+            --win11-dialog-border-color: #e5e5e5;
+            --win11-dialog-header-bg: #ffffff;
+            --win11-dialog-button-bg: #f3f3f3;
+            --win11-dialog-button-hover: #e5e5e5;
+            --win11-dialog-button-active: #d9d9d9;
+            --win11-dialog-accent-color: #0078d4;
+            --win11-dialog-shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .win11-dialog-simulator {
+                --win11-dialog-bg-color: #202020;
+                --win11-dialog-text-color: #ffffff;
+                --win11-dialog-border-color: #3d3d3d;
+                --win11-dialog-header-bg: #2b2b2b;
+                --win11-dialog-button-bg: #3d3d3d;
+                --win11-dialog-button-hover: #4f4f4f;
+                --win11-dialog-button-active: #5e5e5e;
+                --win11-dialog-accent-color: #60a5e5;
+                --win11-dialog-shadow-color: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* 基础样式 */
+        .win11-dialog-simulator {
+            all: initial;
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2147483647;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* 弹窗容器 */
+        .win11-dialog-container {
+            width: 440px;
+            background-color: var(--win11-dialog-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--win11-dialog-shadow-color);
+            overflow: hidden;
+            animation: win11-dialog-fadeIn 0.3s ease-out;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes win11-dialog-fadeIn {
+            from { opacity: 0; transform: translateY(-20px) translateY(-50%); }
+            to { opacity: 1; transform: translateY(0) translateY(-50%); }
+        }
+
+        /* 弹窗头部 */
+        .win11-dialog-header {
+            padding: 16px 24px;
+            background-color: var(--win11-dialog-header-bg);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--win11-dialog-border-color);
+        }
+
+        .win11-dialog-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 16px;
+            background-color: #0078d4;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .win11-dialog-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--win11-dialog-text-color);
+        }
+
+        /* 弹窗内容区域 - 空状态 */
+        .win11-dialog-content {
+            padding: 24px;
+            min-height: 80px;
+        }
+
+        /* 底部按钮区域 */
+        .win11-dialog-footer {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            border-top: 1px solid var(--win11-dialog-border-color);
+            background-color: var(--win11-dialog-header-bg);
+        }
+
+        .win11-dialog-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--win11-dialog-button-bg);
+            color: var(--win11-dialog-text-color);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-width: 80px;
+        }
+
+        .win11-dialog-button:hover {
+            background-color: var(--win11-dialog-button-hover);
+        }
+
+        .win11-dialog-button:active {
+            background-color: var(--win11-dialog-button-active);
+        }
+
+        .win11-dialog-button-primary {
+            background-color: var(--win11-dialog-accent-color);
+            color: white;
+        }
+
+        .win11-dialog-button-primary:hover {
+            background-color: #006cbd;
+        }
+
+        .win11-dialog-button-primary:active {
+            background-color: #005da6;
+        }
+        /* 深浅色模式适配 */
+        :root {
+            --erer-background: #ffffff;
+            --erer-text: #000000;
+            --erer-primary: #0078d7;
+            --erer-border: #e5e5e5;
+            --erer-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --erer-background: #2d2d2d;
+                --erer-text: #ffffff;
+                --erer-primary: #0078d7;
+                --erer-border: #444444;
+                --erer-shadow: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* Windows 11风格弹窗 */
+        .erer-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .erer-dialog-container {
+            background-color: var(--erer-background);
+            color: var(--erer-text);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--erer-shadow);
+            width: 440px;
+            max-width: 90%;
+            overflow: hidden;
+            border: 1px solid var(--erer-border);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .erer-dialog-header {
+            padding: 16px 24px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .erer-dialog-content {
+            padding: 0 24px 20px;
+            line-height: 1.5;
+        }
+
+        .erer-dialog-footer {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .erer-dialog-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .erer-dialog-button-primary {
+            background-color: var(--erer-primary);
+            color: white;
+        }
+
+        .erer-dialog-button-primary:hover {
+            background-color: #0066b9;
+        }
+        :root {
+            --kudtips-bg: #ffffff;
+            --kudtips-text: #000000;
+            --kudtips-primary: #0067c0;
+            --kudtips-border: #e5e5e5;
+            --kudtips-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --kudtips-acrylic: rgba(255, 255, 255, 0.7);
+            --kudtips-header-bg: rgba(0, 0, 0, 0.02);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --kudtips-bg: #202020;
+                --kudtips-text: #ffffff;
+                --kudtips-primary: #3a96dd;
+                --kudtips-border: #404040;
+                --kudtips-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                --kudtips-acrylic: rgba(32, 32, 32, 0.7);
+                --kudtips-header-bg: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Windows 11风格弹窗 - 所有类添加kudtips前缀 */
+        .kudtips-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .kudtips-dialog-container {
+            background: var(--kudtips-acrylic);
+            color: var(--kudtips-text);
+            border-radius: 8px;
+            box-shadow: var(--kudtips-shadow);
+            width: 440px;
+            max-width: 90%;
+            overflow: hidden;
+            border: 1px solid var(--kudtips-border);
+            font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+            animation: kudtips-fadeIn 0.3s ease-out;
+        }
+
+        .kudtips-dialog-header {
+            padding: 16px 24px;
+            font-size: 20px;
+            font-weight: 600;
+            background: var(--kudtips-header-bg);
+            display: flex;
+            align-items: center;
+        }
+
+        .kudtips-dialog-icon {
+            margin-right: 12px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .kudtips-dialog-content {
+            padding: 20px 24px;
+            line-height: 1.5;
+        }
+
+        .kudtips-dialog-footer {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background: var(--kudtips-header-bg);
+        }
+
+        .kudtips-dialog-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 80px;
+        }
+
+        .kudtips-dialog-button-primary {
+            background-color: var(--kudtips-primary);
+            color: white;
+        }
+
+        .kudtips-dialog-button-primary:hover {
+            background-color: var(--kudtips-primary);
+            opacity: 0.9;
+        }
+
+        .kudtips-dialog-button-secondary {
+            background-color: transparent;
+            color: var(--kudtips-text);
+            border: 1px solid var(--kudtips-border);
+        }
+
+        .kudtips-dialog-button-secondary:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes kudtips-fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <div id="kudtips-dialog" class="kudtips-dialog-overlay" style="display: none;">
+        <div class="kudtips-dialog-container">
+            <div class="kudtips-dialog-header">
+                <svg class="kudtips-dialog-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span>客户端下载</span>
+            </div>
+            <div class="kudtips-dialog-content">
+                由于网页并不是万能的<br>
+                如果你想要获取资讯,或者是安装mc等操作,推荐你下载一下客户端
+                不下载的话腐竹会杀死1200个微生物的
+            </div>
+            <div class="kudtips-dialog-footer">
+                <button class="kudtips-dialog-button kudtips-dialog-button-secondary" onclick="hideKudtipsDialog()">再想想</button>
+                <button class="kudtips-dialog-button kudtips-dialog-button-primary" onclick="hide1KudtipsDialog()">下载</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 显示弹窗
+        function showKudtipsDialog() {
+            const dialog = document.getElementById('kudtips-dialog');
+            dialog.style.display = 'flex';
+            
+            // 点击遮罩层关闭
+            dialog.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideKudtipsDialog();
+                }
+            });
+        }
+
+        // 隐藏弹窗
+        function hideKudtipsDialog() {
+            document.getElementById('kudtips-dialog').style.display = 'none';
+        }
+        // 下载文件
+        function hide1KudtipsDialog() {
+            window.location.href = 'indexrecovery.html';
+            document.getElementById('kudtips-dialog').style.display = 'none';
+        }
+
+        // 按ESC键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideKudtipsDialog();
+            }
+        });
+    </script>
+    <div id="erer-dialog" class="erer-dialog-overlay" style="display: none;">
+        <div class="erer-dialog-container">
+            <div class="erer-dialog-header">系统提示</div>
+            <div class="erer-dialog-content">
+                检测到当前页面响应缓慢，请尝试刷新(切换页面弹出此提示不用管),或访问indexrecovery.html,这里只提供最基本的网页服务。
+            </div>
+            <div class="erer-dialog-footer">
+                <button class="erer-dialog-button erer-dialog-button-primary" id="erer-confirm-btn">确定</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 卡顿检测函数
+        function ererDetectLag() {
+            const threshold = 1000; // 1s视为卡顿
+            let lastTime = performance.now();
+            let frames = 0;
+            let lagDetected = false;
+
+            function checkFrames(time) {
+                frames++;
+                if (time >= lastTime + 1000) {
+                    const fps = frames / ((time - lastTime) / 1000);
+                    frames = 0;
+                    lastTime = time;
+
+                    
+                }
+                
+                if (!lagDetected) {
+                    requestAnimationFrame(checkFrames);
+                }
+            }
+
+            requestAnimationFrame(checkFrames);
+
+            // 备用检测：长时间任务API
+            const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.duration > threshold) {
+                        ererShowDialog();
+                        observer.disconnect();
+                        lagDetected = true;
+                        break;
+                    }
+                }
+            });
+            observer.observe({ entryTypes: ["longtask"] });
+        }
+
+        // 显示弹窗
+        function ererShowDialog() {
+            const dialog = document.getElementById('erer-dialog');
+            dialog.style.display = 'flex';
+            
+            document.getElementById('erer-confirm-btn').addEventListener('click', function() {
+                dialog.style.display = 'none';
+            });
+        }
+
+        // 页面加载后开始检测
+        window.addEventListener('load', function() {
+            setTimeout(ererDetectLag, 3000); // 延迟3秒开始检测，避免加载时的正常延迟
+        });
+    </script>
+    <!-- 弹窗结构 -->
+    <div class="win11-dialog-simulator" id="win11Dialog">
+        <div class="win11-dialog-container">
+            <div class="win11-dialog-header">
+                <div class="win11-dialog-icon">i</div>
+                <div class="win11-dialog-title">宣传视频</div>
+            </div>
+            <div class="win11-dialog-content" id="win11Dialog2">
+                <p style="color: rgb(18, 59, 194);">以下视频来源于bilibili:</p>
+                <video width="400" height="320" controls>
+                    <source src="bx.mp4" type="video/mp4">
+                  您的浏览器不支持Video标签。
+                </video>
+            </div>
+            <div class="win11-dialog-footer">
+                <a class="win11-dialog-button win11-dialog-button-primary" href="index1.html">确认</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function stopWin11DialogVideo() {
+            // 1. 获取 id="win11Dialog" 的 div
+            const win11Dialog = document.getElementById('win11Dialog2');
+            
+            if (!win11Dialog) {
+                console.error("找不到 ID 为 'win11Dialog' 的元素！");
+                return;
+            }
+            
+            // 2. 获取该 div 内的所有 video 元素
+            const videos = win11Dialog.getElementsByTagName('source');
+            
+            if (videos.length === 0) {
+                console.warn("该对话框内没有视频！");
+                return;
+            }
+            
+            // 3. 遍历所有 video 并停止播放
+            for (const video of videos) {
+                video.pause();          // 暂停播放
+                video.currentTime = 0; // 回到开头
+            }
+        }
+    </script>
+    <script>
+        (function() {
+            // 获取弹窗元素
+            const dialog = document.getElementById('win11Dialog');
+            
+            // 显示弹窗的函数
+            window.showWin11Dialog = function(options) {
+                // 设置标题
+                if (options && options.title) {
+                    dialog.querySelector('.win11-dialog-title').textContent = options.title;
+                }
+                
+                // 设置按钮
+                if (options && options.buttons) {
+                    const footerEl = dialog.querySelector('.win11-dialog-footer');
+                    footerEl.innerHTML = '';
+                    
+                    options.buttons.forEach(btn => {
+                        const button = document.createElement('button');
+                        button.className = btn.primary ? 
+                            'win11-dialog-button win11-dialog-button-primary' : 
+                            'win11-dialog-button';
+                        button.textContent = btn.text;
+                        button.onclick = btn.onClick || (() => dialog.style.display = 'none');
+                        footerEl.appendChild(button);
+                    });
+                }
+                
+                // 显示弹窗
+                dialog.style.display = 'block';
+            };
+            
+            // 隐藏弹窗的函数
+            window.hideWin11Dialog = function() {
+                dialog.style.display = 'none';
+            };
+            
+            // 绑定默认按钮事件
+            dialog.querySelector('.win11-dialog-button').onclick = hideWin11Dialog;
+            dialog.querySelector('.win11-dialog-button-primary').onclick = hideWin11Dialog;
+            
+            // 点击外部不关闭
+            dialog.addEventListener('click', function(e) {
+                if (e.target === dialog) {
+                    e.stopPropagation();
+                }
+            });
+            
+        })();
+    </script>
+    <script>
+        // 存储原始标题
+        let originalTitle = document.title;
+        let timeoutId = null;
+        
+        // 监听页面可见性变化
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // 页面被切换出去
+                document.title = "孩子回来";
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+            } else {
+                // 页面被切换回来
+                document.title = "回来就好";
+                
+                // 3秒后恢复原始标题
+                timeoutId = setTimeout(function() {
+                    document.title = originalTitle;
+                    timeoutId = null;
+                }, 1500);
+            }
+        });
+    </script>
+    <script>
+        // 增强版检测逻辑
+        function enhancedCheck() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /android|webos|iphone|ipod|blackberry/i.test(userAgent);
+            const isTablet = /(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(userAgent);
+            const isTV = /smart-tv|androidtv|googletv|appletv/i.test(userAgent);
+    
+            const viewportWidth = Math.max(
+                document.documentElement.clientWidth || 0,
+                window.innerWidth || 0
+            );
+    
+            if (!isTV && !isTablet && isMobile && viewportWidth < 768) {
+                alert("本页面需要更大屏幕才能给您好的体验，您可以访问indexrecovery.html使用极速版\n");
+            }
+        }
+    
+        // 防抖处理
+        let checkTimeout;
+        function debouncedCheck() {
+            clearTimeout(checkTimeout);
+            checkTimeout = setTimeout(enhancedCheck, 300);
+        }
+    
+        // 添加监听事件
+        ['load', 'resize', 'orientationchange', 'pageshow'].forEach(event => {
+            window.addEventListener(event, debouncedCheck);
+        });
+    </script>
+    <div class="notification" id="notification">
+        <h3>通知</h3>
+        <p>性能差的设备不要长时间呆在这里,虽然做足了<del>优化</del></p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const notification = document.getElementById('notification');
+            
+            // 页面加载后立即显示通知
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // 5秒后隐藏通知
+            setTimeout(() => {
+                notification.classList.remove('show');
+                
+                // 等待过渡动画结束后移除元素
+                setTimeout(() => {
+                    notification.remove();
+                }, 1000);
+            }, 5000);
+        });
+    </script>
+    <script>
+        // 使用Intersection Observer实现懒加载
+        document.addEventListener("DOMContentLoaded", function() {
+          const lazyImages = [].slice.call(document.querySelectorAll("img.lazyload"));
+          
+          if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  let lazyImage = entry.target;
+                  lazyImage.src = lazyImage.dataset.src;
+                  lazyImageObserver.unobserve(lazyImage);
+                }
+              });
+            });
+            
+            lazyImages.forEach(function(lazyImage) {
+              lazyImageObserver.observe(lazyImage);
+            });
+          }
+        });
+    </script>        
+    <!-- 异步加载非关键CSS -->
+    <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+
+    <!-- 延迟非关键JS -->
+    <script src="non-critical.js" defer></script>
+    <script>
+        // 创建花瓣
+            function createPetals() {
+                const petalCount = 15; // 花瓣数量
+                
+                for (let i = 0; i < petalCount; i++) {
+                    setTimeout(() => {
+                        createPetal();
+                    }, i * 0.1); // 延迟创建每个花瓣
+                }
+            }
+            
+            // 创建单个花瓣
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                
+                // 随机起始位置（屏幕外）
+                const startOptions = [
+                    { x: -30, y: Math.random() * window.innerHeight }, // 左侧进入
+                    { x: window.innerWidth, y: Math.random() * window.innerHeight }, // 右侧进入
+                    { x: Math.random() * window.innerWidth, y: -30 } // 顶部进入
+                ];
+                const start = startOptions[Math.floor(Math.random() * startOptions.length)];
+                
+                // 随机结束位置（屏幕外）
+                const endOptions = [
+                    { x: window.innerWidth + 30, y: Math.random() * window.innerHeight }, // 右侧离开
+                    { x: -30, y: Math.random() * window.innerHeight }, // 左侧离开
+                    { x: Math.random() * window.innerWidth, y: window.innerHeight + 30 } // 底部离开
+                ];
+                const end = endOptions[Math.floor(Math.random() * endOptions.length)];
+                
+                // 随机大小
+                const size = 15 + Math.random() * 20;
+                
+                // 随机动画时长
+                const duration = 8 + Math.random() * 15;
+                
+                // 随机延迟
+                const delay = Math.random() * 5;
+                
+                // 设置样式
+                petal.style.setProperty('--startX', `${start.x}px`);
+                petal.style.setProperty('--startY', `${start.y}px`);
+                petal.style.setProperty('--endX', `${end.x - start.x}px`);
+                petal.style.setProperty('--endY', `${end.y - start.y}px`);
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size}px`;
+                petal.style.animationDuration = `${duration}s`;
+                petal.style.animationDelay = `${delay}s`;
+                
+                document.body.appendChild(petal);
+                
+                // 花瓣飘出后重新创建
+                petal.addEventListener('animationend', () => {
+                    petal.remove();
+                    createPetal();
+                });
+            }
+            
+            // 页面加载后开始动画
+            window.addEventListener('load', createPetals);
+            
+            // 窗口大小改变时调整
+            window.addEventListener('resize', () => {
+                document.querySelectorAll('.petal').forEach(petal => petal.remove());
+                createPetals();
+            });
+    </script>
+    <div class="page active" id="page1">
+        <div id="screensaver">
+            <video id="screensaver-video" autoplay loop muted>
+                <source src="114.mp4" type="video/mp4">
+                您的浏览器不支持视频标签。
+            </video>
+        </div>
+        <script>
+            let inactivityTime = 0;
+            const inactivityLimit = 60; // 60秒 = 1分钟
+            let screensaverTimeout;
+            
+            // 重置 inactivityTime 的函数
+            function resetInactivityTime() {
+                inactivityTime = 0;
+                hideScreensaver();
+            }
+            
+            // 显示屏保
+            function showScreensaver() {
+                document.getElementById('screensaver').style.display = 'block';
+                document.getElementById('screensaver-video').currentTime = 0;
+                document.getElementById('screensaver-video').play();
+            }
+            
+            // 隐藏屏保
+            function hideScreensaver() {
+                document.getElementById('screensaver').style.display = 'none';
+                document.getElementById('screensaver-video').pause();
+            }
+            
+            // 设置定时器检查不活动时间
+            function startInactivityTimer() {
+                // 清除之前的定时器
+                clearInterval(screensaverTimeout);
+                
+                // 设置新的定时器
+                screensaverTimeout = setInterval(function() {
+                    inactivityTime++;
+                    if (inactivityTime >= inactivityLimit) {
+                        showScreensaver();
+                        clearInterval(screensaverTimeout);
+                    }
+                }, 1000); // 每秒检查一次
+            }
+            
+            // 添加事件监听器
+            window.onload = function() {
+                startInactivityTimer();
+                
+                // 鼠标移动事件
+                document.addEventListener('mousemove', function() {
+                    resetInactivityTime();
+                    startInactivityTimer();
+                });
+                
+                // 按键事件
+                document.addEventListener('keydown', function() {
+                    resetInactivityTime();
+                    startInactivityTimer();
+                });
+                
+                // 触摸事件（移动设备）
+                document.addEventListener('touchstart', function() {
+                    resetInactivityTime();
+                    startInactivityTimer();
+                });
+                
+                // 点击事件
+                document.addEventListener('click', function() {
+                    resetInactivityTime();
+                    startInactivityTimer();
+                });
+            };
+        </script>
+        <video id="video-background" autoplay muted loop></video>
+        <div class="overlay">
+        <header>
+            <nav>
+                <div class="logo">
+                    <a id="playButton" style="text-decoration: none; color: inherit;">繁星游戏堡</a>
+                </div>
+                <script>
+                    // 监听键盘按下事件
+                    document.addEventListener('keydown', function(e) {
+                        // 检测 Ctrl + S（KeyCode 83 或 key 's'）
+                        if (e.ctrlKey && (e.key === 's' || e.keyCode === 83)) {
+                            e.preventDefault(); // 阻止默认保存行为
+                            window.location.href = "about:blank"; // 跳转到空白页
+                        }
+                    });
+                    // 禁止右键菜单
+                    document.addEventListener('contextmenu', function(e) {
+                        e.preventDefault(); // 阻止默认右键菜单
+                        alert("右键菜单已禁用！请联系服务器管理员获得帮助:D");
+                    });
+                    // 禁止键盘快捷键（Ctrl+C、Ctrl+U等）
+                    document.addEventListener('keydown', function(e) {
+                        // 阻止 Ctrl + U（查看源代码）
+                        if (e.ctrlKey && e.key === 'u') {
+                            e.preventDefault();
+                            alert("查看源代码已禁用！");
+                        }
+                        // 阻止 Ctrl + C（复制）
+                        if (e.ctrlKey && e.key === 'c') {
+                            e.preventDefault();
+                            alert("复制已禁用！");
+                        }
+                    });
+                    // 监听键盘按下事件
+                    document.addEventListener('keydown', function(e) {
+                        // 检测 F12 键（KeyCode 123 或 F12 键）
+                        if (e.key === 'F12' || e.keyCode === 123) {
+                            e.preventDefault(); // 阻止默认行为（打开开发者工具）
+                            window.location.href = "404.html"; // 跳转到 404 页面
+                        }
+
+                        // 额外检测 Ctrl+Shift+I（Chrome 开发者工具快捷键）
+                        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+
+                        // 额外检测 Ctrl+Shift+J（Chrome 控制台快捷键）
+                        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+
+                        // 额外检测 Ctrl+U（查看源代码）
+                        if (e.ctrlKey && e.key === 'u') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+                    });
+
+                    // 额外检测：如果用户仍然打开了控制台（某些浏览器可用）
+                    // 注意：这种方法不一定在所有浏览器都有效
+                    setInterval(function() {
+                        if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
+                            window.location.href = "404.html";
+                        }
+                    }, 1000);
+                </script>
+                <div class="nav-links">
+                    <audio id="bgMusic" autoplay loop>
+                        <source src="1.mp3" type="audio/mpeg">
+                        您的浏览器不支持音频元素。
+                    </audio>
+                    <script>
+                        const playButton = document.getElementById("playButton");
+                        const bgMusic = document.getElementById("bgMusic");
+
+                        playButton.addEventListener("click", async () => {
+                            try {
+                                // 尝试播放音乐（请求用户权限）
+                                await bgMusic.play();
+                            } catch (error) {
+                                console.error("播放失败:", error);
+                            }
+                        });
+                    </script>
+                    <a id="fireworkBtn">开始</a>
+                    <a onclick="showWin11Dialog();">宣传视频</a>
+                    <script>
+                        function my11Function()
+                        {
+                            var r=confirm("目前还不知道他的b站链接\n点击其他人的试试\n但有一个同名账号,点击确定前往");
+                            if (r==true)
+                            {
+                                window.location.href='https://space.bilibili.com/14186323'
+                            }
+                        }
+                    </script>
+                    <div class="uac-container" id="uacContainer" style="display: none;">
+                        <div class="uac-dialog">
+                            <div class="uac-elevation-line"></div>
+                            <div class="uac-header">
+                                <div class="uac-icon">
+                                    <img src="1029.ico" width="24" height="24">
+                                </div>
+                                <div class="uac-title" style="color: black;">用户账户控制</div>
+                            </div>
+                            <div class="uac-body">
+                                <div class="uac-shield">
+                                    <img src="1028.ico" width="48" height="48">
+                                </div>
+                                <div class="uac-message">
+                                    <h2 style="color: black;">硬件检测.html</h2>
+                                    <p style="color: black;">你想允许此应用对你的设备进行更改吗？</p>
+                                    <p style="color: black;">发布者: <a style="color: #106ebe;" href="https://space.bilibili.com/3546766444071206">WindowsXP</a></p>
+                                    <p style="color: black;">文件来源: 服务器</p>
+                                </div>
+                            </div>
+                            <div class="uac-footer">
+                                <button class="uac-button uac-button-default" onclick="hideUAC()">否</button>
+                                <button class="uac-button uac-button-primary" onclick="window.location.href='info.html'">是</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <script>
+                        function showUAC() {
+                            document.getElementById('uacContainer').style.display = 'flex';
+                            // 禁用页面滚动
+                            document.body.style.overflow = 'hidden';
+                        }
+                        
+                        function hideUAC() {
+                            document.getElementById('uacContainer').style.display = 'none';
+                            // 恢复页面滚动
+                            document.body.style.overflow = '';
+                        }
+                        
+                        // 点击弹窗外部关闭弹窗
+                        document.getElementById('uacContainer').addEventListener('click', function(e) {
+                            if (e.target === this) {
+                                hideUAC();
+                            }
+                        });
+                    </script>
+                    <a id="win7-openDialog1">关于我们</a>
+                    <a onclick="showKudtipsDialog()">硬件监控</a>
+                    <a><span class="android-dialog-text-trigger" id="androidDialogTextTrigger">捐款</span></a>
+                    <script>
+                        function showAle2rt() {
+                            alert("");
+                        }
+                    </script>
+                    <div class="win7-dialog-system">
+                        <!-- 弹窗1 -->
+                        <div class="win7-overlay" id="win7-overlay1"></div>
+                        <div class="win7-dialog" id="win7-dialog1">
+                            <div class="win7-title-bar">
+                                <img src="261.png" class="win7-icon" alt="警告图标">
+                                <span>关于我们</span>
+                                <button class="win7-close-btn">×</button>
+                            </div>
+                            <div class="win7-content">
+                                <div class="win7-message">
+                                    <h3 style="color: #6495ED; margin-top: 0; margin-bottom: 10px;">关于我们</h3>
+                                    <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19<br>(繁星游戏派对)于2024.8.14正式更名为繁星游戏堡<br>自2022以来，我们致力于打造玩家的极致体验<br>服务器使用高性能物理机 绝不跑路</p>
+                                </div>
+                            </div>
+                            <div class="win7-buttons">
+                                <button class="win7-btn" data-dialog="1" data-action="confirm" onclick="window.location.href='index1.html'">确定</button>
+                                <button class="win7-btn" data-dialog="1" data-action="cancel" onclick="window.location.href='index1.html'">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // 弹窗管理系统
+                        class Win7DialogSystem {
+                            constructor() {
+                                this.openDialogs = [];
+                                this.zIndexBase = 10000;
+                                this.initEvents();
+                            }
+                            
+                            initEvents() {
+                                // 绑定打开按钮事件
+                                document.getElementById('win7-openDialog1').addEventListener('click', () => this.openDialog(1));
+                                document.getElementById('win7-openDialog2').addEventListener('click', () => this.openDialog(2));
+                                
+                                // 使用事件委托处理所有弹窗按钮
+                                document.querySelector('.win7-dialog-system').addEventListener('click', (e) => {
+                                    const closeBtn = e.target.closest('.win7-close-btn');
+                                    const actionBtn = e.target.closest('.win7-btn[data-action]');
+                                    
+                                    if (closeBtn) {
+                                        const dialogId = this.getDialogIdFromElement(closeBtn);
+                                        this.closeDialog(dialogId);
+                                    }
+                                    
+                                    if (actionBtn) {
+                                        const dialogId = parseInt(actionBtn.dataset.dialog);
+                                        const action = actionBtn.dataset.action;
+                                        this.handleAction(dialogId, action);
+                                    }
+                                });
+                                
+                                // 点击遮罩层关闭最上层弹窗
+                                document.querySelectorAll('.win7-overlay').forEach(overlay => {
+                                    overlay.addEventListener('click', (e) => {
+                                        if (e.target === overlay) {
+                                            const dialogId = this.getDialogIdFromElement(overlay);
+                                            this.closeDialog(dialogId);
+                                        }
+                                    });
+                                });
+                            }
+                            
+                            getDialogIdFromElement(element) {
+                                const id = element.closest('.win7-overlay, .win7-dialog').id;
+                                return parseInt(id.replace(/[^\d]/g, ''));
+                            }
+                            
+                            openDialog(dialogId) {
+                                // 如果已经打开，则先关闭
+                                if (this.openDialogs.includes(dialogId)) {
+                                    this.closeDialog(dialogId);
+                                }
+                                
+                                // 添加到打开列表
+                                this.openDialogs.push(dialogId);
+                                
+                                // 计算z-index
+                                const zIndex = this.zIndexBase + (this.openDialogs.length * 2);
+                                const overlayZIndex = zIndex;
+                                const dialogZIndex = zIndex + 1;
+                                
+                                // 显示弹窗
+                                const overlay = document.getElementById(`win7-overlay${dialogId}`);
+                                const dialog = document.getElementById(`win7-dialog${dialogId}`);
+                                
+                                overlay.style.zIndex = overlayZIndex;
+                                dialog.style.zIndex = dialogZIndex;
+                                
+                                overlay.style.display = 'block';
+                                dialog.style.display = 'block';
+                            }
+                            
+                            closeDialog(dialogId) {
+                                const index = this.openDialogs.indexOf(dialogId);
+                                if (index > -1) {
+                                    this.openDialogs.splice(index, 1);
+                                }
+                                
+                                const overlay = document.getElementById(`win7-overlay${dialogId}`);
+                                const dialog = document.getElementById(`win7-dialog${dialogId}`);
+                                
+                                overlay.style.display = 'none';
+                                dialog.style.display = 'none';
+                            }
+                            
+                            handleAction(dialogId, action) {
+                                console.log(`弹窗${dialogId}: 用户点击了${action}按钮`);
+                                this.closeDialog(dialogId);
+                                
+                                // 根据不同的action执行不同的操作
+                                if (action === 'confirm') {
+                                    alert(`弹窗${dialogId}: 您点击了确定按钮`);
+                                } else if (action === 'cancel') {
+                                    alert(`弹窗${dialogId}: 您点击了取消按钮`);
+                                }
+                            }
+                        }
+                        
+                        // 初始化弹窗系统
+                        new Win7DialogSystem();
+                    </script>
+                </div>
+            </nav>
+        </header>
+        <div class="android-dialog-overlay" id="androidDialogOverlay">
+            <div class="android-dialog">
+                <div class="android-dialog-title">捐款</div>
+                <div class="android-dialog-content">
+                    给点钱吧,活不起了:D<br><img src="fu.jpg" alt="付款码"><img src="fu2.png" alt="付款码">
+                </div>
+                <div class="android-dialog-actions">
+                    <button class="android-dialog-btn android-dialog-btn-secondary" id="androidDialogCancelBtn">取消</button>
+                    <button class="android-dialog-btn android-dialog-btn-primary" id="androidDialogConfirmBtn">我已捐款</button>
+                </div>
+            </div>
+            <div class="android-dialog-close-btn" id="androidDialogCloseBtn"></div>
+        </div>
+    
+        <script>
+            const textTrigger = document.getElementById('androidDialogTextTrigger');
+            const overlay = document.getElementById('androidDialogOverlay');
+            const cancelBtn = document.getElementById('androidDialogCancelBtn');
+            const confirmBtn = document.getElementById('androidDialogConfirmBtn');
+            const closeBtn = document.getElementById('androidDialogCloseBtn');
+    
+            // 显示弹窗
+            textTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                overlay.style.display = 'flex';
+            });
+    
+            // 关闭弹窗的三种方式
+            const closeDialog = () => {
+                overlay.style.display = 'none';
+            };
+    
+            cancelBtn.addEventListener('click', closeDialog);
+            
+            // 修改确认按钮功能：显示alert后关闭弹窗
+            confirmBtn.addEventListener('click', function() {
+                alert('感谢您的捐款！您的支持对我们非常重要。');
+                closeDialog();
+            });
+            
+            closeBtn.addEventListener('click', closeDialog);
+    
+            // 点击遮罩层关闭
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeDialog();
+                }
+            });
+        </script>
+        <div class="container">
+            <section class="hero">
+                <h1 id="color-changing-text">繁星游戏堡</h1>
+                <h3>FxGameCastel</h3>
+                <p> 用心打造极致体验</p>
+                <button class="btn" onclick="showAlert1()">加入我们</button>
+                <br>
+                <br>
+                <div class="scroll-text">向下滑动查看更多</div>
+                <svg class="arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    <path fill="none" d="M0 0h24v24H0V0z"/>
+                </svg>
+            </section>
+            
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h3 style="color: #6495ED;">为什么选择我们？</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
+                        <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
+                        <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
+                        <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page2">
+                <video autoplay muted loop class="video-background">
+                    <source src="6.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频
+                </video>
+                <h2 class="glass-text">优秀的后台管理</h2>
+                <div style="text-align: left; padding-left: 20px;">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="glass-text">本服务器使用MCDR(MCDReforged)进行控制<br>MCDR是什么？<br>MCDaemon 的重置版本，用于控制 Minecraft 服务器的一个 Python 工具<br>你需要MCDR? 官网:<a href="https://mcdreforged.com/zh-CN">看看</a></p>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                      const glassElements = document.querySelectorAll(".glass-text");
+                      
+                      const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                          if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                          }
+                        });
+                      }, { threshold: 0.1 });
+                
+                      glassElements.forEach((element) => {
+                        observer.observe(element);
+                      });
+                    });
+                </script>
+            </div>
+            <div class="page" id="page3">
+                <video autoplay muted loop class="video-background">
+                    <source src="7.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频
+                </video>
+                <h2 class="glass-text">管理人员</h2>
+                <br>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <div id="section1">
+                <div class="transparent-box">
+                    <img src="1.png" alt="腐竹头像" width="60" height="60">
+                    <p style="color:yellowgreen" onclick="window.location.href='https://space.bilibili.com/563077451'">IrisOracle 鸢尾</p>
+                    繁星游戏堡·腐竹<br>
+                    à voir le monde et sa beauté.
+                </div>
+                <div class="transparent-box">
+                    <img src="2.png" alt="哥能刷新一下吗" width="60" height="60">
+                    <p style="color:#6495ED" onclick="window.location.href='https://space.bilibili.com/2143461821'">Ruthyrings RU</p>
+                    繁星游戏堡·吉祥物<br>
+                    兄弟玩整合包么
+                </div>
+                <div class="transparent-box">
+                    <img src="3.png" alt="哥能刷新一下吗" width="60" height="60">
+                    <p style="color:#6495ED"onclick="my11Function()">PrimeMoon_ PO</p>
+                    繁星游戏堡·管理员<br>
+                    这个管理很懒，没留下什么
+                </div>
+                <div class="transparent-box">
+                    <img src="4.jpg" alt="哥能刷新一下吗" width="60" height="60">
+                    <p style="color:#6495ED" onclick="window.location.href='https://space.bilibili.com/3546766444071206'">Windows XP</p>
+                    繁星游戏堡·御用刑部尚书<br>
+                    你好
+                </div>
+                <p class="glass-text">点击蓝色名字可以跳转到对应的B站链接</p>
+            </div>
+            <div class="page" id="page4">
+                <video autoplay muted loop class="video-background">
+                    <source src="8.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频
+                </video>
+                <h2 class="glass-text">更新日志</h2>
+                <br>
+                <br>
+                <br>
+                <p class="glass-text">1.砍了电脑配置检测页面<br>2.改成了放宣传片的地方<br>3.换了喜人收款码<br>4.移除了一个通知<br>5.管理页面人名可以点击<br>6.访问indexrecovery.html可极大的改善性能</p>
+            </div>
+            <script>
+                function isIE() {
+                    const ua = navigator.userAgent;
+                    const isIE = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+                    const isOldEdge = ua.indexOf("Edge/") > -1; // Edge 旧版（基于 EdgeHTML）
+                    return isIE || isOldEdge;
+                }
+            
+                if (isIE()) {
+                    alert("本网站不支持 Internet Explorer 或旧版 Edge，请使用 Chrome、Edge（Chromium）或 Firefox 访问。");
+                    window.location.href = "about:blank"; // 强制跳转空白页（无法关闭时）
+                }
+            </script>
+            <script>
+                function isSafari() {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    const isMac = navigator.userAgent.includes('Macintosh');
+                    const isSafariUA = navigator.userAgent.includes('Safari');
+                    const isChromeUA = navigator.userAgent.includes('Chrome');
+                    
+                    // iOS 上的所有浏览器都是 WebKit（Safari 内核）
+                    if (isIOS) {
+                        return true;
+                    }
+                    
+                    // macOS 上的 Safari（排除 Chrome 和 Edge）
+                    return (isMac && isSafariUA && !isChromeUA);
+                }
+            
+                if (isSafari()) {
+                    alert("当前浏览器是Safari,背景可能无法正常显示");
+                } else {
+                    
+                }
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const colors = [
+                        '#FF0000', '#FF7F00', '#FFFF00', 
+                        '#00FF00', '#0000FF', '#4B0082', 
+                        '#9400D3', '#FF1493', '#00FFFF'
+                    ];
+                    
+                    let mouseX = 0;
+                    let mouseY = 0;
+                    let trailCount = 10; // 拖尾粒子数量
+                    let trails = [];
+                    
+                    // 初始化拖尾粒子
+                    for (let i = 0; i < trailCount; i++) {
+                        let trail = document.createElement('div');
+                        trail.className = 'trail';
+                        trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        document.body.appendChild(trail);
+                        trails.push({
+                            element: trail,
+                            x: 0,
+                            y: 0,
+                            size: Math.random() * 10 + 5,
+                            speed: Math.random() * 0.5 + 0.1,
+                            delay: i * 5
+                        });
+                    }
+                    
+                    // 跟踪鼠标位置
+                    document.addEventListener('mousemove', (e) => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                    });
+                    const blueColors = [
+                        '#0000FF',  // 纯蓝
+                        '#1E90FF',  // 道奇蓝（DodgerBlue）
+                        '#4169E1',  // 皇家蓝（RoyalBlue）
+                        '#4682B4',  // 钢蓝（SteelBlue）
+                        '#87CEFA',  // 浅天蓝（LightSkyBlue）
+                        '#ADD8E6',  // 浅蓝（LightBlue）
+                        '#B0E0E6',  // 粉蓝（PowderBlue）
+                        '#6495ED',  // 矢车菊蓝（CornflowerBlue）
+                    ];
+                    // 动画循环
+                    function animate() {
+                        for (let i = 0; i < trails.length; i++) {
+                            const trail = trails[i];
+                            // 延迟跟随效果
+                            if (i === 0) {
+                                trail.x = mouseX;
+                                trail.y = mouseY;
+                            } else {
+                                const prev = trails[i - 1];
+                                trail.x += (prev.x - trail.x) * trail.speed;
+                                trail.y += (prev.y - trail.y) * trail.speed;
+                            }
+                            
+                            // 更新粒子位置和大小
+                            trail.element.style.left = trail.x + 'px';
+                            trail.element.style.top = trail.y + 'px';
+                            trail.element.style.width = trail.size + 'px';
+                            trail.element.style.height = trail.size + 'px';
+                            
+                            // 随机颜色变化
+                            if (Math.random() < 0.05) {
+                                trail.element.style.backgroundColor = blueColors[Math.floor(Math.random() * blueColors.length)];
+                            }
+                        }
+                        
+                        requestAnimationFrame(animate);
+                    }
+                    
+                    animate();
+                });
+            </script>
+            <div class="nav-dots">
+                <div class="dot active" data-page="1"></div>
+                <div class="dot" data-page="2"></div>
+                <div class="dot" data-page="3"></div>
+                <div class="dot" data-page="4"></div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const pages = document.querySelectorAll('.page');
+                    const dots = document.querySelectorAll('.dot');
+                    let currentPage = 0;
+                    
+                    // 初始化所有页面位置
+                    pages.forEach((page, index) => {
+                        if (index === 0) {
+                            page.classList.add('active');
+                        } else {
+                            page.classList.add('next');
+                        }
+                    });
+                    
+                    // 滚动事件处理
+                    let isAnimating = false;
+                    
+                    window.addEventListener('wheel', function(e) {
+                        if (isAnimating) return;
+                        
+                        const direction = e.deltaY > 0 ? 1 : -1;
+                        const newPage = currentPage + direction;
+                        
+                        if (newPage >= 0 && newPage < pages.length) {
+                            isAnimating = true;
+                            currentPage = newPage;
+                            updatePages(() => {
+                                isAnimating = false;
+                            });
+                        }
+                    }, { passive: true });
+                    
+                    // 点击导航点
+                    
+                    
+                    // 更新页面状态
+                    function updatePages(callback) {
+                        // 先处理当前活动页面
+                        const currentActive = document.querySelector('.page.active');
+                        if (currentActive) {
+                            currentActive.classList.remove('active');
+                            currentActive.classList.add(currentPage > Array.from(pages).indexOf(currentActive) ? 'prev' : 'next');
+                        }
+                        
+                        // 处理新活动页面
+                        const newActive = pages[currentPage];
+                        newActive.classList.remove('prev', 'next');
+                        newActive.classList.add('active');
+                        
+                        // 更新导航点
+                        dots.forEach((dot, index) => {
+                            dot.classList.toggle('active', index === currentPage);
+                        });
+                        
+                        // 动画结束后执行回调
+                        setTimeout(callback, 800); // 与CSS过渡时间匹配
+                    }
+                    
+                    // 触摸设备支持
+                    let startY;
+                    
+                    document.addEventListener('touchstart', function(e) {
+                        startY = e.touches[0].clientY;
+                    }, { passive: true });
+                    
+                    document.addEventListener('touchmove', function(e) {
+                        if (isAnimating) return;
+                        
+                        const y = e.touches[0].clientY;
+                        const diff = startY - y;
+                        
+                        if (Math.abs(diff) > 50) {
+                            isAnimating = true;
+                            const direction = diff > 0 ? 1 : -1;
+                            const newPage = currentPage + direction;
+                            
+                            if (newPage >= 0 && newPage < pages.length) {
+                                currentPage = newPage;
+                                updatePages(() => {
+                                    isAnimating = false;
+                                });
+                            }
+                        }
+                    }, { passive: true });
+                });
+                </script>
+            <script>
+                function showAlert() {
+                    alert("施工中");
+                }
+                function showAlert1() {
+                    var r = confirm("加入QQ群问卷链接:点击确定跳转\n点按取消查看discord链接");
+                    if (r == true) {
+                        window.open("https://wj.qq.com/s2/15083217/9cc4/", "_blank");
+                    } else {
+                        alert("Discord链接:https://discord.gg/dUWasqNV");
+                    }
+                }
+            </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Randomly select background video
+                const videos = ['1.mp4', '2.mp4'];
+                const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+                const videoBg = document.getElementById('video-background');
+                videoBg.src = randomVideo;
+                
+                // Ensure video plays correctly on mobile
+                videoBg.play().catch(e => {
+                    console.log("Autoplay prevented, trying with muted attribute");
+                    videoBg.muted = true;
+                    videoBg.play();
+                });
+                
+                // Particle explosion effect
+                document.body.addEventListener('click', function(e) {
+                    createParticles(e.clientX, e.clientY);
+                });
+                
+                function createParticles(x, y) {
+                    const colors = ['#1e90ff', '#00bfff', '#87cefa', '#4682b4', '#5f9ea0', '#ff00ff'];
+                    const particleCount = 1;
+                    
+                    
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('fireworkBtn');
+                const colors = [
+                    '#ff3366', '#ff9933', '#33ccff', 
+                    '#9966ff', '#ff66cc', '#66ff33',
+                    '#ffff00', '#00ffff', '#ff00ff'
+                ];
+                
+                btn.addEventListener('click', function(e) {
+                    createFireworks(e.clientX, e.clientY);
+                });
+                
+                function createFireworks(x, y) {
+                    // 烟花爆炸粒子数量
+                    const particleCount = 100;
+                    
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        
+                        // 随机大小 (3-8px)
+                        const size = Math.random() * 5 + 3;
+                        particle.style.width = `${size}px`;
+                        particle.style.height = `${size}px`;
+                        
+                        // 随机颜色
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.backgroundColor = color;
+                        
+                        // 初始位置 (按钮点击位置)
+                        particle.style.left = `${x}px`;
+                        particle.style.top = `${y}px`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        // 随机角度和速度
+                        const angle = Math.random() * Math.PI * 2;
+                        const velocity = 2 + Math.random() * 10;
+                        
+                        // 计算x和y方向的速度
+                        const vx = Math.cos(angle) * velocity;
+                        const vy = Math.sin(angle) * velocity;
+                        
+                        // 动画持续时间 (800-1200ms)
+                        const duration = 800 + Math.random() * 400;
+                        
+                        // 开始动画
+                        animateParticle(particle, x, y, vx, vy, duration);
+                    }
+                }
+                
+                function animateParticle(particle, startX, startY, vx, vy, duration) {
+                    const startTime = Date.now();
+                    
+                    function update() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = elapsed / duration;
+                        
+                        // 动画结束
+                        if (progress >= 1) {
+                            particle.remove();
+                            return;
+                        }
+                        
+                        // 计算当前位置 (添加重力效果)
+                        const gravity = 0.1;
+                        const currentX = startX + vx * elapsed * 0.2;
+                        const currentY = startY + vy * elapsed * 0.2 + gravity * elapsed * 0.1 * elapsed * 0.1;
+                        
+                        // 更新位置
+                        particle.style.left = `${currentX}px`;
+                        particle.style.top = `${currentY}px`;
+                        
+                        // 淡出效果
+                        particle.style.opacity = 1 - progress;
+                        
+                        // 缩小效果
+                        particle.style.transform = `scale(${1 - progress * 0.5})`;
+                        
+                        requestAnimationFrame(update);
+                    }
+                    
+                    requestAnimationFrame(update);
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // 视频数据存储
+                const videoData = {};
+                
+                // 获取所有视频容器
+                const videoContainers = document.querySelectorAll('[data-video-container]');
+                
+                // IntersectionObserver 配置
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '100px', // 提前100px加载
+                    threshold: 0.01
+                };
+                
+                // 创建观察器
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        const container = entry.target;
+                        const videoId = container.getAttribute('data-video-container');
+                        const video = container.querySelector('video');
+                        const placeholder = document.getElementById(`placeholder-${videoId}`);
+                        const statusElement = document.getElementById(`status-${videoId}`);
+                        
+                        if (entry.isIntersecting) {
+                            // 进入视口 - 加载视频
+                            if (!videoData[videoId] || videoData[videoId].state === 'unloaded') {
+                                loadVideo(videoId, video, placeholder, statusElement);
+                            }
+                        } else {
+                            // 离开视口 - 卸载视频
+                            if (videoData[videoId] && videoData[videoId].state === 'loaded') {
+                                unloadVideo(videoId, video, placeholder, statusElement);
+                            }
+                        }
+                    });
+                }, observerOptions);
+                
+                // 加载视频函数
+                function loadVideo(videoId, videoElement, placeholder, statusElement) {
+                    // 如果已经加载，直接显示
+                    if (videoData[videoId] && videoData[videoId].state === 'loaded') {
+                        showVideo(videoElement, placeholder, statusElement);
+                        return;
+                    }
+                    
+                    
+                    statusElement.className = 'status loading';
+                    
+                    // 存储原始src（第一次加载时）
+                    if (!videoData[videoId]) {
+                        const source = videoElement.querySelector('source');
+                        videoData[videoId] = {
+                            state: 'loading',
+                            src: source.getAttribute('data-src'),
+                            type: source.getAttribute('type'),
+                            currentTime: 0
+                        };
+                    } else {
+                        videoData[videoId].state = 'loading';
+                    }
+                    
+                    // 设置视频源
+                    const source = videoElement.querySelector('source');
+                    source.src = videoData[videoId].src;
+                    
+                    // 重新加载视频元素
+                    videoElement.load();
+                    
+                    // 视频加载完成后的处理
+                    videoElement.onloadeddata = function() {
+                        videoData[videoId].state = 'loaded';
+                        showVideo(videoElement, placeholder, statusElement);
+                        
+                        // 恢复之前的时间位置
+                        if (videoData[videoId].currentTime > 0) {
+                            videoElement.currentTime = videoData[videoId].currentTime;
+                        }
+                        
+                        // 尝试自动播放（静音模式下）
+                        videoElement.play().then(() => {
+                            
+                            statusElement.className = 'status visible';
+                        }).catch(error => {
+                            
+                            statusElement.className = 'status visible';
+                        });
+                    };
+                    
+                    // 错误处理
+                    videoElement.onerror = function() {
+                        
+                        statusElement.className = 'status hidden';
+                        videoData[videoId].state = 'error';
+                    };
+                }
+                
+                // 卸载视频函数
+                function unloadVideo(videoId, videoElement, placeholder, statusElement) {
+                    // 保存当前播放位置
+                    videoData[videoId].currentTime = videoElement.currentTime;
+                    videoData[videoId].state = 'unloaded';
+                    
+                    // 暂停视频
+                    videoElement.pause();
+                    
+                    // 移除视频源
+                    const source = videoElement.querySelector('source');
+                    source.removeAttribute('src');
+                    videoElement.load();
+                    
+                    // 隐藏视频，显示占位符
+                    videoElement.style.display = 'none';
+                    placeholder.style.display = 'flex';
+                    statusElement.className = 'status hidden';
+                }
+                
+                // 显示视频函数
+                function showVideo(videoElement, placeholder, statusElement) {
+                    placeholder.style.display = 'none';
+                    videoElement.style.display = 'block';
+                }
+                
+                // 为每个视频容器设置观察器
+                videoContainers.forEach(container => {
+                    observer.observe(container);
+                    
+                    const videoId = container.getAttribute('data-video-container');
+                    const video = container.querySelector('video');
+                    const statusElement = document.getElementById(`status-${videoId}`);
+                    
+                    // 存储初始状态
+                    videoData[videoId] = {
+                        state: 'unloaded'
+                    };
+                    
+                    // 用户手动播放事件
+                    video.addEventListener('play', function() {
+                        statusElement.className = 'status visible';
+                    });
+                    
+                    // 用户手动暂停事件
+                    video.addEventListener('pause', function() {
+                        statusElement.className = 'status hidden';
+                    });
+                });
+                
+                // 页面可见性API - 当标签页切换到后台时卸载所有视频
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        videoContainers.forEach(container => {
+                            const videoId = container.getAttribute('data-video-container');
+                            const video = container.querySelector('video');
+                            const placeholder = document.getElementById(`placeholder-${videoId}`);
+                            const statusElement = document.getElementById(`status-${videoId}`);
+                            
+                            if (videoData[videoId] && videoData[videoId].state === 'loaded') {
+                                unloadVideo(videoId, video, placeholder, statusElement);
+                            }
+                        });
+                    }
+                });
+                
+                // 节流的滚动事件，用于更新状态显示
+                let isScrolling;
+                window.addEventListener('scroll', function() {
+                    window.clearTimeout(isScrolling);
+                    isScrolling = setTimeout(function() {
+                        videoContainers.forEach(container => {
+                            const videoId = container.getAttribute('data-video-container');
+                            const statusElement = document.getElementById(`status-${videoId}`);
+                            
+                            if (videoData[videoId]) {
+                                const rect = container.getBoundingClientRect();
+                                const isVisible = (
+                                    rect.top >= 0 &&
+                                    rect.left >= 0 &&
+                                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                                );
+                                
+                                if (isVisible && videoData[videoId].state === 'loaded') {
+                                    statusElement.className = 'status visible';
+                                } else if (!isVisible && videoData[videoId].state === 'loaded') {
+                                    statusElement.className = 'status hidden';
+                                }
+                            }
+                        });
+                    }, 100);
+                }, false);
+            });
+        </script>
+    </div>
+</body>
+</html>

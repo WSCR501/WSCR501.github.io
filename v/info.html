@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP和系统信息检测</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>正在获取您的网络和系统信息...</h1>
+    <script>
+        // 获取公网IP
+        async function getPublicIP() {
+            try {
+                const response = await axios.get('https://api.ipify.org?format=json');
+                return response.data.ip;
+            } catch (error) {
+                console.error('获取IP地址失败:', error);
+                return '未知';
+            }
+        }
+
+        // 收集浏览器/设备信息
+        function getSystemInfo() {
+            const info = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                colorDepth: window.screen.colorDepth,
+                language: navigator.language,
+                cookiesEnabled: navigator.cookieEnabled,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                cpuCores: navigator.hardwareConcurrency || '未知'
+            };
+            return info;
+        }
+
+        // 显示信息
+        async function displayInfo() {
+            const ip = await getPublicIP();
+            const systemInfo = getSystemInfo();
+            
+            let infoText = `您的公网IP: ${ip}\n\n`;
+            infoText += `系统信息\n`;
+            infoText += `操作系统: ${systemInfo.platform}\n`;
+            infoText += `分辨率: ${systemInfo.screenWidth}x${systemInfo.screenHeight}\n`;
+            infoText += `色深度: ${systemInfo.colorDepth}位\n`;
+            infoText += `语言: ${systemInfo.language}\n`;
+            infoText += `用户代理: \n${systemInfo.userAgent}\n`;
+            infoText += `时区: ${systemInfo.timeZone}\n`;
+            infoText += `CPU核心数: ${systemInfo.cpuCores}\n`;
+            infoText += `Cookies启用: ${systemInfo.cookiesEnabled ? '是' : '否'}`;
+            alert(infoText);
+        }
+
+        // 页面加载后执行
+        window.onload = displayInfo;
+    </script>
+</body>
+</html>

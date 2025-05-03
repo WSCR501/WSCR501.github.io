@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>繁星游戏堡-极速版(无css以及多余功能)</title>
+</head>
+<body>
+    <script>
+        // 使用Intersection Observer实现懒加载
+        document.addEventListener("DOMContentLoaded", function() {
+          const lazyImages = [].slice.call(document.querySelectorAll("img.lazyload"));
+          
+          if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  let lazyImage = entry.target;
+                  lazyImage.src = lazyImage.dataset.src;
+                  lazyImageObserver.unobserve(lazyImage);
+                }
+              });
+            });
+            
+            lazyImages.forEach(function(lazyImage) {
+              lazyImageObserver.observe(lazyImage);
+            });
+          }
+        });
+    </script>        
+    <!-- 异步加载非关键CSS -->
+    <link rel="preload" href="styles.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <div class="page active" id="page1">
+        <div class="overlay">
+        <header>
+            <nav>
+                <div class="logo">
+                    <a id="playButton" style="text-decoration: none; color: inherit;">繁星游戏堡</a>
+                </div>
+                <script>
+                    // 监听键盘按下事件
+                    document.addEventListener('keydown', function(e) {
+                        // 检测 Ctrl + S（KeyCode 83 或 key 's'）
+                        if (e.ctrlKey && (e.key === 's' || e.keyCode === 83)) {
+                            e.preventDefault(); // 阻止默认保存行为
+                            window.location.href = "about:blank"; // 跳转到空白页
+                        }
+                    });
+                    // 禁止右键菜单
+                    document.addEventListener('contextmenu', function(e) {
+                        e.preventDefault(); // 阻止默认右键菜单
+                        alert("右键菜单已禁用！请联系服务器管理员获得帮助:D");
+                    });
+                    // 禁止键盘快捷键（Ctrl+C、Ctrl+U等）
+                    document.addEventListener('keydown', function(e) {
+                        // 阻止 Ctrl + U（查看源代码）
+                        if (e.ctrlKey && e.key === 'u') {
+                            e.preventDefault();
+                            alert("查看源代码已禁用！");
+                        }
+                        // 阻止 Ctrl + C（复制）
+                        if (e.ctrlKey && e.key === 'c') {
+                            e.preventDefault();
+                            alert("复制已禁用！");
+                        }
+                    });
+                    // 监听键盘按下事件
+                    document.addEventListener('keydown', function(e) {
+                        // 检测 F12 键（KeyCode 123 或 F12 键）
+                        if (e.key === 'F12' || e.keyCode === 123) {
+                            e.preventDefault(); // 阻止默认行为（打开开发者工具）
+                            window.location.href = "404.html"; // 跳转到 404 页面
+                        }
+
+                        // 额外检测 Ctrl+Shift+I（Chrome 开发者工具快捷键）
+                        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+
+                        // 额外检测 Ctrl+Shift+J（Chrome 控制台快捷键）
+                        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+
+                        // 额外检测 Ctrl+U（查看源代码）
+                        if (e.ctrlKey && e.key === 'u') {
+                            e.preventDefault();
+                            window.location.href = "404.html";
+                        }
+                    });
+
+                    // 额外检测：如果用户仍然打开了控制台（某些浏览器可用）
+                    // 注意：这种方法不一定在所有浏览器都有效
+                    setInterval(function() {
+                        if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
+                            window.location.href = "404.html";
+                        }
+                    }, 1000);
+                </script>
+                <div class="nav-links">
+                    <script>
+                        function my11Function()
+                        {
+                            var r=confirm("目前还不知道他的b站链接\n点击其他人的试试\n但有一个同名账号,点击确定前往");
+                            if (r==true)
+                            {
+                                window.location.href='https://space.bilibili.com/14186323'
+                            }
+                        }
+                    </script>
+                    <script>
+                        function showUAC() {
+                            document.getElementById('uacContainer').style.display = 'flex';
+                            // 禁用页面滚动
+                            document.body.style.overflow = 'hidden';
+                        }
+                        
+                        function hideUAC() {
+                            document.getElementById('uacContainer').style.display = 'none';
+                            // 恢复页面滚动
+                            document.body.style.overflow = '';
+                        }
+                        
+                        // 点击弹窗外部关闭弹窗
+                        document.getElementById('uacContainer').addEventListener('click', function(e) {
+                            if (e.target === this) {
+                                hideUAC();
+                            }
+                        });
+                    </script>
+                    <a id="win7-openDialog1">关于我们</a>
+                    <a><span class="android-dialog-text-trigger" id="androidDialogTextTrigger">捐款</span></a>
+                    <script>
+                        function showAle2rt() {
+                            alert("");
+                        }
+                    </script>
+                    <div class="win7-dialog-system">
+                        <!-- 弹窗1 -->
+                        <div class="win7-overlay" id="win7-overlay1"></div>
+                        <div class="win7-dialog" id="win7-dialog1">
+                            <div class="win7-title-bar">
+                                <span>关于我们</span>
+                                <button class="win7-close-btn">×</button>
+                            </div>
+                            <div class="win7-content">
+                                <div class="win7-message">
+                                    <h3 style="color: #6495ED; margin-top: 0; margin-bottom: 10px;">关于我们</h3>
+                                    <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19<br>(繁星游戏派对)于2024.8.14正式更名为繁星游戏堡<br>自2022以来，我们致力于打造玩家的极致体验<br>服务器使用高性能物理机 绝不跑路</p>
+                                </div>
+                            </div>
+                            <div class="win7-buttons">
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        // 弹窗管理系统
+                        class Win7DialogSystem {
+                            constructor() {
+                                this.openDialogs = [];
+                                this.zIndexBase = 10000;
+                                this.initEvents();
+                            }
+                            
+                            initEvents() {
+                                // 绑定打开按钮事件
+                                document.getElementById('win7-openDialog1').addEventListener('click', () => this.openDialog(1));
+                                document.getElementById('win7-openDialog2').addEventListener('click', () => this.openDialog(2));
+                                
+                                // 使用事件委托处理所有弹窗按钮
+                                document.querySelector('.win7-dialog-system').addEventListener('click', (e) => {
+                                    const closeBtn = e.target.closest('.win7-close-btn');
+                                    const actionBtn = e.target.closest('.win7-btn[data-action]');
+                                    
+                                    if (closeBtn) {
+                                        const dialogId = this.getDialogIdFromElement(closeBtn);
+                                        this.closeDialog(dialogId);
+                                    }
+                                    
+                                    if (actionBtn) {
+                                        const dialogId = parseInt(actionBtn.dataset.dialog);
+                                        const action = actionBtn.dataset.action;
+                                        this.handleAction(dialogId, action);
+                                    }
+                                });
+                                
+                                // 点击遮罩层关闭最上层弹窗
+                                document.querySelectorAll('.win7-overlay').forEach(overlay => {
+                                    overlay.addEventListener('click', (e) => {
+                                        if (e.target === overlay) {
+                                            const dialogId = this.getDialogIdFromElement(overlay);
+                                            this.closeDialog(dialogId);
+                                        }
+                                    });
+                                });
+                            }
+                            
+                            getDialogIdFromElement(element) {
+                                const id = element.closest('.win7-overlay, .win7-dialog').id;
+                                return parseInt(id.replace(/[^\d]/g, ''));
+                            }
+                            
+                            openDialog(dialogId) {
+                                // 如果已经打开，则先关闭
+                                if (this.openDialogs.includes(dialogId)) {
+                                    this.closeDialog(dialogId);
+                                }
+                                
+                                // 添加到打开列表
+                                this.openDialogs.push(dialogId);
+                                
+                                // 计算z-index
+                                const zIndex = this.zIndexBase + (this.openDialogs.length * 2);
+                                const overlayZIndex = zIndex;
+                                const dialogZIndex = zIndex + 1;
+                                
+                                // 显示弹窗
+                                const overlay = document.getElementById(`win7-overlay${dialogId}`);
+                                const dialog = document.getElementById(`win7-dialog${dialogId}`);
+                                
+                                overlay.style.zIndex = overlayZIndex;
+                                dialog.style.zIndex = dialogZIndex;
+                                
+                                overlay.style.display = 'block';
+                                dialog.style.display = 'block';
+                            }
+                            
+                            closeDialog(dialogId) {
+                                const index = this.openDialogs.indexOf(dialogId);
+                                if (index > -1) {
+                                    this.openDialogs.splice(index, 1);
+                                }
+                                
+                                const overlay = document.getElementById(`win7-overlay${dialogId}`);
+                                const dialog = document.getElementById(`win7-dialog${dialogId}`);
+                                
+                                overlay.style.display = 'none';
+                                dialog.style.display = 'none';
+                            }
+                            
+                            handleAction(dialogId, action) {
+                                console.log(`弹窗${dialogId}: 用户点击了${action}按钮`);
+                                this.closeDialog(dialogId);
+                                
+                                // 根据不同的action执行不同的操作
+                                if (action === 'confirm') {
+                                    alert(`弹窗${dialogId}: 您点击了确定按钮`);
+                                } else if (action === 'cancel') {
+                                    alert(`弹窗${dialogId}: 您点击了取消按钮`);
+                                }
+                            }
+                        }
+                        
+                        // 初始化弹窗系统
+                        new Win7DialogSystem();
+                    </script>
+                </div>
+            </nav>
+        </header>
+        <div class="android-dialog-overlay" id="androidDialogOverlay">
+            <div class="android-dialog">
+                <div class="android-dialog-title">捐款</div>
+                <div class="android-dialog-content">
+                    给点钱吧,活不起了:D<br><img src="fu.jpg" alt="付款码"><img src="fu2.png" alt="付款码">
+                </div>
+                <div class="android-dialog-actions">
+                    <button class="android-dialog-btn android-dialog-btn-secondary" id="androidDialogCancelBtn">取消</button>
+                    <button class="android-dialog-btn android-dialog-btn-primary" id="androidDialogConfirmBtn">我已捐款</button>
+                </div>
+            </div>
+            <div class="android-dialog-close-btn" id="androidDialogCloseBtn"></div>
+        </div>
+    
+        <script>
+            const textTrigger = document.getElementById('androidDialogTextTrigger');
+            const overlay = document.getElementById('androidDialogOverlay');
+            const cancelBtn = document.getElementById('androidDialogCancelBtn');
+            const confirmBtn = document.getElementById('androidDialogConfirmBtn');
+            const closeBtn = document.getElementById('androidDialogCloseBtn');
+    
+            // 显示弹窗
+            textTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                overlay.style.display = 'flex';
+            });           
+            closeBtn.addEventListener('click', closeDialog);
+    
+            // 点击遮罩层关闭
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeDialog();
+                }
+            });
+        </script>
+        <div class="container">
+            <section class="hero">
+                <h1 id="color-changing-text">繁星游戏堡</h1>
+                <h3>FxGameCastel</h3>
+                <p> 用心打造极致体验</p>
+                <button class="btn" onclick="showAlert1()">加入我们</button>
+                <br>
+                <br>
+                <div class="scroll-text">向下滑动查看更多</div>
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    <path fill="none" d="M0 0h24v24H0V0z"/>
+                </svg>
+            </section>
+            
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h3 style="color: #6495ED;">为什么选择我们？</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p style="color: #6495ED;">繁星游戏堡前身建立2022.1.19
+                        <p style="color: #6495ED;">（繁星游戏派对）于2024.8.14正式更名为繁星游戏堡
+                        <p style="color: #6495ED;">自2022以来，我们致力于打造玩家的极致体验
+                        <p style="color: #6495ED;">服务器使用高性能物理机 绝不跑路</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" style="background-color: #f44336;" id="confirmBtn">关闭</button>
+                    </div>
+                </div>
+            </div>
+            <div class="page" id="page2">
+                
+                    <source src="6.mp4" type="/mp4">
+                    在Recovery网页下不支持播放视频
+                </>
+                <h2 class="glass-text">优秀的后台管理</h2>
+                <div style="text-align: left; padding-left: 20px;">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p class="glass-text">本服务器使用MCDR(MCDReforged)进行控制<br>MCDR是什么？<br>MCDaemon 的重置版本，用于控制 Minecraft 服务器的一个 Python 工具<br>你需要MCDR? 官网:<a href="https://mcdreforged.com/zh-CN">看看</a></p>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                      const glassElements = document.querySelectorAll(".glass-text");
+                      
+                      const observer = new IntersectionObserver((entries) => {
+                        entries.forEach((entry) => {
+                          if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                          }
+                        });
+                      }, { threshold: 0.1 });
+                
+                      glassElements.forEach((element) => {
+                        observer.observe(element);
+                      });
+                    });
+                </script>
+            </div>
+            <div class="page" id="page3">
+                
+                    <source src="7.mp4" type="/mp4">
+                    在Recovery网页下不支持播放视频
+                </>
+                <h2 class="glass-text">管理人员</h2>
+                <br>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <div id="section1">
+                <div class="transparent-box">
+                    <img src="1no" alt="腐竹头像" width="64" height="64">
+                    <p style="color:yellowgreen" onclick="window.location.href='https://space.bilibili.com/563077451'">IrisOracle 鸢尾</p>
+                    繁星游戏堡·腐竹<br>
+                    à voir le monde et sa beauté.
+                </div>
+                <div class="transparent-box">
+                    <img src="2no" alt="Recovery网页下没有图片" width="64" height="64">
+                    <p style="color:#6495ED" onclick="window.location.href='https://space.bilibili.com/2143461821'">Ruthyrings RU</p>
+                    繁星游戏堡·吉祥物<br>
+                    兄弟玩整合包么
+                </div>
+                <div class="transparent-box">
+                    <img src="3no" alt="Recovery网页下没有图片" width="64" height="64">
+                    <p style="color:#6495ED"onclick="my11Function()">PrimeMoon_ PO</p>
+                    繁星游戏堡·管理员<br>
+                    这个管理很懒，没留下什么
+                </div>
+                <div class="transparent-box">
+                    <img src="4" alt="Recovery网页下没有图片" width="64" height="64">
+                    <p style="color:#6495ED" onclick="window.location.href='https://space.bilibili.com/3546766444071206'">Windows XP</p>
+                    繁星游戏堡·御用刑部尚书<br>
+                    你好
+                </div>
+                <p class="glass-text">点击蓝色名字可以跳转到对应的B站链接</p>
+            </div>
+            <div class="page" id="page4">
+                
+                    <source src="8.mp4" type="/mp4">
+                    在Recovery网页下不支持播放视频
+                </>
+                <h2 class="glass-text">更新日志</h2>
+                <br>
+                <br>
+                <br>
+                <p class="glass-text">recovery网页不会更新<a href="index1.html">,跳转到正常网页</a></p>
+            </div>
+            <script>
+                function showAlert() {
+                    alert("施工中");
+                }
+                function showAlert1() {
+                    var r = confirm("加入QQ群问卷链接:点击确定跳转\n点按取消查看discord链接");
+                    if (r == true) {
+                        window.open("https://wj.qq.com/s2/15083217/9cc4/", "_blank");
+                    } else {
+                        alert("Discord链接:https://discord.gg/dUWasqNV");
+                    }
+                }
+            </script>
+    </div>
+</body>
+</html>

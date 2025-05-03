@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广子</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        
+        .desktop {
+            flex: 1;
+            position: relative;
+            background-color: #0078d7;
+            background-image: linear-gradient(135deg, #0078d7 0%, #004e8c 100%);
+        }
+        
+        .browser-window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0px; /* 留出任务栏空间 */
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .browser-header {
+            height: 40px;
+            background-color: #f3f3f3;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .browser-tabs {
+            flex: 1;
+            display: flex;
+            height: 100%;
+        }
+        
+        .browser-tab {
+            padding: 0 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #ddd;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .browser-tab.active {
+            background-color: white;
+            font-weight: 500;
+        }
+        
+        .browser-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .taskbar {
+            height: 48px;
+            background-color: rgba(32, 32, 32, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .taskbar-icons {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .taskbar-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .taskbar-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .taskbar-icon.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .taskbar-icon img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .context-menu {
+            position: fixed;
+            background-color: rgba(45, 45, 45, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 6px;
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .context-menu-item {
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .context-menu-item:hover {
+            background-color: rgba(98, 100, 167, 0.8);
+        }
+        
+        .start-button {
+            position: absolute;
+            left: 10px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .start-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .start-button img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .blank-page {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 48px);
+            color: #666;
+            font-size: 24px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .blank-page i {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <div class="browser-window" id="browserWindow">
+            <div class="browser-header">
+                <div class="browser-tabs">
+                    <div class="browser-tab active">bo.html</div>
+                </div>
+            </div>
+            <div class="browser-content">
+                <h1>Minecraft Chromium的小站(已被外来物种琴饭)</h1>
+                <p>(广告位招租)</p>
+            </div>
+        </div>
+        
+        <div class="blank-page" id="blankPage">
+            <i>🖥️</i>
+            <p>桌面</p>
+        </div>
+    </div>
+    
+    <div class="taskbar">
+        <div class="start-button">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMjUgMzc1aDc1MHYyNTBIMTI1eiIvPjwvc3ZnPg==" alt="Start">
+        </div>
+        
+        <div class="taskbar-icons">
+            <div class="taskbar-icon active" id="browserIcon">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTkgMTZWN0gxNVYxMUgxOVYxNkg5TTIxIDNDMjEuNTUyIDMgMjIgMy40NDggMjIgNFYyMEMyMiAyMC41NTIgMjEuNTUyIDIxIDIxIDIxSDNDMi40NDggMjEgMiAyMC41NTIgMiAyMFY0QzIgMy40NDggMi40NDggMyAzIDNIMjFNMTUgMTZWMTlIMTlWMTZIMTVNMTEgMTlWN0g3VjE5SDExWiIvPjwvc3ZnPg==" alt="Browser">
+                <div class="context-menu" id="browserContextMenu">
+                    <div class="context-menu-item" id="closeBrowser">关闭窗口</div>
+                    <div class="context-menu-item">固定到任务栏</div>
+                    <div class="context-menu-item">从任务栏取消固定</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const browserIcon = document.getElementById('browserIcon');
+        const browserContextMenu = document.getElementById('browserContextMenu');
+        const closeBrowserBtn = document.getElementById('closeBrowser');
+        const browserWindow = document.getElementById('browserWindow');
+        const blankPage = document.getElementById('blankPage');
+        
+        // 阻止默认的右键菜单
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+        
+        // 浏览器图标右键点击事件
+        browserIcon.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            
+            // 获取图标位置
+            const iconRect = browserIcon.getBoundingClientRect();
+            
+            // 计算菜单位置 - 显示在图标上方居中
+            const menuLeft = iconRect.left + (iconRect.width / 2) - (browserContextMenu.offsetWidth / 2);
+            const menuTop = iconRect.top - browserContextMenu.offsetHeight - 5;
+            
+            // 确保菜单不会超出屏幕左侧
+            const adjustedLeft = Math.max(10, menuLeft);
+            
+            // 设置菜单位置
+            browserContextMenu.style.left = `${adjustedLeft}px`;
+            browserContextMenu.style.top = `${menuTop}px`;
+            browserContextMenu.style.display = 'block';
+            
+            // 点击其他地方关闭菜单
+            const closeMenu = (e) => {
+                if (!browserContextMenu.contains(e.target) && e.target !== browserIcon) {
+                    browserContextMenu.style.display = 'none';
+                    document.removeEventListener('click', closeMenu);
+                }
+            };
+            
+            setTimeout(() => {
+                document.addEventListener('click', closeMenu);
+            }, 100);
+        });
+        
+        // 关闭浏览器按钮点击事件
+        closeBrowserBtn.addEventListener('click', () => {
+            browserWindow.style.display = 'none';
+            blankPage.style.display = 'flex';
+            browserIcon.classList.remove('active');
+            browserContextMenu.style.display = 'none';
+        });
+        
+        // 浏览器图标点击事件（重新打开浏览器）
+        browserIcon.addEventListener('click', () => {
+            if (browserWindow.style.display === 'none') {
+                browserWindow.style.display = 'flex';
+                blankPage.style.display = 'none';
+                browserIcon.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
